@@ -3,58 +3,80 @@ package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class MainMenuScreen implements Screen {
     final Main game;
+    //Stage handles the viewport and distributes input events.
+    private Stage stage;
 
     private OrthographicCamera camera;
-    private Texture menuImage;
-    private SpriteBatch batch;
+
+    //Instantiating two text_button objects
+    Text_button play_button = new Text_button("Play", 2,1, 5, 4);
+    Text_button exit_button = new Text_button("Exit", 2,1, 5, 6);
 
     public MainMenuScreen(final Main game) {
         this.game = game;
-
-        // load the images
-        menuImage = new Texture(Gdx.files.internal("menuScreen.png"));
+        //Stage covers the entire screen and enable event capture.
+        stage = new Stage(new ScreenViewport());
+        Gdx.input.setInputProcessor(stage);
 
         // This will make sure the camera always shows us an area of our game world
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 900, 600);
 
-        batch = new SpriteBatch();
+        game.batch = new SpriteBatch();
+
+        //Creates the buttons
+        play_button.create();
+        exit_button.create();
+
+        //Inputlistener for the buttons to execute the action upon clicking the button
+        play_button.getButton().addListener(new InputListener(){
+            @Override
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                game.setScreen(new GameScreen(game));
+            }
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+        });
+        stage.addActor(play_button.getButton());
+
+        exit_button.getButton().addListener(new InputListener(){
+            @Override
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                Gdx.app.exit();
+            }
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+        });
+        stage.addActor(exit_button.getButton());
+
     }
 
     @Override
     public void render(float delta) {
-
         // Tell the camera to update its matrices.
         camera.update();
         // Tell the SpriteBatch to render in the coordinate system specified by the camera
         game.batch.setProjectionMatrix(camera.combined);
+        ScreenUtils.clear(0, 0, 0.2f, 1);
 
         game.batch.begin();
-        game.batch.draw(menuImage, 0, 0);
-        // game.font.draw is how text is rendered to the screen
-        game.font.draw(game.batch, "Welcome to Bomb_IT!!! ", 400, 450);
-        game.font.draw(game.batch, "Click play to begin!", 400, 400);
         game.batch.end();
 
-        // If the screen has been touched
-        if (Gdx.input.isTouched()) {
-            // Transform the touch/mouse coordinates to our camera’s coordinate system
-            Vector3 touchPos = new Vector3();
-            touchPos.set(Gdx.input.getX(), Gdx.input.getY(), 0);
-            camera.unproject(touchPos);
-            // If the touch is over play button change the screen
-            if ((touchPos.x > 400 && touchPos.x < 500) && ((touchPos.y > 200 && touchPos.y < 350))){
-                game.setScreen(new GameScreen(game));
-                dispose();
-            }
-
-        }
+        stage.act();
+        stage.draw();
     }
 
     @Override
@@ -79,7 +101,7 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void dispose() {
-        menuImage.dispose();
+
     }
 }
 
