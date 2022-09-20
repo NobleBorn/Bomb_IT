@@ -2,11 +2,12 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
@@ -18,8 +19,18 @@ public class MainMenuScreen implements Screen {
     private OrthographicCamera camera;
 
     //Instantiating two text_button objects
-    Text_button play_button = new Text_button("Play", 2,1, 5, 4);
-    Text_button exit_button = new Text_button("Exit", 2,1, 5, 6);
+    Text_button play_button = new Text_button("Play", 2,0.6f, 7, 3.7f);
+    Text_button option_button = new Text_button("Option", 2,0.6f, 7, 4.9f);
+    Text_button exit_button = new Text_button("Exit", 2,0.6f, 7, 6.1f);
+
+    Image_button music_button = new Image_button("music_on.png", "music_off.png",1.5f,
+            1.4f, 1, 7);
+    Image_button sound_button = new Image_button("sound_on.png", "sound_off.png",1.5f,
+            1.4f, 2.7f, 7);
+
+    private Music game_music;
+    private Sound click_sound;
+
 
     public MainMenuScreen(final Main game) {
         this.game = game;
@@ -36,11 +47,19 @@ public class MainMenuScreen implements Screen {
         //Creates the buttons
         play_button.create();
         exit_button.create();
+        option_button.create();
+
+        music_button.create();
+        sound_button.create();
+
+        game_music = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
+        game_music.setLooping(true);
 
         //Inputlistener for the buttons to execute the action upon clicking the button
         play_button.getButton().addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                click_sound.play();
                 game.setScreen(new GameScreen(game));
             }
             @Override
@@ -49,6 +68,18 @@ public class MainMenuScreen implements Screen {
             }
         });
         stage.addActor(play_button.getButton());
+
+        option_button.getButton().addListener(new InputListener(){
+            @Override
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                click_sound.play();
+            }
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+        });
+        stage.addActor(option_button.getButton());
 
         exit_button.getButton().addListener(new InputListener(){
             @Override
@@ -61,6 +92,31 @@ public class MainMenuScreen implements Screen {
             }
         });
         stage.addActor(exit_button.getButton());
+
+        music_button.getButton().addListener(new EventListener() {
+            @Override
+            public boolean handle(Event event) {
+                if(music_button.getButton().isChecked())
+                    game_music.pause();
+                else
+                    game_music.play();
+                return false;
+            }
+        });
+        stage.addActor(music_button.getButton());
+
+        sound_button.getButton().addListener(new EventListener() {
+            @Override
+            public boolean handle(Event event) {
+                if(sound_button.getButton().isChecked()){
+                    click_sound.dispose();
+                }
+                else
+                    click_sound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
+                return false;
+            }
+        });
+        stage.addActor(sound_button.getButton());
 
     }
 
@@ -85,6 +141,7 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void show() {
+        game_music.play();
     }
 
     @Override
@@ -101,6 +158,8 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void dispose() {
+        game_music.dispose();
+        click_sound.dispose();
 
     }
 }

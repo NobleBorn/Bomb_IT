@@ -11,8 +11,8 @@ public class Text_button extends Buttons{
     private String name;
     private Button button;
 
-    //A text_button beside the common attributes also has  a text
-    public Text_button(String text_button, int width, int height, int x_pos, int y_pos) {
+    //A text_button beside the common attributes also has a text
+    public Text_button(String text_button, float width, float height, float x_pos, float y_pos) {
         super(width, height, x_pos, y_pos);
         this.name = text_button;
     }

@@ -2,12 +2,12 @@ package com.mygdx.game;
 
 //A button class for the common attributes of a button
 public class Buttons {
-    private int button_width;
-    private int button_height;
-    private int button_x;
-    private int button_y;
+    private float button_width;
+    private float button_height;
+    private float button_x;
+    private float button_y;
 
-    public Buttons(int width, int height, int x_pos, int y_pos){
+    public Buttons(float width, float height, float x_pos, float y_pos){
         this.button_width = width;
         this.button_height = height;
         this.button_x = x_pos;
@@ -15,19 +15,19 @@ public class Buttons {
 
     }
 
-    public int getButton_width() {
+    public float getButton_width() {
         return button_width;
     }
 
-    public int getButton_height() {
+    public float getButton_height() {
         return button_height;
     }
 
-    public int getButton_x() {
+    public float getButton_x() {
         return button_x;
     }
 
-    public int getButton_y() {
+    public float getButton_y() {
         return button_y;
     }
 }
