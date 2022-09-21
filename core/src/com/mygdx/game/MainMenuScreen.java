@@ -7,7 +7,6 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.*;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
@@ -18,11 +17,12 @@ public class MainMenuScreen implements Screen {
 
     private OrthographicCamera camera;
 
-    //Instantiating two text_button objects
+    //Instantiating text_button objects
     Text_button play_button = new Text_button("Play", 2,0.6f, 7, 3.7f);
     Text_button option_button = new Text_button("Option", 2,0.6f, 7, 4.9f);
     Text_button exit_button = new Text_button("Exit", 2,0.6f, 7, 6.1f);
 
+    //Instantiating image_button objects
     Image_button music_button = new Image_button("music_on.png", "music_off.png",1.5f,
             1.4f, 1, 7);
     Image_button sound_button = new Image_button("sound_on.png", "sound_off.png",1.5f,
@@ -32,6 +32,11 @@ public class MainMenuScreen implements Screen {
     private Sound click_sound;
 
 
+    /**
+     * Constructor - sets the camera, a new stage, creates the buttons and takes in the button's input
+     *
+     * @param game
+     */
     public MainMenuScreen(final Main game) {
         this.game = game;
         //Stage covers the entire screen and enable event capture.
@@ -120,6 +125,10 @@ public class MainMenuScreen implements Screen {
 
     }
 
+    /**
+     *
+     * @param delta
+     */
     @Override
     public void render(float delta) {
         // Tell the camera to update its matrices.
@@ -156,6 +165,9 @@ public class MainMenuScreen implements Screen {
     public void resume() {
     }
 
+    /**
+     * Disposes of the garbage after application is closed
+     */
     @Override
     public void dispose() {
         game_music.dispose();

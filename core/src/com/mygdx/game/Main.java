@@ -4,6 +4,7 @@ import com.badlogic.gdx.*;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.physics.box2d.*;
 
 //Help from Libgdx website, wiki and tutorials
 public class Main extends Game {
