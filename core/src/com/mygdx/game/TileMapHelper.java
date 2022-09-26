@@ -28,6 +28,10 @@ public class TileMapHelper {
     public OrthogonalTiledMapRenderer setupMap() { //väljer bana
         tiledMap = new TmxMapLoader().load("map0.tmx");
         parseMapObjects(tiledMap.getLayers().get("permwalls").getObjects());
+        parseMapObjects(tiledMap.getLayers().get("destroywalls").getObjects());
+        parseMapObjects(tiledMap.getLayers().get("powerups").getObjects());
+
+
         return new OrthogonalTiledMapRenderer(tiledMap);
     }
 
