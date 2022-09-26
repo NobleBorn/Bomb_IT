@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package Models;
 
 public interface Destroyable {
 }

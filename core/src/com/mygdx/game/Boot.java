@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 
+import Models.Map;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -10,6 +11,7 @@ public class Boot extends Game {
     public static Boot INSTANCE;
     private int widthScreen, heightScreen;
     private OrthographicCamera orthographicCamera;
+    private Map map;
 
     public Boot() {
         INSTANCE = this;
@@ -17,6 +19,7 @@ public class Boot extends Game {
 
     @Override
     public void create() {
+        this.map = new Map();
         this.widthScreen = Gdx.graphics.getWidth();
         this.heightScreen = Gdx.graphics.getHeight();
         this.orthographicCamera = new OrthographicCamera();
