@@ -30,7 +30,14 @@ public class Map {
         return coordinates;
     }
 
-    private void createPermWalls(){}
+    private void createPermWalls(){
+        grid = new Object[HEIGHT][WIDTH];
+        for (int i = 0; i < WIDTH; i++) {
+    for (int j = 0; j < HEIGHT; j++) {
+        grid[j][i] = null;
+    }
+        }
+    }
     private void createDestWalls(){}
     private void createPowerUps(){}
 
