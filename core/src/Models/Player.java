@@ -3,6 +3,7 @@ package Models;
 public class Player extends Entity{
     private Enum direction;
     private Position position;
+    private PlayerHelper playerHelper;
 
     public Player(){
         this.position = new Position(0, 0);
@@ -14,12 +15,19 @@ public class Player extends Entity{
         Position newPosition = newPositionHandler();
 
         CollisionChecker collisionChecker = new CollisionChecker();
+
+        playerHelper = new PlayerHelper(newPosition);
+        if (playerHelper.callCollisionChecker()){
+            position = newPosition;
+        }
+        /*
         if (collisionChecker.playerNextTileFree(newPosition, map)){ //player shouldn't need to know about the map
             position = newPosition;
         }
+         */
     }
 
-    private Position newPositionHandler() {
+    private Position newPositionHandler() { //possible improvement?
         Position newPosition;
         if (direction == Direction.UP){
             newPosition = new Position(position.getX(), position.getY()+1);
@@ -43,5 +51,8 @@ public class Player extends Entity{
     }
     public Position getPosition(){
         return new Position(position.getX(), position.getY());
+    }
+
+    public void terminate(){
     }
 }

@@ -62,4 +62,8 @@ public class Map {
     private void createDestWalls(){}
     private void createPowerUps(){}
 
+    public boolean isPlayerNextTileFree(Position newPosition) {
+        CollisionChecker collisionChecker = new CollisionChecker();
+        return collisionChecker.playerNextTileFree(newPosition, this);
+    }
 }
