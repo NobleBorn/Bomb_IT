@@ -3,17 +3,29 @@ package Models;
 import Models.Position;
 import com.sun.tools.javac.util.ArrayUtils;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class Map {
 
     private int y;
     private int x;
     private final int size = 20;
-    private Tile[][] tiles;
+    private Tile[][] tiles = new Tile[20][20];
+    private String[][] maps = new String[size][size];
 
     public Map(){
         setMapSize(size);
         createTiles(size);
         loadWalls();
+        test();
     }
 
     private void setMapSize(int Size){
@@ -34,9 +46,67 @@ public class Map {
     }
 
     private void loadWalls(){
-        createPermWalls();
-        createDestWalls();
         createPowerUps();
+    }
+    public void test(){
+
+        try {
+            List<String> rows = new ArrayList<String>();
+            BufferedReader bf = new BufferedReader(new FileReader("test.txt"));
+            String line = bf.readLine();
+            while (line != null) {
+                rows.add(line);
+                line = bf.readLine();
+            }
+            bf.close();
+
+            int s = 0;
+            for (String str : rows) {
+                String[] stringSplit = str.split(",");
+                maps[s] = stringSplit;
+                s++;
+            }
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        for (int i = 0; i < size; i++){
+            for (int j = 0; j < size; j++){
+                String decider = maps[i][j];
+                switch (decider) {
+                    case "1":
+                        tiles[i][j].addEntity(new Wall(false, new Position(i, j)));
+                        break;
+                    case "2":
+                        tiles[i][j].addEntity(new Wall(true, new Position(i, j)));
+                        break;
+                    case "3":
+                        tiles[i][j].addEntity(new Player(new Position(i, j)));
+                        break;
+                }
+            }
+        }
+        int s = 0;
+        for (int i = 0; i < size; i++){
+            for (int j = 0; j < size; j++) {
+                if (!tiles[i][j].isTileEmpty()) {
+                    Entity entity = tiles[i][j].entities.get(0);
+                    if (entity instanceof Wall) {
+                        if (i == s) {
+                            System.out.print(entity.getPosition().getX() + " " +
+                                    entity.getPosition().getY() + " " +
+                                    ((Wall) entity).isDestroyable() + ", ");
+                        }
+                    }
+                    else if(entity instanceof Player){
+                        System.out.print("Player, ");
+                    }
+                } else {
+                    System.out.print("Empty tile, ");
+                }
+            }
+            System.out.println("\n");
+            s++;
+        }
     }
 
     public int[] getSize(){
@@ -48,18 +118,6 @@ public class Map {
         return coordinates;
     }
 
-    private void createPermWalls(){
-        Position[] positions = new Position[(size*size)];
-        for (int i = 0; i < 20; i++){
-            positions[i] = new Position(i, 0);
-        }
-
-        for (int i = 1; i < 20; i++){
-            positions[(i*20)+1] = new Position(0, i);
-        }
-
-    }
-    private void createDestWalls(){}
     private void createPowerUps(){}
 
 }
