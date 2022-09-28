@@ -6,12 +6,15 @@ public class Player extends Entity{
     private PlayerHelper playerHelper;
     private int score;
     private boolean alive;
+    private int bombLength;
 
     public Player(){
         this.position = new Position(0, 0);
         this.direction = Models.Direction.DOWN;
         this.score = 0;
         this.alive = true;
+        this.bombLength = 1;
+
     }
 
     public void walk(Direction newDirection) {
@@ -49,11 +52,8 @@ public class Player extends Entity{
 
     public void dropBomb(){
         //add so you cannot drop infinite bombs
-        Bomb bomb = new Bomb(getPosition());
-        bomb.drop();
-    }
-    public Position getPosition(){
-        return new Position(position.getX(), position.getY());
+        Bomb bomb = new Bomb(getPosition(), bombLength);
+
     }
 
     public void terminate(){
