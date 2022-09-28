@@ -8,8 +8,6 @@ public class Bomb extends Entity implements Runnable{
     private Position position;
     private int bombLength;
 
-    private List<Bomb> bombs = new ArrayList<>(1);
-
 
     public Bomb(Position position, int length){
         super();
