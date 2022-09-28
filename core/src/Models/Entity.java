@@ -1,9 +1,10 @@
 package Models;
 
 public class Entity {
-    private Position position;
+    protected Position position;
 
-    Entity(){
+    Entity(Position position){
+        this.position = position;
 
     }
 

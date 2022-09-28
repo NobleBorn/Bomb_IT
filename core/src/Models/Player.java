@@ -2,14 +2,13 @@ package Models;
 
 public class Player extends Entity{
     private Enum direction;
-    private Position position;
     private PlayerHelper playerHelper;
     private int score;
     private boolean alive;
     private int bombLength;
 
-    public Player(){
-        this.position = new Position(0, 0);
+    public Player(Position position){
+        super(position);
         this.direction = Models.Direction.DOWN;
         this.score = 0;
         this.alive = true;
