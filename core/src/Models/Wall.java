@@ -1,15 +1,14 @@
 package Models;
 
-import Models.Position;
-
 public class Wall extends Entity{
 
     private boolean isDestroyable;
-    private Position position;
+    //private Position position;
 
     public Wall(boolean isDestroyable, Position position){
+        super(position);
         this.isDestroyable = isDestroyable;
-        this.position = position;
+        //this.position = super.position;
     }
 
     public boolean isDestroyable() {

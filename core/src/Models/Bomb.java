@@ -5,12 +5,11 @@ import java.util.List;
 
 public class Bomb extends Entity implements Runnable{
 
-    private Position position;
     private int bombLength;
 
 
     public Bomb(Position position, int length){
-        super();
+        super(position);
         this.bombLength = length;
         run();
 

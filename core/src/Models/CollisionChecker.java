@@ -1,11 +1,11 @@
 package Models;
 
+
 import java.util.List;
 
 public class CollisionChecker {
 
     public boolean playerNextTileFree(Position newPosition, Map map){
-
         //skapa metod walk hos player
         //skapa variabel newPosition som räknar ut nästa position
         //skicka den positionen till denna funktion

@@ -18,7 +18,6 @@ public class BombExplosion{
             if (i != 0) {
                 bombExplosionSquares.add(new BombExplosionSquare(new Position(position.getX(), position.getY()+i)));
             }
-
         }
     }
 
