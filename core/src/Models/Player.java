@@ -2,10 +2,13 @@ package Models;
 
 public class Player extends Entity{
     private Enum direction;
+    private Position nextPosition;
     private PlayerHelper playerHelper;
     private int score;
     private boolean alive;
     private int bombLength;
+
+    public Observable observable;
 
     public Player(Position position){
         super(position);
@@ -13,16 +16,18 @@ public class Player extends Entity{
         this.score = 0;
         this.alive = true;
         this.bombLength = 1;
-
+        this.observable = new Observable();
     }
 
     public void walk(Direction newDirection) {
-        direction = newDirection;
-        Position newPosition = newPositionHandler();
+        //direction = newDirection;
+        nextPosition = newPositionHandler();
 
-        playerHelper = new PlayerHelper(newPosition);
+        observable.notifySubscribers("movement",this);
+
+        playerHelper = new PlayerHelper(nextPosition);
         if (playerHelper.callCollisionChecker()){
-            position = newPosition;
+            position = nextPosition;
         }
         /*
         CollisionChecker collisionChecker = new CollisionChecker();
@@ -57,5 +62,10 @@ public class Player extends Entity{
 
     public void terminate(){
         alive = false;
+    }
+
+
+    public Position getNextPosition() {
+        return nextPosition;
     }
 }
