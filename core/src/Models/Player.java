@@ -4,23 +4,26 @@ public class Player extends Entity{
     private Enum direction;
     private Position position;
     private PlayerHelper playerHelper;
+    private int score;
+    private boolean alive;
 
     public Player(){
         this.position = new Position(0, 0);
         this.direction = Models.Direction.DOWN;
+        this.score = 0;
+        this.alive = true;
     }
 
     public void walk(Direction newDirection) {
         direction = newDirection;
         Position newPosition = newPositionHandler();
 
-        CollisionChecker collisionChecker = new CollisionChecker();
-
         playerHelper = new PlayerHelper(newPosition);
         if (playerHelper.callCollisionChecker()){
             position = newPosition;
         }
         /*
+        CollisionChecker collisionChecker = new CollisionChecker();
         if (collisionChecker.playerNextTileFree(newPosition, map)){ //player shouldn't need to know about the map
             position = newPosition;
         }
@@ -54,5 +57,6 @@ public class Player extends Entity{
     }
 
     public void terminate(){
+        alive = false;
     }
 }
