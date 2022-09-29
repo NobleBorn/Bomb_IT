@@ -55,6 +55,23 @@ public class Player extends Entity{
 
     }
 
+    CollisionChecker isWallHit = new CollisionChecker();
+    private Wall wall;
+    private BombExplosion bombex;
+
+    public collectPoints() {
+        // make the players collect 10 points when wall is destroyed
+        //skriv ut på spelplanen
+
+        if (isWallHit.bombCollision(wall, bombex)) {
+            score = score + 10;
+            //updatera
+        }
+    }
+
+    public
+    // när tiden är slut vinner spelaren med mest poäng
+
     public void terminate(){
         alive = false;
     }
