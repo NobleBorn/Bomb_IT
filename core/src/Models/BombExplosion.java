@@ -11,15 +11,32 @@ public class BombExplosion{
         createBombExplosionSquares(position, length);
     }
 
+    private Wall permWall;
     private void createBombExplosionSquares(Position position, int length) {
-        //lägg till hänsyn för väggar
-        for (int i = (-length); i < length; i++){
-            bombExplosionSquares.add(new BombExplosionSquare(new Position(position.getX()+i, position.getY())));
-            if (i != 0) {
-                bombExplosionSquares.add(new BombExplosionSquare(new Position(position.getX(), position.getY()+i)));
+
+        int tailLength = (length-1)/2;
+
+        bombExplosionSquares.add(new BombExplosionSquare(new Position(position.getX(), position.getY())));
+        for (int i = 1; i <= tailLength; i++) {
+
+            bombExplosionSquares.add(new BombExplosionSquare(new Position(position.getX() + i, position.getY())));
+            bombExplosionSquares.add(new BombExplosionSquare(new Position(position.getX() - i, position.getY())));
+            bombExplosionSquares.add(new BombExplosionSquare(new Position(position.getX(), position.getY() + i)));
+            bombExplosionSquares.add(new BombExplosionSquare(new Position(position.getX(), position.getY() - i)));
+
+            }
+
+        //lägg till hänsyn för väggar typ if(inte destroyable)
+        for(BombExplosionSquare b : bombExplosionSquares){
+            if((b.getPosition() == permWall.getPosition()) && !(permWall.isDestroyable())){
+                bombExplosionSquares.remove(b);
+
             }
         }
+
     }
+
+
 
     public List<BombExplosionSquare> getBombExplosionSquares() {
         return bombExplosionSquares;
