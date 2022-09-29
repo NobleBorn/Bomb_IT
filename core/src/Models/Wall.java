@@ -4,12 +4,11 @@ import Models.Position;
 
 public class Wall extends Entity{
 
-    private boolean isDestroyable;
-    private Position position;
+    private final boolean isDestroyable;
 
-    public Wall(boolean isDestroyable, Position position){
+    public Wall(Position position, boolean isDestroyable){
+        super(position);
         this.isDestroyable = isDestroyable;
-        this.position = position;
     }
 
     public boolean isDestroyable() {

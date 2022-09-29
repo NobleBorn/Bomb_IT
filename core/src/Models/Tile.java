@@ -18,11 +18,6 @@ public class Tile {
         entities.remove(e);
     }
     public boolean isTileEmpty(){
-        if (entities.size() == 0){
-            return true;
-        }
-        else {
-            return false;
-        }
+        return entities.size() == 0;
     }
 }

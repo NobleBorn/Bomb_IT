@@ -10,7 +10,7 @@ public class Bomb extends Entity implements Runnable{
 
 
     public Bomb(Position position, int length){
-        super();
+        super(position);
         this.bombLength = length;
         run();
 
