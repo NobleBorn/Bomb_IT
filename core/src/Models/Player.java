@@ -7,6 +7,7 @@ public class Player extends Entity{
     private boolean alive;
     private int bombLength;
 
+
     public Player(Position position){
         super(position);
         this.direction = Models.Direction.DOWN;
@@ -14,6 +15,11 @@ public class Player extends Entity{
         this.alive = true;
         this.bombLength = 1;
 
+    }
+
+    @Override
+    protected Entity copyThis() {
+        return new Player(new Position(this.position));
     }
 
     public void walk(Direction newDirection) {
@@ -29,7 +35,7 @@ public class Player extends Entity{
         if (collisionChecker.playerNextTileFree(newPosition, map)){ //player shouldn't need to know about the map
             position = newPosition;
         }
-         */
+        */
     }
 
     private Position newPositionHandler() { //possible improvement?

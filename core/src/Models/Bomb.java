@@ -36,4 +36,8 @@ public class Bomb extends Entity implements Runnable{
     }
 
 
+    @Override
+    protected Entity copyThis() {
+        return new Bomb(new Position(position), this.bombLength);
+    }
 }

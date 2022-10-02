@@ -1,41 +1,60 @@
 package com.mygdx.game;
 
+import Models.Map;
+import Models.Position;
+import Models.Tile;
+import Models.Wall;
+import Views.TileViewImage;
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.MapObjects;
-import com.badlogic.gdx.maps.objects.PolygonMapObject;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Vector;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.Shape;
-
-import static com.mygdx.game.Constants.PPM;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class TileMapHelper {
 
-    private TiledMap tiledMap;
     private GameScreen gameScreen;
+    private Map map;
+    private Texture img;
+    private SpriteBatch sb;
 
-    public TileMapHelper(GameScreen gameScreen) {
-        this.gameScreen = gameScreen;
+    public TileMapHelper(SpriteBatch batch) {
+        this.sb = batch;
     }
 
-    public OrthogonalTiledMapRenderer setupMap() { //väljer bana
-        tiledMap = new TmxMapLoader().load("map0.tmx");
-        parseMapObjects(tiledMap.getLayers().get("permwalls").getObjects());
-        parseMapObjects(tiledMap.getLayers().get("destroywalls").getObjects());
-        parseMapObjects(tiledMap.getLayers().get("powerups").getObjects());
-
-
-        return new OrthogonalTiledMapRenderer(tiledMap);
+    public void setupMap() { //väljer bana
+        map = new Map();
+        map.addObjects();
+        Tile tile;
+        //int counter = 0;
+        Sprite sprPermWall = new Sprite(new TileViewImage().getWallTexture(false));
+        Sprite sprTempWall = new Sprite(new TileViewImage().getWallTexture(true));
+        sprPermWall.setSize(Tile.getTileSize(), Tile.getTileSize());
+        sprTempWall.setSize(Tile.getTileSize(), Tile.getTileSize());
+        Tile[][] tilesMatrix = map.getMapMatrix();
+        for(int i = 0; i < tilesMatrix.length; i++){
+            for (int j = 0; j < tilesMatrix.length; j++){
+                tile = tilesMatrix[i][j];
+                if (!tile.isTileEmpty()){
+                    if ((tile.entities.get(0) instanceof Wall)){
+                        if (!(((Wall) tile.entities.get(0)).isDestroyable())) {
+                            sb.begin();
+                            sprPermWall.setPosition(j * Tile.getTileSize(), i * Tile.getTileSize());
+                            sprPermWall.draw(sb);
+                            sb.end();
+                        }
+                        else{
+                            sb.begin();
+                            sprTempWall.setPosition(j * Tile.getTileSize(), i * Tile.getTileSize());
+                            sprTempWall.draw(sb);
+                            sb.end();
+                        }
+                    }
+                }
+            }
+        }
     }
 
-    private void parseMapObjects(MapObjects mapObjects) {
+    /*private void parseMapObjects(MapObjects mapObjects) {
         for(MapObject mapObject : mapObjects) {
             if(mapObject instanceof PolygonMapObject) {
                 createStaticBody((PolygonMapObject) mapObject);
@@ -64,5 +83,5 @@ public class TileMapHelper {
         PolygonShape shape = new PolygonShape();
         shape.set(worldVertices);
         return shape;
-    }
+    }*/
 }

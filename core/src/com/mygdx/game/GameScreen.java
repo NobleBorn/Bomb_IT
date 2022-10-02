@@ -28,27 +28,24 @@ public class GameScreen extends ScreenAdapter {
 
     public GameScreen(OrthographicCamera camera){
         this.camera = camera;
-        this.batch = new SpriteBatch();
-        this.world = new World(new Vector2(0,0), false);
-        this.box2DDebugRenderer = new Box2DDebugRenderer();
+        //this.world = new World(new Vector2(0,0), false);
+        //this.box2DDebugRenderer = new Box2DDebugRenderer();
 
-        this.tileMapHelper = new TileMapHelper(this);
-        this.orthogonalTiledMapRenderer = tileMapHelper.setupMap();
+
     }
-
-    private void update() {
+    /*private void update() {
         world.step(1 / 60f, 6, 2);
         cameraUpdate();
 
         batch.setProjectionMatrix(camera.combined);
-        orthogonalTiledMapRenderer.setView(camera);
+        //orthogonalTiledMapRenderer.setView(camera);
 
         if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {  //ESC closes game
             Gdx.app.exit();
         }
-    }
+    }*/
 
-    private void cameraUpdate(){
+    /*private void cameraUpdate(){
         camera.position.set(new Vector3(640, 640, 0));
         camera.update();
     }
@@ -60,20 +57,21 @@ public class GameScreen extends ScreenAdapter {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        orthogonalTiledMapRenderer.render();
+        //orthogonalTiledMapRenderer.render();
 
         batch.begin();
 
         //render objects
 
         batch.end();
-        box2DDebugRenderer.render(world, camera.combined.scl(PPM));
+        //box2DDebugRenderer.render(world, camera.combined.scl(PPM));
+
 
 
     }
 
     public World getWorld() {
         return world;
-    }
+    }*/
 
 }

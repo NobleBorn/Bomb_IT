@@ -14,4 +14,9 @@ public class Wall extends Entity{
     public boolean isDestroyable() {
         return isDestroyable;
     }
+
+    @Override
+    protected Entity copyThis() {
+        return new Wall(this.isDestroyable, new Position(this.position));
+    }
 }
