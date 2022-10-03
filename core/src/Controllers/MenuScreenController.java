@@ -1,88 +1,100 @@
 package Controllers;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.scenes.scene2d.Event;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.*;
 import Views.*;
-import Models.*;
 
-public class MenuScreenController implements Screen {
-    final Main game;
-
+public class MenuScreenController {
     private MenuScreenView menuScreenView;
 
-    private Stage stage;
-    private OrthographicCamera camera;
+    TextButton play_button = new TextButton("Play", 2,1, 7, 3);
+    TextButton option_button = new TextButton("Option", 2,0.6f, 7, 4.9f);
+    TextButton exit_button = new TextButton("Exit", 2,0.6f, 7, 6.1f);
 
-    Text_button play_button = new Text_button("Play", 2,1, 7, 3);
+    ImageButton music_button = new ImageButton("music_on.png", "music_off.png",1.5f,
+            1.4f, 1, 7);
+    ImageButton sound_button = new ImageButton("sound_on.png", "sound_off.png",1.5f,
+            1.4f, 2.7f, 7);
 
-    public MenuScreenController(final Main game){
-        this.game = game;
-        this.stage = new Stage(new ScreenViewport());
-        Gdx.input.setInputProcessor(this.stage);
+    public MenuScreenController(final MenuScreenView menuScreenView){
+        this.menuScreenView = menuScreenView;
+        play_button.create();
+        option_button.create();
+        exit_button.create();
 
-        this.camera = new OrthographicCamera();
-        this.camera.setToOrtho(false, 900, 600);
+        music_button.create();
+        sound_button.create();
 
-        menuScreenView = new MenuScreenView(game, this);
-
-        this.play_button.getButton().addListener(new InputListener(){
+        play_button.getButton().addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                game.setScreen(new Boot(game));
+                menuScreenView.getGame_music().stop();
+                menuScreenView.getClick_sound().stop();
+                menuScreenView.setStartClicked(true);
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 return true;
             }
         });
-        this.stage.addActor(play_button.getButton());
+        menuScreenView.getStage().addActor(play_button.getButton());
 
-    }
+        option_button.getButton().addListener(new InputListener(){
+            @Override
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                menuScreenView.getClick_sound().play();
+            }
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+        });
+        menuScreenView.getStage().addActor(option_button.getButton());
 
-    public Text_button getPlay_button() {
-        return play_button;
-    }
+       exit_button.getButton().addListener(new InputListener(){
+            @Override
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                Gdx.app.exit();
+            }
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                return true;
+            }
+        });
+        menuScreenView.getStage().addActor(exit_button.getButton());
 
-    public Stage getStage() {
-        return stage;
-    }
+        music_button.getButton().addListener(new EventListener() {
+            @Override
+            public boolean handle(Event event) {
+                if(music_button.getButton().isChecked())
+                    menuScreenView.getGame_music().pause();
+                else
+                    menuScreenView.getGame_music().play();
+                return false;
+            }
+        });
+        menuScreenView.getStage().addActor(music_button.getButton());
 
-    public OrthographicCamera getCamera() {
-        return camera;
-    }
+        sound_button.getButton().addListener(new EventListener() {
+            @Override
+            public boolean handle(Event event) {
+                if(sound_button.getButton().isChecked()){
+                    menuScreenView.getClick_sound().dispose();
+                }
+                else
+                    menuScreenView.setClick_sound(Gdx.audio.newSound(Gdx.files.internal("drop.wav")));
+                return false;
+            }
+        });
+        menuScreenView.getStage().addActor(sound_button.getButton());
 
-    @Override
-    public void render(float delta) {
-        menuScreenView.render(delta);
-    }
 
-    @Override
-    public void resize(int width, int height) {
-    }
 
-    @Override
-    public void show() {
-    }
-
-    @Override
-    public void hide() {
-    }
-
-    @Override
-    public void pause() {
-    }
-
-    @Override
-    public void resume() {
-    }
-
-    @Override
-    public void dispose() {
 
     }
 }

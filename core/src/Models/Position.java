@@ -15,6 +15,7 @@ public class Position {
     public int getY(){
         return y;
     }
+
     public Boolean isCollide(Position otherPosition){
         return ((this.x == otherPosition.x) && (this.y == otherPosition.y));
     }

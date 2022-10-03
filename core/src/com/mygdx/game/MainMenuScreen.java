@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import Views.PlayerView;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
@@ -56,6 +57,7 @@ public class MainMenuScreen implements Screen {
 
         music_button.create();
         sound_button.create();
+
 
         game_music = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
         game_music.setLooping(true);

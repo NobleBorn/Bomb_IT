@@ -1,10 +1,12 @@
 package com.mygdx.game;
 
+import Views.MenuScreenView;
 import com.badlogic.gdx.*;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.*;
+import Controllers.MenuScreenController;
 
 //Help from Libgdx website, wiki and tutorials
 public class Main extends Game {
@@ -18,7 +20,7 @@ public class Main extends Game {
 		// BitmapFont object is used, along with a SpriteBatch, to render text onto the screen
 		font = new BitmapFont();
 		// Set the Screen of the Game to a MainMenuScreen object, with a Main instance as its first and only parameter
-		this.setScreen(new MainMenuScreen(this));
+		this.setScreen(new MenuScreenView(this));
 	}
 
 	@Override
