@@ -25,6 +25,7 @@ public class Map implements EventListener{
         setMapSize(size);
         createTiles(size);
         loadWalls();
+        addObjects();
     }
 
     private void setMapSize(int Size){
@@ -48,7 +49,7 @@ public class Map implements EventListener{
         createPowerUps();
     }
 
-    public void addObjects(){
+    private void addObjects(){
 
         try {
             List<String> rows = new ArrayList<String>();
@@ -86,17 +87,6 @@ public class Map implements EventListener{
                 }
             }
         }
-        /* for (int i=0; i<size; i++){
-            for (int j = 0; j < size; j++){
-                if (tiles[i][j].isTileEmpty()){
-                    System.out.print("Empty ");
-                }
-                else{
-                    System.out.print(tiles[i][j].entities.get(0).getClass() + " ");
-                }
-            }
-            System.out.print("\n");
-        } */
     }
 
     public int[] getSize(){

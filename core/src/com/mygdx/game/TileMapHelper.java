@@ -12,46 +12,40 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class TileMapHelper {
 
-    private GameScreen gameScreen;
     private Map map;
-    private Texture img;
     private SpriteBatch sb;
 
     public TileMapHelper(SpriteBatch batch) {
         this.sb = batch;
+        this.map = new Map();
     }
 
-    public void setupMap() { //väljer bana
-        map = new Map();
-        map.addObjects();
+    public void setupMap() {
         Tile tile;
         //int counter = 0;
-        Sprite sprPermWall = new Sprite(new TileViewImage().getWallTexture(false));
-        Sprite sprTempWall = new Sprite(new TileViewImage().getWallTexture(true));
-        sprPermWall.setSize(Tile.getTileSize(), Tile.getTileSize());
-        sprTempWall.setSize(Tile.getTileSize(), Tile.getTileSize());
+        //Sprite sprPermWall = new Sprite(new TileViewImage().getWallTexture(false));
+        Texture sprPermWall = new TileViewImage().getWallTexture(false);
+        Texture sprTempWall = new TileViewImage().getWallTexture(true);
+
         Tile[][] tilesMatrix = map.getMapMatrix();
+        sb.begin();
         for(int i = 0; i < tilesMatrix.length; i++){
             for (int j = 0; j < tilesMatrix.length; j++){
                 tile = tilesMatrix[i][j];
                 if (!tile.isTileEmpty()){
                     if ((tile.entities.get(0) instanceof Wall)){
                         if (!(((Wall) tile.entities.get(0)).isDestroyable())) {
-                            sb.begin();
-                            sprPermWall.setPosition(j * Tile.getTileSize(), i * Tile.getTileSize());
-                            sprPermWall.draw(sb);
-                            sb.end();
+                            sb.draw(sprPermWall, j*Tile.getTileSize(), i*Tile.getTileSize());
                         }
                         else{
-                            sb.begin();
-                            sprTempWall.setPosition(j * Tile.getTileSize(), i * Tile.getTileSize());
-                            sprTempWall.draw(sb);
-                            sb.end();
+                            sb.draw(sprTempWall, j*Tile.getTileSize(), i*Tile.getTileSize());
                         }
+                        continue;
                     }
                 }
             }
         }
+        sb.end();
     }
 
     /*private void parseMapObjects(MapObjects mapObjects) {
