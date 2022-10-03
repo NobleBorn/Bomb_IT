@@ -13,7 +13,7 @@ public class BombExplosion { //if extend Entity, BombExplosion and its center Bo
         createBombExplosionSquares(position, length);
     }
 
-    private Wall permWall;
+    private Wall wall;
     private void createBombExplosionSquares(Position position, int length) {
 
         int tailLength = (length-1)/2;
@@ -26,13 +26,17 @@ public class BombExplosion { //if extend Entity, BombExplosion and its center Bo
             bombExplosionSquares.add(new BombExplosionSquare(new Position(position.getX(), position.getY() + i)));
             bombExplosionSquares.add(new BombExplosionSquare(new Position(position.getX(), position.getY() - i)));
 
-            }
+        }
 
-        //lägg till hänsyn för väggar typ if(inte destroyable)
-        for(BombExplosionSquare b : bombExplosionSquares){
-            if((b.getPosition() == permWall.getPosition()) && !(permWall.isDestroyable())){
-                bombExplosionSquares.remove(b);
-
+        int var = 4;
+        for(int n = 0; n <= bombExplosionSquares.size(); n++){
+            if((bombExplosionSquares.get(n).getPosition() == wall.getPosition()) && !(wall.isDestroyable())){
+                int var2 = 0;
+                while(n+var2*var<bombExplosionSquares.size()){
+                    bombExplosionSquares.remove(bombExplosionSquares.get(n+var*var2));
+                    var2++;
+                }
+                var--;
             }
         }
 
