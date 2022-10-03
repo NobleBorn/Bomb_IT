@@ -17,11 +17,29 @@ public class CollisionChecker {
         return !tiles[x][y].isTileEmpty(); //returns whether tile is empty or not
     }
 
-    public void bombCollision(Entity o1, BombExplosion bombExplosion){
+
+    public boolean bombCollision(Entity o1) {
+        if (o1 instanceof Destroyable) { //add power ups if implemented
+            return true;
+        }
+    }
+
+    public void terminateWhenCollision(Entity o1) {
+        List<BombExplosionSquare> bombExplosionSquares = bombCollision().getBombExplosionSquares();
+        for (int i = 0; i < bombExplosionSquares.size(); i++) {
+            if (bombExplosionSquares.get(i).getPosition() == o1.getPosition()) {
+                o1.terminate(o1);
+        }
+    }
+
+
+    /*public void bombCollision(Entity o1, BombExplosion bombExplosion){
         if (o1 instanceof Player || o1 instanceof Wall || o1 instanceof Powerups) { //could be replaced with if (o1 instance of Destroyable)
             if (o1 instanceof Wall && !((Wall) o1).isDestroyable()){ //if o1 is a permanent wall
                 return;
             }
+
+            det under till en egen metod, inte i denna klassen
             List<BombExplosionSquare> bombExplosionSquares = bombExplosion.getBombExplosionSquares();
             for (int i = 0; i < bombExplosionSquares.size(); i++) {
                 if (bombExplosionSquares.get(i).getPosition() == o1.getPosition()){
@@ -29,5 +47,7 @@ public class CollisionChecker {
                 }
             }
         }
+
+     */
     }
 }
