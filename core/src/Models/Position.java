@@ -13,4 +13,12 @@ public class Position {
     public Boolean isCollide(Position otherPosition){
         return ((this.x == otherPosition.x) && (this.y == otherPosition.y));
     }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
 }

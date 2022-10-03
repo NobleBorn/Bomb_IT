@@ -1,34 +1,30 @@
 package Views;
 
-import Controllers.PlayerController;
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.ApplicationListener;
+import Controllers.*;
+import Models.*;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.mygdx.game.Main;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.util.HashMap;
 
-public class PlayerView extends ApplicationAdapter {
-    final HashMap<String, TextureRegion> player_sprites = new HashMap<String, TextureRegion>();
+public class PlayerView extends Game {
+    public TextureRegion up1, up2, down1, down2, right1, right2, left1, left2;
     Texture playerImages;
-    Array<TextureRegion> regions = new Array<>();
-    PlayerController playerController;
     SpriteBatch batch;
+    Player player;
+    PlayerController playerController;
+    KeyHandler keyH;
+    int spriteCounter = 0;
+    int spriteNum = 1;
 
-    public PlayerView(PlayerController playerController){
-        this.playerController = playerController;
+
+    public PlayerView(Player player){
+        this.player = player;
+        playerController =  new PlayerController(player, this);
+        keyH = new KeyHandler();
     }
 
     @Override
@@ -38,38 +34,79 @@ public class PlayerView extends ApplicationAdapter {
         addSprites();
     }
 
-    public Array<TextureRegion> getRegions() {
-        return regions;
+    private void addSprites() {
+        down1 =  new TextureRegion(playerImages, 0,0,16,16);
+        down2 = new TextureRegion(playerImages, 16,0,16,16);
+
+        left1 = new TextureRegion(playerImages, 32,0,16,16);
+        left2 = new TextureRegion(playerImages, 48,0,16,16);
+
+        right1 = new TextureRegion(playerImages, 64,0,16,16);
+        right2 = new TextureRegion(playerImages, 80,0,16,16);
+
+        up1 = new TextureRegion(playerImages, 96,0,16,16);
+        up2 = new TextureRegion(playerImages, 112,0,16,16);
+
     }
 
-    private void addSprites() {
-        player_sprites.put("down1", new TextureRegion(playerImages, 0,0,16,16));
-        player_sprites.put("down2", new TextureRegion(playerImages, 16,0,16,16));
+    public void draw(){
+        TextureRegion image = null;
 
-        player_sprites.put("left1", new TextureRegion(playerImages, 32,0,16,16));
-        player_sprites.put("left2", new TextureRegion(playerImages, 48,0,16,16));
-
-        player_sprites.put("right1", new TextureRegion(playerImages, 64,0,16,16));
-        player_sprites.put("right2", new TextureRegion(playerImages, 80,0,16,16));
-
-        player_sprites.put("up1", new TextureRegion(playerImages, 96,0,16,16));
-        player_sprites.put("up2", new TextureRegion(playerImages, 112,0,16,16));
-
+        switch (player.getDirection()){
+            case UP:
+                if (spriteNum == 1){
+                    image = up1;
+                }
+                if (spriteNum == 2){
+                    image = up2;
+                }
+                break;
+            case DOWN:
+                if (spriteNum == 1)
+                    image = down1;
+                if (spriteNum == 2)
+                    image = down2;
+                break;
+            case RIGHT:
+                if (spriteNum == 1)
+                    image = right1;
+                if (spriteNum == 2)
+                    image = right2;
+                break;
+            case LEFT:
+                if (spriteNum == 1)
+                    image = left1;
+                if (spriteNum == 2)
+                    image = left2;
+                break;
+        }
+        batch.draw(image, player.position.x, player.position.y, 48, 48);
     }
 
     @Override
     public void render() {
         batch.begin();
-        batch.draw(regions.get(0), 50, 50);
-        batch.draw(regions.get(1), 100, 100);
-        batch.draw(regions.get(2), 150, 50);
-        batch.draw(regions.get(3), 100, 150);
+        draw();
         batch.end();
+        spriteCounter++;
+        if (spriteCounter > 12){
+            if (spriteNum == 1 && (Gdx.input.isKeyPressed(Input.Keys.DPAD_UP) ||
+                    Gdx.input.isKeyPressed(Input.Keys.DPAD_DOWN) || Gdx.input.isKeyPressed(Input.Keys.DPAD_RIGHT)
+                    || Gdx.input.isKeyPressed(Input.Keys.DPAD_LEFT))){
+                spriteNum = 2;
+            }
+            else if (spriteNum == 2 && (Gdx.input.isKeyPressed(Input.Keys.DPAD_UP) ||
+                    Gdx.input.isKeyPressed(Input.Keys.DPAD_DOWN) || Gdx.input.isKeyPressed(Input.Keys.DPAD_RIGHT)
+                    || Gdx.input.isKeyPressed(Input.Keys.DPAD_LEFT))){
+                spriteNum = 1;
+            }
+
+            spriteCounter = 0;
+        }
     }
 
     @Override
     public void dispose() {
         playerImages.dispose();
-
     }
 }
