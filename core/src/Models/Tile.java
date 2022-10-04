@@ -28,8 +28,15 @@ public class Tile {
     public static int getTileSize(){
         return tileSize;
     }
+    public List<Entity> getEntities(){
+        List<Entity> entitiesReturn = new ArrayList<>();
+        for (Entity ent: entities){
+            entitiesReturn.add(ent.copyThis());
+        }
+        return entitiesReturn;
+    }
 
-    public List<Entity> copyEntities(List<Entity> otherEntities) {
+    private List<Entity> copyEntities(List<Entity> otherEntities) {
         for(Entity ent: otherEntities){
             addEntity(ent.copyThis());
         }

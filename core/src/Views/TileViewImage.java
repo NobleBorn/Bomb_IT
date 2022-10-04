@@ -12,12 +12,13 @@ public class TileViewImage {
     public TileViewImage(){
         this.permWall = new Texture(Gdx.files.internal("PermWall.jpg"));
         this.tempWall = new Texture(Gdx.files.internal("tempWall.jpg"));
+
     }
     public Texture getWallTexture(boolean isDestroyable){
         if(isDestroyable){
             return tempWall;
         }
-        else{
+        else {
             return permWall;
         }
     }

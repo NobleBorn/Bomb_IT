@@ -53,7 +53,7 @@ public class Map implements EventListener{
 
         try {
             List<String> rows = new ArrayList<String>();
-            BufferedReader bf = new BufferedReader(new FileReader("test.txt"));
+            BufferedReader bf = new BufferedReader(new FileReader("C:\\Users\\oyoun\\IdeaProjects\\Bomb_IT\\assets\\test.txt"));
             String line = bf.readLine();
             while (line != null) {
                 rows.add(line);
@@ -63,7 +63,6 @@ public class Map implements EventListener{
 
             int s = 0;
             for (int i=rows.size()-1;i>=0;i--) {
-            //for (String row: rows){
                 String[] stringSplit = (rows.get(i).split(","));
                 maps[s] = stringSplit;
                 s++;

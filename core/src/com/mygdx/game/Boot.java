@@ -1,7 +1,6 @@
 package com.mygdx.game;
 
 
-import Models.Direction;
 import Models.Map;
 import Models.Player;
 import Views.TileViewImage;
@@ -47,7 +46,7 @@ public class Boot extends Game {
     }
     @Override
     public void render(){
-        //super.render();
+        super.render();
         tileMapHelper.setupMap();
         orthographicCamera.update();
         //screen.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -55,6 +54,13 @@ public class Boot extends Game {
     @Override
     public void resize(int width, int height) {
         super.resize(width, height);
+    }
+
+    @Override
+    public void dispose(){
+        super.dispose();
+        batch.dispose();
+
     }
 
     @Override

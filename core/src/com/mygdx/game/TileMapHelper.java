@@ -14,30 +14,35 @@ public class TileMapHelper {
 
     private Map map;
     private SpriteBatch sb;
+    private final Texture sprPermWall;
+    private final Texture sprTempWall;
+    private Tile tile;
 
     public TileMapHelper(SpriteBatch batch) {
         this.sb = batch;
         this.map = new Map();
+        sprPermWall = new TileViewImage().getWallTexture(false);
+        sprTempWall = new TileViewImage().getWallTexture(true);
     }
 
     public void setupMap() {
-        Tile tile;
         //int counter = 0;
         //Sprite sprPermWall = new Sprite(new TileViewImage().getWallTexture(false));
-        Texture sprPermWall = new TileViewImage().getWallTexture(false);
-        Texture sprTempWall = new TileViewImage().getWallTexture(true);
+
+        //Texture background = new Texture("backgroundImagePath");
 
         Tile[][] tilesMatrix = map.getMapMatrix();
         sb.begin();
         for(int i = 0; i < tilesMatrix.length; i++){
             for (int j = 0; j < tilesMatrix.length; j++){
                 tile = tilesMatrix[i][j];
+                //sb.draw(background, j*Tile.getTileSize(), i*Tile.getTileSize());
                 if (!tile.isTileEmpty()){
                     if ((tile.entities.get(0) instanceof Wall)){
                         if (!(((Wall) tile.entities.get(0)).isDestroyable())) {
-                            sb.draw(sprPermWall, j*Tile.getTileSize(), i*Tile.getTileSize());
+                            sb.draw(sprPermWall, (j*Tile.getTileSize()), i*Tile.getTileSize());
                         }
-                        else{
+                        else {
                             sb.draw(sprTempWall, j*Tile.getTileSize(), i*Tile.getTileSize());
                         }
                         continue;
