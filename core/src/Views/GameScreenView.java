@@ -1,4 +1,4 @@
-package Views;
+/* package Views;
 
 import Models.*;
 import Controllers.*;
@@ -14,10 +14,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mygdx.game.Boot;
 import com.mygdx.game.Main;
 
 public class GameScreenView implements Screen {
-    final Main game;
+    final Boot game;
 
     private Stage stage;
     private SpriteBatch batch;
@@ -28,8 +29,8 @@ public class GameScreenView implements Screen {
     private PlayerView playerView;
     private PlayerController playerController;
 
-    public GameScreenView(Main game){
-        this.game = game;
+    public GameScreenView(){
+        //this.game = game;
         batch = new SpriteBatch();
         this.stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(this.stage);
@@ -90,4 +91,4 @@ public class GameScreenView implements Screen {
         playerView.dispose();
 
     }
-}
+} */

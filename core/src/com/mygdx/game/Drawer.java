@@ -1,39 +1,35 @@
 package com.mygdx.game;
 
-import Models.Map;
-import Models.Position;
-import Models.Tile;
-import Models.Wall;
+import Models.*;
+import Views.PlayerView;
 import Views.TileViewImage;
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
-public class TileMapHelper {
+public class Drawer {
 
     private Map map;
     private SpriteBatch sb;
     private final Texture sprPermWall;
     private final Texture sprTempWall;
+    private final PlayerView playerOneView;
+    private final PlayerView playerTwoView;
+    private Player entityToCast;
     private Tile tile;
 
-    public TileMapHelper(SpriteBatch batch) {
+    public Drawer(SpriteBatch batch, Map map) {
         this.sb = batch;
-        this.map = new Map();
+        this.map = map;
         sprPermWall = new TileViewImage().getWallTexture(false);
         sprTempWall = new TileViewImage().getWallTexture(true);
+        playerOneView = new PlayerView();
+        playerTwoView = new PlayerView();
     }
 
     public void setupMap() {
         //int counter = 0;
         //Sprite sprPermWall = new Sprite(new TileViewImage().getWallTexture(false));
-        float pad = 1/100f * Gdx.graphics.getWidth();
+        /*float pad = 1/100f * Gdx.graphics.getWidth();
         Skin skin = new Skin();
         ImageButton pause = new ImageButton( skin, "menu-button-pause" );
         ImageButton volume = new ImageButton( skin, "menu-button-volume" );
@@ -45,7 +41,7 @@ public class TileMapHelper {
         menu.add( pause ).padRight( pad );
         menu.add( volume ).padRight( pad );
         menu.add( about ).fill().padRight( pad );
-        menu.add( help ).fill();
+        menu.add( help ).fill();*/
         //Texture background = new Texture("backgroundImagePath");
 
         Tile[][] tilesMatrix = map.getMapMatrix();
@@ -55,19 +51,34 @@ public class TileMapHelper {
                 tile = tilesMatrix[i][j];
                 //sb.draw(background, j*Tile.getTileSize(), i*Tile.getTileSize());
                 if (!tile.isTileEmpty()){
+
                     if ((tile.entities.get(0) instanceof Wall)){
-                        if (!(((Wall) tile.entities.get(0)).isDestroyable())) {
-                            sb.draw(sprPermWall, (j*Tile.getTileSize()), i*Tile.getTileSize());
-                        }
-                        else {
-                            sb.draw(sprTempWall, j*Tile.getTileSize(), i*Tile.getTileSize());
-                        }
-                        continue;
+                        drawWall(i, j);
+
+                    } else if (tile.entities.get(0) instanceof Player){
+                        drawPlayer(i, j);
                     }
                 }
             }
         }
         sb.end();
+    }
+
+    private void drawPlayer(int i, int j) {
+        entityToCast = (Player) tile.entities.get(0);
+        playerOneView.setupPlayerImage();
+        sb.draw(playerOneView.getImage(entityToCast.getDirection()), j *Tile.getTileSize(), i *Tile.getTileSize());
+        //sb.draw(sprPermWall, j *Tile.getTileSize(), i *Tile.getTileSize());
+
+    }
+
+    private void drawWall(int i, int j) {
+        if (!(((Wall) tile.entities.get(0)).isDestroyable())) {
+            sb.draw(sprPermWall, (j *Tile.getTileSize()), i *Tile.getTileSize());
+        }
+        else{
+            sb.draw(sprTempWall, j *Tile.getTileSize(), i *Tile.getTileSize());
+        }
     }
 
     /*private void parseMapObjects(MapObjects mapObjects) {

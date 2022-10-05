@@ -1,4 +1,4 @@
-package com.mygdx.game;
+/* package com.mygdx.game;
 
 import Views.PlayerView;
 import com.badlogic.gdx.Gdx;
@@ -37,7 +37,7 @@ public class MainMenuScreen implements Screen {
      * Constructor - sets the camera, a new stage, creates the buttons and takes in the button's input
      *
      * @param game
-     */
+     */ /*
     public MainMenuScreen(final Main game) {
         this.game = game;
         //Stage covers the entire screen and enable event capture.
@@ -130,7 +130,7 @@ public class MainMenuScreen implements Screen {
     /**
      *
      * @param delta
-     */
+     */ /*
     @Override
     public void render(float delta) {
         // Tell the camera to update its matrices.
@@ -169,12 +169,12 @@ public class MainMenuScreen implements Screen {
 
     /**
      * Disposes of the garbage after application is closed
-     */
+     */ /*
     @Override
     public void dispose() {
         game_music.dispose();
         click_sound.dispose();
 
     }
-}
+} */
 

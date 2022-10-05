@@ -21,6 +21,7 @@ public class Map implements EventListener{
     private final int size = 20;
     private Tile[][] tiles = new Tile[20][20];
     private String[][] maps = new String[size][size];
+    private List<Player> playerObjList = new ArrayList<>();
 
     public Map(){
         setMapSize(size);
@@ -86,12 +87,15 @@ public class Map implements EventListener{
                         break;
                     case "3":
                         tiles[i][j].addEntity(new Player(new Position(i, j), collision));
+                        playerObjList.add((Player)tiles[i][j].getEntities().get(0));
                         break;
                 }
             }
         }
     }
-
+    public List<Player> getPlayers(){
+        return playerObjList;
+    }
     public int[] getSize(){
         int[] coordinates = new int[2];
 

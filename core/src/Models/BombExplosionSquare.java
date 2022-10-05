@@ -17,6 +17,6 @@ public class BombExplosionSquare extends Entity{
 
     @Override
     protected Entity copyThis() {
-        return new BombExplosionSquare(new Position(position));
+        return new BombExplosionSquare(new Position(position) ,cc);
     }
 }

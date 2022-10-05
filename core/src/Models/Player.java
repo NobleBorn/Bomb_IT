@@ -10,9 +10,9 @@ public class Player extends Entity{
 
     public MoveObservable observable;
 
-    public Player(Position position){
+    public Player(Position position, CollisionChecker cc){
         super(position);
-        //this.cc = cc;
+        this.cc = cc;
         this.direction = Direction.RIGHT;
         this.score = 0;
         this.alive = true;
@@ -24,13 +24,10 @@ public class Player extends Entity{
         direction = newDirection;
         nextPosition = newPositionHandler();
 
-        observable.notifySubscribers(position, nextPosition);
-        position = nextPosition;
-
-        /*if (cc.isNextTileFree(nextPosition)){
+        if (cc.isNextTileFree(nextPosition)){
             observable.notifySubscribers(position, nextPosition);
             position = nextPosition;
-        }*/
+        }
     }
 
     public Direction getDirection() {
@@ -63,5 +60,10 @@ public class Player extends Entity{
 
     public void terminate(){
         alive = false;
+    }
+
+    @Override
+    protected Entity copyThis() {
+        return new Player(new Position(position), cc);
     }
 }

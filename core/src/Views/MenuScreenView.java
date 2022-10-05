@@ -75,7 +75,7 @@ public class MenuScreenView implements Screen {
         game.batch.end();
 
         if (startClicked)
-            this.game.setScreen(new GameScreenView(game));
+            this.game.setScreen(new GameScreen());
 
         stage.act();
         stage.draw();

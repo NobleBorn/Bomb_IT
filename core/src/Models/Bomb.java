@@ -11,6 +11,7 @@ public class Bomb extends Entity implements Runnable{
     public Bomb(Position position, int length, CollisionChecker cc){
         super(position);
         this.bombLength = length;
+        this.cc = cc;
         run();
 
     }
@@ -38,6 +39,6 @@ public class Bomb extends Entity implements Runnable{
 
     @Override
     protected Entity copyThis() {
-        return new Bomb(new Position(position), this.bombLength);
+        return new Bomb(new Position(position), this.bombLength, cc);
     }
 }

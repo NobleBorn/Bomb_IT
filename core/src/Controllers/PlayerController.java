@@ -9,9 +9,9 @@ public class PlayerController {
     Player player;
     PlayerView playerView;
 
-    public PlayerController(Player player, PlayerView playerView){
+    public PlayerController(Player player){
         this.player = player;
-        this.playerView = playerView;
+        //this.playerView = playerView;
         this.keyH = new KeyHandler();
     }
 
