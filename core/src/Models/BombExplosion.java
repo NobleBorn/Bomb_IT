@@ -7,8 +7,9 @@ public class BombExplosion { //if extend Entity, BombExplosion and its center Bo
 
     private List<BombExplosionSquare> bombExplosionSquares = new ArrayList<>(1);
     private Position position;
+    private CollisionChecker cc;
 
-    public BombExplosion(Position position, int length){
+    public BombExplosion(Position position, int length, CollisionChecker cc){
         this.position = position;
         createBombExplosionSquares(position, length);
     }
@@ -18,13 +19,13 @@ public class BombExplosion { //if extend Entity, BombExplosion and its center Bo
 
         int tailLength = (length-1)/2;
 
-        bombExplosionSquares.add(new BombExplosionSquare(new Position(position.getX(), position.getY())));
+        bombExplosionSquares.add(new BombExplosionSquare(new Position(position.getX(), position.getY()), cc));
         for (int i = 1; i <= tailLength; i++) {
 
-            bombExplosionSquares.add(new BombExplosionSquare(new Position(position.getX() + i, position.getY())));
-            bombExplosionSquares.add(new BombExplosionSquare(new Position(position.getX() - i, position.getY())));
-            bombExplosionSquares.add(new BombExplosionSquare(new Position(position.getX(), position.getY() + i)));
-            bombExplosionSquares.add(new BombExplosionSquare(new Position(position.getX(), position.getY() - i)));
+            bombExplosionSquares.add(new BombExplosionSquare(new Position(position.getX() + i, position.getY()), cc));
+            bombExplosionSquares.add(new BombExplosionSquare(new Position(position.getX() - i, position.getY()), cc));
+            bombExplosionSquares.add(new BombExplosionSquare(new Position(position.getX(), position.getY() + i), cc));
+            bombExplosionSquares.add(new BombExplosionSquare(new Position(position.getX(), position.getY() - i), cc));
 
         }
 

@@ -1,47 +1,46 @@
 package Models;
 
 public class Player extends Entity{
-    private Enum direction;
-    private PlayerHelper playerHelper;
+    private Direction direction;
+    private Position nextPosition;
     private int score;
     private boolean alive;
     private int bombLength;
-    private CollisionChecker collision;
+    private CollisionChecker cc;
 
-    public Player(Position position, CollisionChecker collision){
+    public MoveObservable observable;
+
+    public Player(Position position){
         super(position);
-        this.direction = Models.Direction.DOWN;
+        //this.cc = cc;
+        this.direction = Direction.RIGHT;
         this.score = 0;
         this.alive = true;
         this.bombLength = 1;
-        this.collision = collision;
-    }
-
-    @Override
-    protected Entity copyThis() {
-        return new Player(new Position(this.position), collision);
+        this.observable = new MoveObservable();
     }
 
     public void walk(Direction newDirection) {
         direction = newDirection;
-        Position newPosition = newPositionHandler();
+        nextPosition = newPositionHandler();
 
-        playerHelper = new PlayerHelper(newPosition);
-        if (playerHelper.callCollisionChecker()){
-            position = newPosition;
-        }
-        /*
-        CollisionChecker collisionChecker = new CollisionChecker();
-        if (collisionChecker.playerNextTileFree(newPosition, map)){ //player shouldn't need to know about the map
-            position = newPosition;
-        }
-        */
+        observable.notifySubscribers(position, nextPosition);
+        position = nextPosition;
+
+        /*if (cc.isNextTileFree(nextPosition)){
+            observable.notifySubscribers(position, nextPosition);
+            position = nextPosition;
+        }*/
+    }
+
+    public Direction getDirection() {
+        return direction;
     }
 
     private Position newPositionHandler() { //possible improvement?
         Position newPosition;
         if (direction == Direction.UP){
-            newPosition = new Position(position.getX(), position.getY()+1);
+            newPosition = new Position(position.getX(), position.getY()+2);
         }
         else if (direction == Direction.RIGHT){
             newPosition = new Position(position.getX()+1, position.getY());
@@ -50,14 +49,15 @@ public class Player extends Entity{
             newPosition = new Position(position.getX(), position.getY()-1);
         }
         else{
-            newPosition = new Position(position.getX()-1, position.getY()+1);
+            newPosition = new Position(position.getX()-1, position.getY());
         }
         return newPosition;
     }
 
     public void dropBomb(){
         //add so you cannot drop infinite bombs
-        Bomb bomb = new Bomb(getPosition(), bombLength);
+        //should bomb be placed a tile behind the player?
+        Bomb bomb = new Bomb(getPosition(), bombLength, cc);
 
     }
 
