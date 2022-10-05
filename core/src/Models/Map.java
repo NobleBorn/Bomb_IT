@@ -24,7 +24,7 @@ public class Map implements EventListener{
 
     public Map(){
         setMapSize(size);
-        createTiles(size);
+        tiles = createTiles(size);
         loadWalls();
         addObjects();
         this.collision = new CollisionChecker(this);
@@ -35,12 +35,14 @@ public class Map implements EventListener{
         x = Size;
     }
 
-    private void createTiles(int Size) {
+    private Tile[][] createTiles(int Size) {
+        Tile[][] tiles = new Tile[size][size];
         for (int i = 0; i < size; i++){
             for (int j = 0; j < size; j++){
                 tiles[i][j] = new Tile(i, j);
             }
         }
+        return tiles;
     }
 
     public Tile[][] getTiles(){
