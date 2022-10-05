@@ -1,41 +1,76 @@
 package com.mygdx.game;
 
+import Models.Map;
+import Models.Position;
+import Models.Tile;
+import Models.Wall;
+import Views.TileViewImage;
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.MapObjects;
-import com.badlogic.gdx.maps.objects.PolygonMapObject;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Vector;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.Shape;
-
-import static com.mygdx.game.Constants.PPM;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
 public class TileMapHelper {
 
-    private TiledMap tiledMap;
-    private GameScreen gameScreen;
+    private Map map;
+    private SpriteBatch sb;
+    private final Texture sprPermWall;
+    private final Texture sprTempWall;
+    private Tile tile;
 
-    public TileMapHelper(GameScreen gameScreen) {
-        this.gameScreen = gameScreen;
+    public TileMapHelper(SpriteBatch batch) {
+        this.sb = batch;
+        this.map = new Map();
+        sprPermWall = new TileViewImage().getWallTexture(false);
+        sprTempWall = new TileViewImage().getWallTexture(true);
     }
 
-    public OrthogonalTiledMapRenderer setupMap() { //väljer bana
-        tiledMap = new TmxMapLoader().load("map0.tmx");
-        parseMapObjects(tiledMap.getLayers().get("permwalls").getObjects());
-        parseMapObjects(tiledMap.getLayers().get("destroywalls").getObjects());
-        parseMapObjects(tiledMap.getLayers().get("powerups").getObjects());
+    public void setupMap() {
+        //int counter = 0;
+        //Sprite sprPermWall = new Sprite(new TileViewImage().getWallTexture(false));
+        float pad = 1/100f * Gdx.graphics.getWidth();
+        Skin skin = new Skin();
+        ImageButton pause = new ImageButton( skin, "menu-button-pause" );
+        ImageButton volume = new ImageButton( skin, "menu-button-volume" );
+        TextButton about = new TextButton( "about", skin, "menu-button" );
+        TextButton help = new TextButton( "help", skin, "menu-button" );
 
+        Table menu = new Table( skin );
+        menu.setBackground( "background" );
+        menu.add( pause ).padRight( pad );
+        menu.add( volume ).padRight( pad );
+        menu.add( about ).fill().padRight( pad );
+        menu.add( help ).fill();
+        //Texture background = new Texture("backgroundImagePath");
 
-        return new OrthogonalTiledMapRenderer(tiledMap);
+        Tile[][] tilesMatrix = map.getMapMatrix();
+        sb.begin();
+        for(int i = 0; i < tilesMatrix.length; i++){
+            for (int j = 0; j < tilesMatrix.length; j++){
+                tile = tilesMatrix[i][j];
+                //sb.draw(background, j*Tile.getTileSize(), i*Tile.getTileSize());
+                if (!tile.isTileEmpty()){
+                    if ((tile.entities.get(0) instanceof Wall)){
+                        if (!(((Wall) tile.entities.get(0)).isDestroyable())) {
+                            sb.draw(sprPermWall, (j*Tile.getTileSize()), i*Tile.getTileSize());
+                        }
+                        else {
+                            sb.draw(sprTempWall, j*Tile.getTileSize(), i*Tile.getTileSize());
+                        }
+                        continue;
+                    }
+                }
+            }
+        }
+        sb.end();
     }
 
-    private void parseMapObjects(MapObjects mapObjects) {
+    /*private void parseMapObjects(MapObjects mapObjects) {
         for(MapObject mapObject : mapObjects) {
             if(mapObject instanceof PolygonMapObject) {
                 createStaticBody((PolygonMapObject) mapObject);
@@ -64,5 +99,5 @@ public class TileMapHelper {
         PolygonShape shape = new PolygonShape();
         shape.set(worldVertices);
         return shape;
-    }
+    }*/
 }

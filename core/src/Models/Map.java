@@ -10,13 +10,14 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.EventListener;
 import java.util.List;
 
-
-public class Map {
+public class Map implements EventListener{
 
     private int y;
     private int x;
+    private final CollisionChecker collision;
     private final int size = 20;
     private Tile[][] tiles = new Tile[20][20];
     private String[][] maps = new String[size][size];
@@ -25,7 +26,8 @@ public class Map {
         setMapSize(size);
         tiles = createTiles(size);
         loadWalls();
-        test();
+        addObjects();
+        this.collision = new CollisionChecker(this);
     }
 
     private void setMapSize(int Size){
@@ -50,11 +52,12 @@ public class Map {
     private void loadWalls(){
         createPowerUps();
     }
-    public void test(){
+
+    private void addObjects(){
 
         try {
             List<String> rows = new ArrayList<String>();
-            BufferedReader bf = new BufferedReader(new FileReader("test.txt"));
+            BufferedReader bf = new BufferedReader(new FileReader("C:\\Users\\oyoun\\IdeaProjects\\Bomb_IT\\assets\\test.txt"));
             String line = bf.readLine();
             while (line != null) {
                 rows.add(line);
@@ -63,8 +66,8 @@ public class Map {
             bf.close();
 
             int s = 0;
-            for (String str : rows) {
-                String[] stringSplit = str.split(",");
+            for (int i=rows.size()-1;i>=0;i--) {
+                String[] stringSplit = (rows.get(i).split(","));
                 maps[s] = stringSplit;
                 s++;
             }
@@ -82,32 +85,10 @@ public class Map {
                         tiles[i][j].addEntity(new Wall(true, new Position(i, j)));
                         break;
                     case "3":
-                        tiles[i][j].addEntity(new Player(new Position(i, j)));
+                        tiles[i][j].addEntity(new Player(new Position(i, j), collision));
                         break;
                 }
             }
-        }
-        int s = 0;
-        for (int i = 0; i < size; i++){
-            for (int j = 0; j < size; j++) {
-                if (!tiles[i][j].isTileEmpty()) {
-                    Entity entity = tiles[i][j].entities.get(0);
-                    if (entity instanceof Wall) {
-                        if (i == s) {
-                            System.out.print(entity.getPosition().getX() + " " +
-                                    entity.getPosition().getY() + " " +
-                                    ((Wall) entity).isDestroyable() + ", ");
-                        }
-                    }
-                    else if(entity instanceof Player){
-                        System.out.print("Player, ");
-                    }
-                } else {
-                    System.out.print("Empty tile, ");
-                }
-            }
-            System.out.println("\n");
-            s++;
         }
     }
 
@@ -120,10 +101,17 @@ public class Map {
         return coordinates;
     }
 
-    private void createPowerUps(){}
+    public int createPowerUps(){
+        return 0;
+    }
 
-    public boolean isPlayerNextTileFree(Position newPosition) {
-        CollisionChecker collisionChecker = new CollisionChecker();
-        return collisionChecker.playerNextTileFree(newPosition, this);
+    public Tile[][] getMapMatrix() {
+        Tile[][] returnTiles  = new Tile[size][size];
+        for(int i = 0; i < size; i++){
+            for (int j = 0; j < size; j++){
+                returnTiles[i][j] = new Tile(tiles[i][j]);
+            }
+        }
+        return returnTiles;
     }
 }
