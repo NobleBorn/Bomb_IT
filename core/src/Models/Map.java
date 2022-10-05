@@ -74,7 +74,7 @@ public class Map {
                         tiles[i][j].addEntity(new Wall(true, new Position(i, j)));
                         break;
                     case "3":
-                        tiles[i][j].addEntity(new Player(new Position(i, j), cc));
+                        tiles[i][j].addEntity(new Player(new Position(i, j)));
                         break;
                 }
             }

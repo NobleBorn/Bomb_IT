@@ -81,7 +81,7 @@ public class PlayerView extends Game {
                     image = left2;
                 break;
         }
-        batch.draw(image, player.position.x, player.position.y, 48, 48);
+        batch.draw(image, player.getPosition().x, player.getPosition().y, 48, 48);
     }
 
     @Override

@@ -1,9 +1,8 @@
 package Models;
 
 public class Player extends Entity{
-    private Enum direction;
+    private Direction direction;
     private Position nextPosition;
-    private PlayerHelper playerHelper;
     private int score;
     private boolean alive;
     private int bombLength;
@@ -11,10 +10,10 @@ public class Player extends Entity{
 
     public MoveObservable observable;
 
-    public Player(Position position, CollisionChecker cc){
+    public Player(Position position){
         super(position);
-        this.cc = cc;
-        this.direction = Models.Direction.DOWN;
+        //this.cc = cc;
+        this.direction = Direction.RIGHT;
         this.score = 0;
         this.alive = true;
         this.bombLength = 1;
@@ -25,16 +24,23 @@ public class Player extends Entity{
         direction = newDirection;
         nextPosition = newPositionHandler();
 
-        if (cc.isNextTileFree(nextPosition)){
+        observable.notifySubscribers(position, nextPosition);
+        position = nextPosition;
+
+        /*if (cc.isNextTileFree(nextPosition)){
             observable.notifySubscribers(position, nextPosition);
             position = nextPosition;
-        }
+        }*/
+    }
+
+    public Direction getDirection() {
+        return direction;
     }
 
     private Position newPositionHandler() { //possible improvement?
         Position newPosition;
         if (direction == Direction.UP){
-            newPosition = new Position(position.getX(), position.getY()+1);
+            newPosition = new Position(position.getX(), position.getY()+2);
         }
         else if (direction == Direction.RIGHT){
             newPosition = new Position(position.getX()+1, position.getY());
@@ -43,7 +49,7 @@ public class Player extends Entity{
             newPosition = new Position(position.getX(), position.getY()-1);
         }
         else{
-            newPosition = new Position(position.getX()-1, position.getY()+1);
+            newPosition = new Position(position.getX()-1, position.getY());
         }
         return newPosition;
     }

@@ -40,6 +40,7 @@ public class GameScreenView implements Screen {
         img = new Texture(Gdx.files.internal("sand.png"));
 
         this.playerPosition = new Position(0, 0);
+
         player = new Player(playerPosition);
         playerController = new PlayerController(player, playerView);
         playerView = new PlayerView(player);
@@ -55,7 +56,7 @@ public class GameScreenView implements Screen {
     public void render(float delta) {
         ScreenUtils.clear(0, 0, 0.2f, 1);
         playerController.update();
-        player.update();
+        //player.update();
 
         batch.begin();
         batch.draw(img, 0, 0, 48,48);
