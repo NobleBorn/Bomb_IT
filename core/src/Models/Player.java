@@ -8,7 +8,7 @@ public class Player extends Entity{
     private boolean alive;
     private int bombLength;
 
-    public Observable observable;
+    public MoveObservable observable;
 
     public Player(Position position){
         super(position);
@@ -16,19 +16,19 @@ public class Player extends Entity{
         this.score = 0;
         this.alive = true;
         this.bombLength = 1;
-        this.observable = new Observable();
+        this.observable = new MoveObservable();
     }
 
     public void walk(Direction newDirection) {
-        //direction = newDirection;
         nextPosition = newPositionHandler();
 
-        observable.notifySubscribers("movement",this);
-
         playerHelper = new PlayerHelper(nextPosition);
-        if (playerHelper.callCollisionChecker()){
+        if (playerHelper.isNextTileFree()){
             position = nextPosition;
         }
+
+        observable.notifySubscribers(position, nextPosition); //right now position is overwritten with nextPosition
+
         /*
         CollisionChecker collisionChecker = new CollisionChecker();
         if (collisionChecker.playerNextTileFree(newPosition, map)){ //player shouldn't need to know about the map
@@ -56,6 +56,7 @@ public class Player extends Entity{
 
     public void dropBomb(){
         //add so you cannot drop infinite bombs
+        //should bomb be placed a tile behind the player?
         Bomb bomb = new Bomb(getPosition(), bombLength);
 
     }

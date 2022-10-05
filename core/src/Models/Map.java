@@ -1,12 +1,6 @@
 package Models;
 
-import Models.Position;
-import com.sun.tools.javac.util.ArrayUtils;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -88,7 +82,7 @@ public class Map {
         int s = 0;
         for (int i = 0; i < size; i++){
             for (int j = 0; j < size; j++) {
-                if (!tiles[i][j].isTileEmpty()) {
+                if (tiles[i][j].isTileEmpty()) {
                     Entity entity = tiles[i][j].entities.get(0);
                     if (entity instanceof Wall) {
                         if (i == s) {

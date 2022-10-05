@@ -1,9 +1,8 @@
 package Models;
 
-public class MovementListener implements Subscriber {
+public class MovementListener implements MoveSubscriber {
 
     private Map map;
-    private final String event = "movement";
     private Player player;
 
     public MovementListener(Map map){
@@ -11,17 +10,13 @@ public class MovementListener implements Subscriber {
     }
 
     @Override
-    public void update(String eventType, Entity entity) {
-        if (eventType.equals(event)){
-            if (entity instanceof Player){
-                player = (Player) entity;
+    public void update(Position oldPosition, Position newPosition) {
                 Tile[][] tiles = map.getTiles();
-                tiles[player.getPosition().getX()][player.getPosition().getY()].removeEntity(player);
-                tiles[player.getNextPosition().getX()][player.getNextPosition().getY()].addEntity(player);
-
-            }
-
-
-        }
+                if (tiles[oldPosition.getX()][oldPosition.getY()].entities.get(0) instanceof Player){
+                    player = (Player) tiles[oldPosition.getX()][oldPosition.getY()].entities.get(0);
+                    tiles[oldPosition.getX()][oldPosition.getY()].removeEntity(player);
+                    tiles[newPosition.getX()][newPosition.getY()].addEntity(player);
+                }
     }
 }
+

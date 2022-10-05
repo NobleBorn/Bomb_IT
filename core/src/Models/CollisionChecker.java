@@ -14,7 +14,7 @@ public class CollisionChecker {
         Tile[][] tiles = map.getTiles();
         int x = newPosition.getX();
         int y = newPosition.getY();
-        return !tiles[x][y].isTileEmpty(); //returns whether tile is empty or not
+        return tiles[x][y].isTileEmpty(); //returns whether tile is empty or not
     }
 
     public void bombCollision(Entity o1, BombExplosion bombExplosion){
@@ -29,5 +29,9 @@ public class CollisionChecker {
                 }
             }
         }
+    }
+
+    public void checkCollision(){
+
     }
 }
