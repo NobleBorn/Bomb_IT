@@ -25,7 +25,7 @@ public class CollisionChecker {
             List<BombExplosionSquare> bombExplosionSquares = bombExplosion.getBombExplosionSquares();
             for (int i = 0; i < bombExplosionSquares.size(); i++) {
                 if (bombExplosionSquares.get(i).getPosition() == o1.getPosition()){
-                    //o1.terminate();
+                    o1.terminate(o1); //better solution?
                 }
             }
         }

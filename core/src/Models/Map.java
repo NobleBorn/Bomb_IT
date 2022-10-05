@@ -17,7 +17,7 @@ public class Map {
 
     public Map(){
         setMapSize(size);
-        createTiles(size);
+        tiles = createTiles(size);
         loadWalls();
         test();
     }
@@ -27,12 +27,14 @@ public class Map {
         x = Size;
     }
 
-    private void createTiles(int Size) {
+    private Tile[][] createTiles(int Size) {
+        Tile[][] tiles = new Tile[size][size];
         for (int i = 0; i < size; i++){
             for (int j = 0; j < size; j++){
                 tiles[i][j] = new Tile(i, j);
             }
         }
+        return tiles;
     }
 
     public Tile[][] getTiles(){

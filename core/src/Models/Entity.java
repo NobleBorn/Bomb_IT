@@ -11,4 +11,8 @@ public class Entity {
     public Position getPosition(){
         return position;
     }
+
+    public void terminate(Entity self){
+        self = null; //does this work?
+    }
 }
