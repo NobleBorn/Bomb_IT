@@ -20,8 +20,15 @@ public class CollisionChecker {
         return !tiles[x][y].isTileEmpty(); //returns whether tile is empty or not
     }
 
-    public void bombCollision(Entity o1, BombExplosion bombExplosion){
-        if (o1 instanceof Player || o1 instanceof Wall || o1 instanceof Powerups) { //could be replaced with if (o1 instance of Destroyable)
+    private boolean isThereCollision;
+    public void bombCollision(BombExplosion bombExplosion){
+       //kolla om det ligger något på en av dessa posiitoner
+        if(){
+            isThereCollision = true;
+        }
+
+
+        /*if (o1 instanceof Player || o1 instanceof Wall || o1 instanceof Powerups) { //could be replaced with if (o1 instance of Destroyable)
             if (o1 instanceof Wall && !((Wall) o1).isDestroyable()){ //if o1 is a permanent wall
                 return;
             }
@@ -31,6 +38,6 @@ public class CollisionChecker {
                     o1.terminate(o1); //better solution?
                 }
             }
-        }
+        }*/
     }
 }
