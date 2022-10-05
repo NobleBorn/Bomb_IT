@@ -18,6 +18,7 @@ public class PlayerView extends Game {
     PlayerController playerController;
     KeyHandler keyH;
     int spriteCounter = 0;
+    int standCounter;
     int spriteNum = 1;
 
 
@@ -102,6 +103,13 @@ public class PlayerView extends Game {
             }
 
             spriteCounter = 0;
+        }
+        else {
+            standCounter++;
+            if (standCounter == 20){
+                spriteNum = 1;
+                standCounter = 0;
+            }
         }
     }
 

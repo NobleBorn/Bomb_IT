@@ -37,9 +37,9 @@ public class GameScreenView implements Screen {
         this.camera = new OrthographicCamera();
         this.camera.setToOrtho(false, 960, 720);
 
-        img = new Texture(Gdx.files.internal("map.png"));
+        img = new Texture(Gdx.files.internal("sand.png"));
 
-        this.playerPosition = new Position(100, 100);
+        this.playerPosition = new Position(0, 0);
         player = new Player(playerPosition);
         playerController = new PlayerController(player, playerView);
         playerView = new PlayerView(player);
@@ -58,7 +58,7 @@ public class GameScreenView implements Screen {
         player.update();
 
         batch.begin();
-        batch.draw(img, 0, 0);
+        batch.draw(img, 0, 0, 48,48);
         batch.end();
 
         playerView.render();
