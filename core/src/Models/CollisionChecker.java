@@ -4,13 +4,16 @@ package Models;
 import java.util.List;
 
 public class CollisionChecker {
+    private final Map map;
+    public CollisionChecker(Map map){
+        this.map = map;
+    }
 
-    public boolean playerNextTileFree(Position newPosition, Map map){
+    public boolean playerNextTileFree(Position newPosition){
         //skapa metod walk hos player
         //skapa variabel newPosition som räknar ut nästa position
         //skicka den positionen till denna funktion
         //om true, uppdatera spelarens positon till newPosition, annars gör inget
-
         Tile[][] tiles = map.getTiles();
         int x = newPosition.getX();
         int y = newPosition.getY();

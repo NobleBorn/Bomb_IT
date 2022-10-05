@@ -6,9 +6,14 @@ import Models.Tile;
 import Models.Wall;
 import Views.TileViewImage;
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
 public class TileMapHelper {
 
@@ -28,7 +33,19 @@ public class TileMapHelper {
     public void setupMap() {
         //int counter = 0;
         //Sprite sprPermWall = new Sprite(new TileViewImage().getWallTexture(false));
+        float pad = 1/100f * Gdx.graphics.getWidth();
+        Skin skin = new Skin();
+        ImageButton pause = new ImageButton( skin, "menu-button-pause" );
+        ImageButton volume = new ImageButton( skin, "menu-button-volume" );
+        TextButton about = new TextButton( "about", skin, "menu-button" );
+        TextButton help = new TextButton( "help", skin, "menu-button" );
 
+        Table menu = new Table( skin );
+        menu.setBackground( "background" );
+        menu.add( pause ).padRight( pad );
+        menu.add( volume ).padRight( pad );
+        menu.add( about ).fill().padRight( pad );
+        menu.add( help ).fill();
         //Texture background = new Texture("backgroundImagePath");
 
         Tile[][] tilesMatrix = map.getMapMatrix();

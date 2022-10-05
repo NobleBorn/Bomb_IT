@@ -17,6 +17,7 @@ public class Map implements EventListener{
 
     private int y;
     private int x;
+    private final CollisionChecker collision;
     private final int size = 20;
     private Tile[][] tiles = new Tile[20][20];
     private String[][] maps = new String[size][size];
@@ -26,6 +27,7 @@ public class Map implements EventListener{
         createTiles(size);
         loadWalls();
         addObjects();
+        this.collision = new CollisionChecker(this);
     }
 
     private void setMapSize(int Size){
@@ -81,7 +83,7 @@ public class Map implements EventListener{
                         tiles[i][j].addEntity(new Wall(true, new Position(i, j)));
                         break;
                     case "3":
-                        tiles[i][j].addEntity(new Player(new Position(i, j)));
+                        tiles[i][j].addEntity(new Player(new Position(i, j), collision));
                         break;
                 }
             }
@@ -99,11 +101,6 @@ public class Map implements EventListener{
 
     public int createPowerUps(){
         return 0;
-    }
-
-    public boolean isPlayerNextTileFree(Position newPosition) {
-        CollisionChecker collisionChecker = new CollisionChecker();
-        return collisionChecker.playerNextTileFree(newPosition, this);
     }
 
     public Tile[][] getMapMatrix() {

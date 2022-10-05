@@ -6,20 +6,20 @@ public class Player extends Entity{
     private int score;
     private boolean alive;
     private int bombLength;
+    private CollisionChecker collision;
 
-
-    public Player(Position position){
+    public Player(Position position, CollisionChecker collision){
         super(position);
         this.direction = Models.Direction.DOWN;
         this.score = 0;
         this.alive = true;
         this.bombLength = 1;
-
+        this.collision = collision;
     }
 
     @Override
     protected Entity copyThis() {
-        return new Player(new Position(this.position));
+        return new Player(new Position(this.position), collision);
     }
 
     public void walk(Direction newDirection) {
