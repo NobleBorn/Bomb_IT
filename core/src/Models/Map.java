@@ -14,12 +14,13 @@ public class Map {
     private final int size = 20;
     private Tile[][] tiles = new Tile[20][20];
     private String[][] maps = new String[size][size];
+    private CollisionChecker cc;
 
     public Map(){
         setMapSize(size);
         tiles = createTiles(size);
-        loadWalls();
-        test();
+        loadMap();
+        this.cc = new CollisionChecker(this);
     }
 
     private void setMapSize(int Size){
@@ -39,12 +40,9 @@ public class Map {
 
     public Tile[][] getTiles(){
         return tiles;
-    }
+    } //should maybe be protected and Map + MovementListener put in same package
 
-    private void loadWalls(){
-        createPowerUps();
-    }
-    public void test(){
+    public void loadMap(){
 
         try {
             List<String> rows = new ArrayList<String>();
@@ -76,7 +74,7 @@ public class Map {
                         tiles[i][j].addEntity(new Wall(true, new Position(i, j)));
                         break;
                     case "3":
-                        tiles[i][j].addEntity(new Player(new Position(i, j)));
+                        tiles[i][j].addEntity(new Player(new Position(i, j), cc));
                         break;
                 }
             }
@@ -113,11 +111,11 @@ public class Map {
 
         return coordinates;
     }
-
-    private void createPowerUps(){}
-
+    /*
     public boolean isPlayerNextTileFree(Position newPosition) {
-        CollisionChecker collisionChecker = new CollisionChecker();
+        CollisionChecker collisionChecker = new CollisionChecker(this);
         return collisionChecker.playerNextTileFree(newPosition, this);
     }
+
+     */
 }

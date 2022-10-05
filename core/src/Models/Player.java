@@ -7,11 +7,13 @@ public class Player extends Entity{
     private int score;
     private boolean alive;
     private int bombLength;
+    private CollisionChecker cc;
 
     public MoveObservable observable;
 
-    public Player(Position position){
+    public Player(Position position, CollisionChecker cc){
         super(position);
+        this.cc = cc;
         this.direction = Models.Direction.DOWN;
         this.score = 0;
         this.alive = true;
@@ -20,21 +22,13 @@ public class Player extends Entity{
     }
 
     public void walk(Direction newDirection) {
+        direction = newDirection;
         nextPosition = newPositionHandler();
 
-        playerHelper = new PlayerHelper(nextPosition);
-        if (playerHelper.isNextTileFree()){
+        if (cc.isNextTileFree(nextPosition)){
+            observable.notifySubscribers(position, nextPosition);
             position = nextPosition;
         }
-
-        observable.notifySubscribers(position, nextPosition); //right now position is overwritten with nextPosition
-
-        /*
-        CollisionChecker collisionChecker = new CollisionChecker();
-        if (collisionChecker.playerNextTileFree(newPosition, map)){ //player shouldn't need to know about the map
-            position = newPosition;
-        }
-         */
     }
 
     private Position newPositionHandler() { //possible improvement?
@@ -57,16 +51,11 @@ public class Player extends Entity{
     public void dropBomb(){
         //add so you cannot drop infinite bombs
         //should bomb be placed a tile behind the player?
-        Bomb bomb = new Bomb(getPosition(), bombLength);
+        Bomb bomb = new Bomb(getPosition(), bombLength, cc);
 
     }
 
     public void terminate(){
         alive = false;
-    }
-
-
-    public Position getNextPosition() {
-        return nextPosition;
     }
 }

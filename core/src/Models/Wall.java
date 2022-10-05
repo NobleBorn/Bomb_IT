@@ -6,7 +6,7 @@ public class Wall extends Entity{
 
     private final boolean isDestroyable;
 
-    public Wall(Position position, boolean isDestroyable){
+    public Wall(boolean isDestroyable, Position position){
         super(position);
         this.isDestroyable = isDestroyable;
     }
