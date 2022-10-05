@@ -1,6 +1,7 @@
 package Models;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CollisionChecker {
@@ -20,24 +21,24 @@ public class CollisionChecker {
         return !tiles[x][y].isTileEmpty(); //returns whether tile is empty or not
     }
 
-    private boolean isThereCollision;
-    public void bombCollision(BombExplosion bombExplosion){
-       //kolla om det ligger något på en av dessa posiitoner
-        if(){
-            isThereCollision = true;
+
+    //Det utkommenterade gör istället att vi returnar en lista med positioner ist för true/false, om vi ist vill ha positioner
+    public boolean bombCollision(BombExplosion bombExplosion) {
+
+        Tile[][] tiles = map.getTiles();
+        List<BombExplosionSquare> explosionSquares = bombExplosion.getBombExplosionSquares();
+
+        //List<Position> collisionPositions = new ArrayList<>(1);
+
+        for (int i = 0; i <= bombExplosion.getBombExplosionSquares().size(); i++) {
+            if (!(tiles[explosionSquares.get(i).getPosition().getX()][explosionSquares.get(i).getPosition().getY()].isTileEmpty())) {
+                return true;
+                //collisionPositions.add(new Position(explosionSquares.get(i).getPosition().getX(),explosionSquares.get(i).getPosition().getY()));
+            }
         }
-
-
-        /*if (o1 instanceof Player || o1 instanceof Wall || o1 instanceof Powerups) { //could be replaced with if (o1 instance of Destroyable)
-            if (o1 instanceof Wall && !((Wall) o1).isDestroyable()){ //if o1 is a permanent wall
-                return;
-            }
-            List<BombExplosionSquare> bombExplosionSquares = bombExplosion.getBombExplosionSquares();
-            for (int i = 0; i < bombExplosionSquares.size(); i++) {
-                if (bombExplosionSquares.get(i).getPosition() == o1.getPosition()){
-                    o1.terminate(o1); //better solution?
-                }
-            }
-        }*/
+        return false;
+        //return collisionPositions;
     }
+
+
 }
