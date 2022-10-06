@@ -10,8 +10,8 @@ public class TileViewImage {
     private final Texture permWall;
     private final Texture tempWall;
     public TileViewImage(){
-        this.permWall = new Texture(Gdx.files.internal("PermWall.jpg"));
-        this.tempWall = new Texture(Gdx.files.internal("tempWall.jpg"));
+        this.permWall = new Texture(Gdx.files.internal("wallperm.jpg"));
+        this.tempWall = new Texture(Gdx.files.internal("walltemp.jpg"));
     }
     public Texture getWallTexture(boolean isDestroyable){
         if(isDestroyable){

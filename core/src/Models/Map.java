@@ -24,11 +24,11 @@ public class Map implements EventListener{
     private List<Player> playerObjList = new ArrayList<>();
 
     public Map(){
+        this.collision = new CollisionChecker(this);
         setMapSize(size);
         tiles = createTiles(size);
         loadWalls();
         addObjects();
-        this.collision = new CollisionChecker(this);
     }
 
     private void setMapSize(int Size){
@@ -58,7 +58,7 @@ public class Map implements EventListener{
 
         try {
             List<String> rows = new ArrayList<String>();
-            BufferedReader bf = new BufferedReader(new FileReader("C:\\Users\\oyoun\\IdeaProjects\\Bomb_IT\\assets\\test.txt"));
+            BufferedReader bf = new BufferedReader(new FileReader("/Users/nobleborn/Desktop/Project/assets/test.txt"));
             String line = bf.readLine();
             while (line != null) {
                 rows.add(line);

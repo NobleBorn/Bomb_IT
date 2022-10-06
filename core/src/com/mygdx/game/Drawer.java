@@ -14,16 +14,19 @@ public class Drawer {
     private final Texture sprTempWall;
     private final PlayerView playerOneView;
     private final PlayerView playerTwoView;
-    private Player entityToCast;
+    private Player player1;
+    private Player player2;
     private Tile tile;
 
-    public Drawer(SpriteBatch batch, Map map) {
+    public Drawer(SpriteBatch batch, Map map, Player player1, Player player2) {
         this.sb = batch;
         this.map = map;
+        this.player1 = player1;
+        this.player2 = player2;
         sprPermWall = new TileViewImage().getWallTexture(false);
         sprTempWall = new TileViewImage().getWallTexture(true);
-        playerOneView = new PlayerView();
-        playerTwoView = new PlayerView();
+        playerOneView = new PlayerView(this.player1);
+        playerTwoView = new PlayerView(this.player2);
     }
 
     public void setupMap() {
@@ -55,7 +58,8 @@ public class Drawer {
                     if ((tile.entities.get(0) instanceof Wall)){
                         drawWall(i, j);
 
-                    } else if (tile.entities.get(0) instanceof Player){
+                    }
+                    else if (tile.entities.get(0) instanceof Player){
                         drawPlayer(i, j);
                     }
                 }
@@ -65,11 +69,25 @@ public class Drawer {
     }
 
     private void drawPlayer(int i, int j) {
-        entityToCast = (Player) tile.entities.get(0);
-        playerOneView.setupPlayerImage();
-        sb.draw(playerOneView.getImage(entityToCast.getDirection()), j *Tile.getTileSize(), i *Tile.getTileSize());
+        //entityToCast = (Player) tile.entities.get(0);
+        /*playerOneView.setupPlayerImage();
+        sb.draw(playerOneView.getImage(player1.getDirection()), j *Tile.getTileSize(), i *Tile.getTileSize());
+        playerTwoView.setupPlayerImage();
+        sb.draw(playerTwoView.getImage(player2.getDirection()), j *Tile.getTileSize(), i *Tile.getTileSize());*/
+        if (i == player1.getPosition().getX() && j == player1.getPosition().getY()){
+            playerOneView.setupPlayerImage();
+            sb.draw(playerOneView.getImage(player1.getDirection(), 1), j *Tile.getTileSize(), i *Tile.getTileSize());
+        }
+        else if (i == player2.getPosition().getX() && j == player2.getPosition().getY()){
+            playerTwoView.setupPlayerImage();
+            sb.draw(playerTwoView.getImage(player2.getDirection(), 2), j *Tile.getTileSize(), i *Tile.getTileSize());
+        }
         //sb.draw(sprPermWall, j *Tile.getTileSize(), i *Tile.getTileSize());
 
+    }
+
+    public SpriteBatch getSb() {
+        return sb;
     }
 
     private void drawWall(int i, int j) {
