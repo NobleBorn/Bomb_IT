@@ -37,16 +37,16 @@ public class Player extends Entity{
     private Position newPositionHandler() { //possible improvement?
         Position newPosition;
         if (direction == Direction.UP){
-            newPosition = new Position(position.getX(), position.getY()+2);
-        }
-        else if (direction == Direction.RIGHT){
             newPosition = new Position(position.getX()+1, position.getY());
         }
+        else if (direction == Direction.RIGHT){
+            newPosition = new Position(position.getX(), position.getY()+1);
+        }
         else if (direction == Direction.DOWN){
-            newPosition = new Position(position.getX(), position.getY()-1);
+            newPosition = new Position(position.getX()-1, position.getY());
         }
         else{
-            newPosition = new Position(position.getX()-1, position.getY());
+            newPosition = new Position(position.getX(), position.getY()-1);
         }
         return newPosition;
     }

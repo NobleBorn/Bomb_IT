@@ -27,8 +27,8 @@ public class Map implements EventListener{
         setMapSize(size);
         tiles = createTiles(size);
         loadWalls();
-        addObjects();
         this.collision = new CollisionChecker(this);
+        addObjects();
     }
 
     private void setMapSize(int Size){

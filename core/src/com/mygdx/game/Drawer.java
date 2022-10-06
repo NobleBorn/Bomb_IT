@@ -3,6 +3,7 @@ package com.mygdx.game;
 import Models.*;
 import Views.PlayerView;
 import Views.TileViewImage;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
@@ -14,16 +15,22 @@ public class Drawer {
     private final Texture sprTempWall;
     private final PlayerView playerOneView;
     private final PlayerView playerTwoView;
-    private Player entityToCast;
+    private Player playerOne;
+    private Player playerTwo;
     private Tile tile;
+    private Tile[][] tilesMatrix;
+    private Player entityToCast;
 
-    public Drawer(SpriteBatch batch, Map map) {
+    public Drawer(SpriteBatch batch, Map map, Player playerOne, Player playerTwo) {
         this.sb = batch;
         this.map = map;
         sprPermWall = new TileViewImage().getWallTexture(false);
         sprTempWall = new TileViewImage().getWallTexture(true);
-        playerOneView = new PlayerView();
-        playerTwoView = new PlayerView();
+        this.playerOne = playerOne;
+        this.playerTwo = playerTwo;
+        playerTwoView = new PlayerView(this.playerTwo);
+        playerOneView = new PlayerView(this.playerOne);
+
     }
 
     public void setupMap() {
@@ -43,8 +50,7 @@ public class Drawer {
         menu.add( about ).fill().padRight( pad );
         menu.add( help ).fill();*/
         //Texture background = new Texture("backgroundImagePath");
-
-        Tile[][] tilesMatrix = map.getMapMatrix();
+        this.tilesMatrix = map.getTiles();
         sb.begin();
         for(int i = 0; i < tilesMatrix.length; i++){
             for (int j = 0; j < tilesMatrix.length; j++){
@@ -65,16 +71,26 @@ public class Drawer {
     }
 
     private void drawPlayer(int i, int j) {
-        entityToCast = (Player) tile.entities.get(0);
+        /* if (tile.entities.get(0).getPosition().getX() == playerOne.getPosition().getX() && tile.entities.get(0).getPosition().getY() == playerOne.getPosition().getY()){
+            playerOneView.setupPlayerImage();
+            //entityToCast = (Player)tile.entities.get(0);
+            //System.out.println(entityToCast.getDirection());
+            sb.draw(playerOneView.getImage(playerOne.getDirection()), j *Tile.getTileSize(), i *Tile.getTileSize());
+        }
+        else if (tile.entities.get(0).getPosition().getX() == playerTwo.getPosition().getX() && tile.entities.get(0).getPosition().getY() == playerTwo.getPosition().getY()){
+            playerTwoView.setupPlayerImage();
+            sb.draw(playerTwoView.getImage(playerTwo.getDirection()), j *Tile.getTileSize(), i *Tile.getTileSize());
+            //sb.draw(sprPermWall, j *Tile.getTileSize(), i *Tile.getTileSize());
+        } */
+
         playerOneView.setupPlayerImage();
-        sb.draw(playerOneView.getImage(entityToCast.getDirection()), j *Tile.getTileSize(), i *Tile.getTileSize());
-        //sb.draw(sprPermWall, j *Tile.getTileSize(), i *Tile.getTileSize());
-
+        sb.draw(playerOneView.getImage(playerOne.getDirection()), j *Tile.getTileSize(), i *Tile.getTileSize());
+        playerTwoView.setupPlayerImage();
+        sb.draw(playerTwoView.getImage(playerTwo.getDirection()), j *Tile.getTileSize(), i *Tile.getTileSize());
     }
-
     private void drawWall(int i, int j) {
         if (!(((Wall) tile.entities.get(0)).isDestroyable())) {
-            sb.draw(sprPermWall, (j *Tile.getTileSize()), i *Tile.getTileSize());
+            sb.draw(sprPermWall, (j *Tile.getTileSize()), i*Tile.getTileSize());
         }
         else{
             sb.draw(sprTempWall, j *Tile.getTileSize(), i *Tile.getTileSize());

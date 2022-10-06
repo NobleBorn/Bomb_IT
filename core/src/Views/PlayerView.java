@@ -22,8 +22,9 @@ public class PlayerView {
     int spriteNum = 1;
 
 
-    public PlayerView(){
+    public PlayerView(Player player){
         keyH = new KeyHandler();
+
         playerImages = new Texture("player.png");
         addSprites();
     }
