@@ -4,7 +4,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputProcessor;
 
 public class KeyHandler implements InputProcessor {
-    public boolean upPressed, downPressed, rightPressed, leftPressed;
+    public boolean upPressed, downPressed, rightPressed, leftPressed, dropBombPressed;
 
 
     @Override
@@ -17,6 +17,9 @@ public class KeyHandler implements InputProcessor {
             rightPressed = true;
         if (keycode == Input.Keys.DPAD_LEFT)
             leftPressed = true;
+
+        if(keycode == Input.Keys.SHIFT_RIGHT)
+            dropBombPressed = true;
 
         return false;
     }
@@ -31,6 +34,10 @@ public class KeyHandler implements InputProcessor {
             rightPressed = false;
         if (keycode == Input.Keys.DPAD_LEFT)
             leftPressed = false;
+
+        if(keycode == Input.Keys.SHIFT_RIGHT)
+            dropBombPressed = false;
+
         return false;
     }
 
