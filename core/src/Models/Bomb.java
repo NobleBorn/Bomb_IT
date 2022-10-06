@@ -13,12 +13,10 @@ public class Bomb extends Entity implements Runnable{
         this.bombLength = length;
         this.cc = cc;
         run();
-
     }
 
     private void detonate(){
         BombExplosion bombExplosion = new BombExplosion(position, bombLength, cc);
-
     }
 
     @Override
@@ -26,8 +24,8 @@ public class Bomb extends Entity implements Runnable{
         boolean run = true;
         while(run){
             try{
-                Thread.sleep(3000);
                 detonate();
+                Thread.sleep(3000);
                 run = false;
             } catch (InterruptedException e){
                 e.printStackTrace();

@@ -21,7 +21,10 @@ public class Player extends Entity{
     }
 
     public void walk(Direction newDirection) {
-        direction = newDirection;
+        if (!(direction == newDirection)){
+            direction = newDirection;
+            return;
+        }
         nextPosition = newPositionHandler();
 
         if (cc.isNextTileFree(nextPosition)){

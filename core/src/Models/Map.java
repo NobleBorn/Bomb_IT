@@ -46,7 +46,7 @@ public class Map implements EventListener{
         return tiles;
     }
 
-    public Tile[][] getTiles(){
+    protected Tile[][] getTiles(){
         return tiles;
     }
 

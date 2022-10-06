@@ -12,13 +12,12 @@ public class CollisionChecker {
     }
 
     public boolean isNextTileFree(Position newPosition){
-        if (!(newPosition.getX() < 0 || newPosition.getY() < 0 || newPosition.getX() > 19 || newPosition.getY() > 19)) {
-            Tile[][] tiles = map.getTiles();
+        //if (!(newPosition.getX() < 0 || newPosition.getY() < 0 || newPosition.getX() > 19 || newPosition.getY() > 19)) {
+            Tile[][] tiles = map.getMapMatrix();
             int x = newPosition.getX();
             int y = newPosition.getY();
             return tiles[x][y].isTileEmpty(); //returns whether tile is empty or not
-        }
-        return false;
+
     }
 
     public void bombCollision(BombExplosionSquare bombExplosion){

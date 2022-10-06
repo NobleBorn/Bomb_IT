@@ -11,11 +11,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 
 public class PlayerView {
-    public TextureRegion up1, up2, down1, down2, right1, right2, left1, left2;
-    Texture playerImages;
-    SpriteBatch batch;
-    Player player;
-    PlayerController playerController;
+    private TextureRegion up1, up2, down1, down2, right1, right2, left1, left2;
+    private final Texture playerImages;
     KeyHandler keyH;
     int spriteCounter = 0;
     int standCounter;
@@ -41,10 +38,10 @@ public class PlayerView {
 
         up1 = new TextureRegion(playerImages, 384,0,64,64);
         up2 = new TextureRegion(playerImages, 448,0,64,64);
-
     }
 
     public TextureRegion getImage(Direction direction){
+        setupPlayerImage();
         TextureRegion image = null;
 
         switch (direction){
@@ -80,19 +77,19 @@ public class PlayerView {
     }
 
 
-    public void setupPlayerImage() {
+    private void setupPlayerImage() {
         /* batch.begin();
         draw();
         batch.end(); */
         if (spriteCounter > 12){
-            if (spriteNum == 1 && (Gdx.input.isKeyPressed(Input.Keys.DPAD_UP) ||
-                    Gdx.input.isKeyPressed(Input.Keys.DPAD_DOWN) || Gdx.input.isKeyPressed(Input.Keys.DPAD_RIGHT)
-                    || Gdx.input.isKeyPressed(Input.Keys.DPAD_LEFT))){
+            if (spriteNum == 1 && (Gdx.input.isKeyJustPressed(Input.Keys.UP) ||
+                    Gdx.input.isKeyJustPressed(Input.Keys.DOWN) || Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)
+                    || Gdx.input.isKeyJustPressed(Input.Keys.LEFT))){
                 spriteNum = 2;
             }
-            else if (spriteNum == 2 && (Gdx.input.isKeyPressed(Input.Keys.DPAD_UP) ||
-                    Gdx.input.isKeyPressed(Input.Keys.DPAD_DOWN) || Gdx.input.isKeyPressed(Input.Keys.DPAD_RIGHT)
-                    || Gdx.input.isKeyPressed(Input.Keys.DPAD_LEFT))){
+            else if (spriteNum == 2 && (Gdx.input.isKeyJustPressed(Input.Keys.UP) ||
+                    Gdx.input.isKeyJustPressed(Input.Keys.DOWN) || Gdx.input.isKeyJustPressed(Input.Keys.RIGHT)
+                    || Gdx.input.isKeyJustPressed(Input.Keys.LEFT))){
                 spriteNum = 1;
             }
 

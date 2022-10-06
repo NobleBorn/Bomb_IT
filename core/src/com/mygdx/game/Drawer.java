@@ -15,11 +15,11 @@ public class Drawer {
     private final Texture sprTempWall;
     private final PlayerView playerOneView;
     private final PlayerView playerTwoView;
-    private Player playerOne;
-    private Player playerTwo;
+    private final Player playerOne;
+    private final Player playerTwo;
     private Tile tile;
     private Tile[][] tilesMatrix;
-    private Player entityToCast;
+    private Direction playerOneOld, playerOneNew, playerTwoOld, playerTwoNew;
 
     public Drawer(SpriteBatch batch, Map map, Player playerOne, Player playerTwo) {
         this.sb = batch;
@@ -30,38 +30,20 @@ public class Drawer {
         this.playerTwo = playerTwo;
         playerTwoView = new PlayerView(this.playerTwo);
         playerOneView = new PlayerView(this.playerOne);
-
     }
 
     public void setupMap() {
-        //int counter = 0;
-        //Sprite sprPermWall = new Sprite(new TileViewImage().getWallTexture(false));
-        /*float pad = 1/100f * Gdx.graphics.getWidth();
-        Skin skin = new Skin();
-        ImageButton pause = new ImageButton( skin, "menu-button-pause" );
-        ImageButton volume = new ImageButton( skin, "menu-button-volume" );
-        TextButton about = new TextButton( "about", skin, "menu-button" );
-        TextButton help = new TextButton( "help", skin, "menu-button" );
-
-        Table menu = new Table( skin );
-        menu.setBackground( "background" );
-        menu.add( pause ).padRight( pad );
-        menu.add( volume ).padRight( pad );
-        menu.add( about ).fill().padRight( pad );
-        menu.add( help ).fill();*/
-        //Texture background = new Texture("backgroundImagePath");
-        this.tilesMatrix = map.getTiles();
+        this.tilesMatrix = map.getMapMatrix();
         sb.begin();
         for(int i = 0; i < tilesMatrix.length; i++){
             for (int j = 0; j < tilesMatrix.length; j++){
                 tile = tilesMatrix[i][j];
-                //sb.draw(background, j*Tile.getTileSize(), i*Tile.getTileSize());
                 if (!tile.isTileEmpty()){
 
-                    if ((tile.entities.get(0) instanceof Wall)){
+                    if ((tile.getEntities().get(0) instanceof Wall)){
                         drawWall(i, j);
 
-                    } else if (tile.entities.get(0) instanceof Player){
+                    } else if (tile.getEntities().get(0) instanceof Player){
                         drawPlayer(i, j);
                     }
                 }
@@ -71,25 +53,16 @@ public class Drawer {
     }
 
     private void drawPlayer(int i, int j) {
-        /* if (tile.entities.get(0).getPosition().getX() == playerOne.getPosition().getX() && tile.entities.get(0).getPosition().getY() == playerOne.getPosition().getY()){
-            playerOneView.setupPlayerImage();
-            //entityToCast = (Player)tile.entities.get(0);
-            //System.out.println(entityToCast.getDirection());
+        if (i == playerOne.getPosition().getX() && j == playerOne.getPosition().getY()){
             sb.draw(playerOneView.getImage(playerOne.getDirection()), j *Tile.getTileSize(), i *Tile.getTileSize());
         }
-        else if (tile.entities.get(0).getPosition().getX() == playerTwo.getPosition().getX() && tile.entities.get(0).getPosition().getY() == playerTwo.getPosition().getY()){
-            playerTwoView.setupPlayerImage();
+        else if (i == playerTwo.getPosition().getX() && j == playerTwo.getPosition().getY()){
             sb.draw(playerTwoView.getImage(playerTwo.getDirection()), j *Tile.getTileSize(), i *Tile.getTileSize());
-            //sb.draw(sprPermWall, j *Tile.getTileSize(), i *Tile.getTileSize());
-        } */
+        }
 
-        playerOneView.setupPlayerImage();
-        sb.draw(playerOneView.getImage(playerOne.getDirection()), j *Tile.getTileSize(), i *Tile.getTileSize());
-        playerTwoView.setupPlayerImage();
-        sb.draw(playerTwoView.getImage(playerTwo.getDirection()), j *Tile.getTileSize(), i *Tile.getTileSize());
     }
     private void drawWall(int i, int j) {
-        if (!(((Wall) tile.entities.get(0)).isDestroyable())) {
+        if (!((Wall) tile.getEntities().get(0)).isDestroyable()) {
             sb.draw(sprPermWall, (j *Tile.getTileSize()), i*Tile.getTileSize());
         }
         else{
