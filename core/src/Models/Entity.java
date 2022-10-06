@@ -5,15 +5,10 @@ public abstract class Entity {
 
     Entity(Position position){
         this.position = position;
-
     }
 
     public Position getPosition(){
         return position;
     }
     protected abstract Entity copyThis();
-
-    public void terminate(Entity self){
-        self = null; //does this work?
-    }
 }
