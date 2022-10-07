@@ -6,6 +6,7 @@ import Views.TileViewImage;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Drawer {
 
@@ -13,23 +14,23 @@ public class Drawer {
     private SpriteBatch sb;
     private final Texture sprPermWall;
     private final Texture sprTempWall;
-    private final PlayerView playerOneView;
-    private final PlayerView playerTwoView;
     private final Player playerOne;
     private final Player playerTwo;
     private Tile tile;
     private Tile[][] tilesMatrix;
-    private Direction playerOneOld, playerOneNew, playerTwoOld, playerTwoNew;
+    private PlayerView playerOneView;
+    private PlayerView playerTwoView;
 
-    public Drawer(SpriteBatch batch, Map map, Player playerOne, Player playerTwo) {
+    public Drawer(SpriteBatch batch, Map map, Player playerOne, Player playerTwo, PlayerView playerOneView, PlayerView playerTwoView) {
         this.sb = batch;
         this.map = map;
         sprPermWall = new TileViewImage().getWallTexture(false);
         sprTempWall = new TileViewImage().getWallTexture(true);
+        this.playerOneView = playerOneView;
+        this.playerTwoView = playerTwoView;
         this.playerOne = playerOne;
         this.playerTwo = playerTwo;
-        playerTwoView = new PlayerView(this.playerTwo);
-        playerOneView = new PlayerView(this.playerOne);
+
     }
 
     public void setupMap() {
@@ -39,7 +40,6 @@ public class Drawer {
             for (int j = 0; j < tilesMatrix.length; j++){
                 tile = tilesMatrix[i][j];
                 if (!tile.isTileEmpty()){
-
                     if ((tile.getEntities().get(0) instanceof Wall)){
                         drawWall(i, j);
 
@@ -59,7 +59,6 @@ public class Drawer {
         else if (i == playerTwo.getPosition().getX() && j == playerTwo.getPosition().getY()){
             sb.draw(playerTwoView.getImage(playerTwo.getDirection()), j *Tile.getTileSize(), i *Tile.getTileSize());
         }
-
     }
     private void drawWall(int i, int j) {
         if (!((Wall) tile.getEntities().get(0)).isDestroyable()) {

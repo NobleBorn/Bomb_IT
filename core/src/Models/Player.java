@@ -19,12 +19,14 @@ public class Player extends Entity{
         this.bombLength = 1;
         this.observable = new MoveObservable();
     }
-
+    public boolean isAlive(){
+        return alive;
+    }
     public void walk(Direction newDirection) {
-        if (!(direction == newDirection)){
+        //if (!(direction == newDirection)){
             direction = newDirection;
-            return;
-        }
+          //  return;
+        //}
         nextPosition = newPositionHandler();
 
         if (cc.isNextTileFree(nextPosition)){

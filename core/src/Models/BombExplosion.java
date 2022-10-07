@@ -26,7 +26,6 @@ public class BombExplosion { //if extend Entity, BombExplosion and its center Bo
             bombExplosionSquares.add(new BombExplosionSquare(new Position(position.getX() - i, position.getY()), cc));
             bombExplosionSquares.add(new BombExplosionSquare(new Position(position.getX(), position.getY() + i), cc));
             bombExplosionSquares.add(new BombExplosionSquare(new Position(position.getX(), position.getY() - i), cc));
-
         }
 
         int var = 4;

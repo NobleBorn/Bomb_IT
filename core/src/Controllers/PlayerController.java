@@ -6,15 +6,12 @@ import Views.*;
 import com.badlogic.gdx.Input;
 
 public class PlayerController {
-    KeyHandler keyH;
+
     Player player;
     private final int keyUp, keyLeft, keyDown, keyRight;
-    PlayerView playerView;
 
     public PlayerController(Player player, int keyUp, int keyLeft, int keyDown, int keyRight){
         this.player = player;
-        //this.playerView = playerView;
-        this.keyH = new KeyHandler();
         this.keyUp = keyUp;
         this.keyLeft = keyLeft;
         this.keyDown = keyDown;
@@ -23,6 +20,7 @@ public class PlayerController {
 
     public void update(){
         //Gdx.input.setInputProcessor(keyH);
+
         if (Gdx.input.isKeyJustPressed(keyUp)){
             //player.setUpPressed(true);
             player.walk(Direction.UP);
@@ -48,11 +46,6 @@ public class PlayerController {
         if (Gdx.input.isKeyJustPressed(keyLeft)){
             //player.setLeftPressed(true);
             player.walk(Direction.LEFT);
-
-        }
-        else{
-            //player.setLeftPressed(false);
-
         }
     }
 

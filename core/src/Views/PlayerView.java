@@ -17,13 +17,19 @@ public class PlayerView {
     int spriteCounter = 0;
     int standCounter;
     int spriteNum = 1;
-
+    private Player player;
+    private Direction direction;
+    private Position pastPos;
+    private int sprite;
 
     public PlayerView(Player player){
         keyH = new KeyHandler();
-
+        this.player = player;
         playerImages = new Texture("player.png");
+        this.direction = player.getDirection();
+        this.pastPos = player.getPosition();
         addSprites();
+        this.sprite = 0;
     }
 
     private void addSprites() {
@@ -41,7 +47,10 @@ public class PlayerView {
     }
 
     public TextureRegion getImage(Direction direction){
-        setupPlayerImage();
+        if (player.getPosition().getX() != pastPos.getX() || player.getPosition().getY() != pastPos.getY()){
+            setupPlayerImage();
+        }
+
         TextureRegion image = null;
 
         switch (direction){
@@ -75,7 +84,6 @@ public class PlayerView {
         //batch.draw(image, player.getPosition().x, player.getPosition().y, 48, 48);
         return image;
     }
-
 
     private void setupPlayerImage() {
         /* batch.begin();
