@@ -8,15 +8,17 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Drawer {
 
-    private Map map;
-    private SpriteBatch sb;
+    private final Map map;
+    private final SpriteBatch sb;
     private final Texture sprPermWall;
     private final Texture sprTempWall;
     private final PlayerView playerOneView;
     private final PlayerView playerTwoView;
-    private Player player1;
-    private Player player2;
+    private final Player player1;
+    private final Player player2;
     private Tile tile;
+
+    private final int TILESIZE = 48;
 
     public Drawer(SpriteBatch batch, Map map, Player player1, Player player2) {
         this.sb = batch;
@@ -55,11 +57,11 @@ public class Drawer {
                 //sb.draw(background, j*Tile.getTileSize(), i*Tile.getTileSize());
                 if (!tile.isTileEmpty()){
 
-                    if ((tile.entities.get(0) instanceof Wall)){
+                    if ((tile.getEntities().get(0) instanceof Wall)){
                         drawWall(i, j);
 
                     }
-                    else if (tile.entities.get(0) instanceof Player){
+                    else if (tile.getEntities().get(0) instanceof Player){
                         drawPlayer(i, j);
                     }
                 }
@@ -76,11 +78,11 @@ public class Drawer {
         sb.draw(playerTwoView.getImage(player2.getDirection()), j *Tile.getTileSize(), i *Tile.getTileSize());*/
         if (i == player1.getPosition().getX() && j == player1.getPosition().getY()){
             playerOneView.setupPlayerImage();
-            sb.draw(playerOneView.getImage(player1.getDirection(), 1), j *Tile.getTileSize(), i *Tile.getTileSize());
+            sb.draw(playerOneView.getImage(player1.getDirection(), 1), j * TILESIZE, i * TILESIZE);
         }
         else if (i == player2.getPosition().getX() && j == player2.getPosition().getY()){
             playerTwoView.setupPlayerImage();
-            sb.draw(playerTwoView.getImage(player2.getDirection(), 2), j *Tile.getTileSize(), i *Tile.getTileSize());
+            sb.draw(playerTwoView.getImage(player2.getDirection(), 2), j * TILESIZE, i * TILESIZE);
         }
         //sb.draw(sprPermWall, j *Tile.getTileSize(), i *Tile.getTileSize());
 
@@ -91,11 +93,11 @@ public class Drawer {
     }
 
     private void drawWall(int i, int j) {
-        if (!(((Wall) tile.entities.get(0)).isDestroyable())) {
-            sb.draw(sprPermWall, (j *Tile.getTileSize()), i *Tile.getTileSize());
+        if (!(((Wall) tile.getEntities().get(0)).isDestroyable())) {
+            sb.draw(sprPermWall, (j * TILESIZE), i * TILESIZE);
         }
         else{
-            sb.draw(sprTempWall, j *Tile.getTileSize(), i *Tile.getTileSize());
+            sb.draw(sprTempWall, j * TILESIZE, i * TILESIZE);
         }
     }
 

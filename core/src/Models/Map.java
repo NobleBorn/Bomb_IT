@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.EventListener;
 import java.util.List;
 
+/**
+ * The class represents a map that contains tiles, see {@link Models.Tile} and entities, see {@link Models.Entity}
+ */
 public class Map implements EventListener{
 
     private int y;
@@ -23,6 +26,9 @@ public class Map implements EventListener{
     private String[][] maps = new String[size][size];
     private List<Player> playerObjList = new ArrayList<>();
 
+    /**
+     * Class constructor.
+     */
     public Map(){
         this.collision = new CollisionChecker(this);
         setMapSize(size);
@@ -46,7 +52,10 @@ public class Map implements EventListener{
         return tiles;
     }
 
-    public Tile[][] getTiles(){
+    /**
+     * @return returns the original 2D array of tiles and the objects they each contain.
+     */
+    protected Tile[][] getTiles(){
         return tiles;
     }
 
@@ -56,28 +65,10 @@ public class Map implements EventListener{
 
     private void addObjects(){
 
-        try {
-            List<String> rows = new ArrayList<String>();
-            BufferedReader bf = new BufferedReader(new FileReader("/Users/nobleborn/Desktop/Project/assets/test.txt"));
-            String line = bf.readLine();
-            while (line != null) {
-                rows.add(line);
-                line = bf.readLine();
-            }
-            bf.close();
-
-            int s = 0;
-            for (int i=rows.size()-1;i>=0;i--) {
-                String[] stringSplit = (rows.get(i).split(","));
-                maps[s] = stringSplit;
-                s++;
-            }
-        } catch (IOException e){
-            e.printStackTrace();
-        }
+        String[][] mapInNumbers = ReadFile();
         for (int i = 0; i < size; i++){
             for (int j = 0; j < size; j++){
-                String decider = maps[i][j];
+                String decider = mapInNumbers[i][j];
                 switch (decider) {
                     case "1":
                         tiles[i][j].addEntity(new Wall(false, new Position(i, j)));
@@ -93,9 +84,38 @@ public class Map implements EventListener{
             }
         }
     }
+
+    private String[][] ReadFile() {
+        String[][] readNumbers = new String[size][size];
+        try {
+            List<String> rows = new ArrayList<String>();
+            BufferedReader bf = new BufferedReader(new FileReader("C:\\Users\\oyoun\\IdeaProjects\\Bomb_IT\\assets\\test.txt"));
+            String line = bf.readLine();
+            while (line != null) {
+                rows.add(line);
+                line = bf.readLine();
+            }
+            bf.close();
+
+            int s = 0;
+            for (int i=rows.size()-1;i>=0;i--) {
+                String[] stringSplit = (rows.get(i).split(","));
+                readNumbers[s] = stringSplit;
+                s++;
+            }
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        return readNumbers;
+    }
+
+    /**
+     * @return returns a {@link List<Player>} that contains all the players' objects on the initialized map.
+     */
     public List<Player> getPlayers(){
         return playerObjList;
     }
+
     public int[] getSize(){
         int[] coordinates = new int[2];
 
@@ -108,7 +128,10 @@ public class Map implements EventListener{
     public int createPowerUps(){
         return 0;
     }
-
+    /**
+     * Offers a way to get access to the information of the objects on the map, without being able to change them from outside the package
+     * @return returns a 2D array of all the tiles on the map, see {@link Models.Tile}.
+     */
     public Tile[][] getMapMatrix() {
         Tile[][] returnTiles  = new Tile[size][size];
         for(int i = 0; i < size; i++){

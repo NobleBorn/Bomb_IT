@@ -5,6 +5,7 @@ import Controllers.PlayerController;
 import Models.*;
 //import Views.GameScreenView;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
