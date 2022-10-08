@@ -1,5 +1,8 @@
 package Models;
 
+/**
+ * The class represents a player as a subclass of {@link Models.Entity} and a navigable entity.
+ */
 public class Player extends Entity{
     private Direction direction;
     private Position nextPosition;
@@ -10,23 +13,27 @@ public class Player extends Entity{
 
     public MoveObservable observable;
 
+    /**
+     * Class constructor
+     * @param position the initial {@link Models.Position} of a player at the time of creating it.
+     * @param cc a {@link Models.CollisionChecker} for the player to be aware of its surroundings.
+     */
     public Player(Position position, CollisionChecker cc){
         super(position);
         this.cc = cc;
-        this.direction = Direction.RIGHT;
+        this.direction = Direction.UP;
         this.score = 0;
         this.alive = true;
         this.bombLength = 1;
         this.observable = new MoveObservable();
     }
-    public boolean isAlive(){
-        return alive;
-    }
+
+    /**
+     * Methods offers a way for the player to move one tile on the map, if possible, and change its position.
+     * @param newDirection the direction that the player is trying to move in.
+     */
     public void walk(Direction newDirection) {
-        //if (!(direction == newDirection)){
-            direction = newDirection;
-          //  return;
-        //}
+        this.direction = newDirection;
         nextPosition = newPositionHandler();
 
         if (cc.isNextTileFree(nextPosition)){
@@ -35,6 +42,9 @@ public class Player extends Entity{
         }
     }
 
+    /**
+     * @return returns the current {@link Models.Direction} of a player. Direction is right by default.
+     */
     public Direction getDirection() {
         return direction;
     }
@@ -56,6 +66,9 @@ public class Player extends Entity{
         return newPosition;
     }
 
+    /**
+     * Creates a {@link Models.Bomb} at the current {@link Models.Position}.
+     */
     public void dropBomb(){
         //add so you cannot drop infinite bombs
         //should bomb be placed a tile behind the player?
@@ -67,6 +80,10 @@ public class Player extends Entity{
         alive = false;
     }
 
+    /**
+     * Offers a way to create a deep-copy of the player.
+     * @return returns a deep-copy of the player with a new {@link Models.Position} object but same coordinates, and the same {@link Models.CollisionChecker} object.
+     */
     @Override
     protected Entity copyThis() {
         return new Player(new Position(position), cc);

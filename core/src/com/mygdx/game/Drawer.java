@@ -3,47 +3,65 @@ package com.mygdx.game;
 import Models.*;
 import Views.PlayerView;
 import Views.TileViewImage;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Drawer {
 
-    private Map map;
-    private SpriteBatch sb;
+    private final Map map;
+    private final SpriteBatch sb;
     private final Texture sprPermWall;
     private final Texture sprTempWall;
-    private final Player playerOne;
-    private final Player playerTwo;
+    private final PlayerView playerOneView;
+    private final PlayerView playerTwoView;
+    private final Player player1;
+    private final Player player2;
     private Tile tile;
-    private Tile[][] tilesMatrix;
-    private PlayerView playerOneView;
-    private PlayerView playerTwoView;
 
-    public Drawer(SpriteBatch batch, Map map, Player playerOne, Player playerTwo, PlayerView playerOneView, PlayerView playerTwoView) {
+    private final int TILESIZE = 48;
+
+    public Drawer(SpriteBatch batch, Map map, Player player1, Player player2) {
         this.sb = batch;
         this.map = map;
+        this.player1 = player1;
+        this.player2 = player2;
         sprPermWall = new TileViewImage().getWallTexture(false);
         sprTempWall = new TileViewImage().getWallTexture(true);
-        this.playerOneView = playerOneView;
-        this.playerTwoView = playerTwoView;
-        this.playerOne = playerOne;
-        this.playerTwo = playerTwo;
-
+        playerOneView = new PlayerView(this.player1);
+        playerTwoView = new PlayerView(this.player2);
     }
 
     public void setupMap() {
-        this.tilesMatrix = map.getMapMatrix();
+        //int counter = 0;
+        //Sprite sprPermWall = new Sprite(new TileViewImage().getWallTexture(false));
+        /*float pad = 1/100f * Gdx.graphics.getWidth();
+        Skin skin = new Skin();
+        ImageButton pause = new ImageButton( skin, "menu-button-pause" );
+        ImageButton volume = new ImageButton( skin, "menu-button-volume" );
+        TextButton about = new TextButton( "about", skin, "menu-button" );
+        TextButton help = new TextButton( "help", skin, "menu-button" );
+
+        Table menu = new Table( skin );
+        menu.setBackground( "background" );
+        menu.add( pause ).padRight( pad );
+        menu.add( volume ).padRight( pad );
+        menu.add( about ).fill().padRight( pad );
+        menu.add( help ).fill();*/
+        //Texture background = new Texture("backgroundImagePath");
+
+        Tile[][] tilesMatrix = map.getMapMatrix();
         sb.begin();
         for(int i = 0; i < tilesMatrix.length; i++){
             for (int j = 0; j < tilesMatrix.length; j++){
                 tile = tilesMatrix[i][j];
+                //sb.draw(background, j*Tile.getTileSize(), i*Tile.getTileSize());
                 if (!tile.isTileEmpty()){
+
                     if ((tile.getEntities().get(0) instanceof Wall)){
                         drawWall(i, j);
 
-                    } else if (tile.getEntities().get(0) instanceof Player){
+                    }
+                    else if (tile.getEntities().get(0) instanceof Player){
                         drawPlayer(i, j);
                     }
                 }
@@ -53,19 +71,33 @@ public class Drawer {
     }
 
     private void drawPlayer(int i, int j) {
-        if (i == playerOne.getPosition().getX() && j == playerOne.getPosition().getY()){
-            sb.draw(playerOneView.getImage(playerOne.getDirection()), j *Tile.getTileSize(), i *Tile.getTileSize());
+        //entityToCast = (Player) tile.entities.get(0);
+        /*playerOneView.setupPlayerImage();
+        sb.draw(playerOneView.getImage(player1.getDirection()), j *Tile.getTileSize(), i *Tile.getTileSize());
+        playerTwoView.setupPlayerImage();
+        sb.draw(playerTwoView.getImage(player2.getDirection()), j *Tile.getTileSize(), i *Tile.getTileSize());*/
+        if (i == player1.getPosition().getX() && j == player1.getPosition().getY()){
+            playerOneView.setupPlayerImage();
+            sb.draw(playerOneView.getImage(player1.getDirection(), 1), j * TILESIZE, i * TILESIZE);
         }
-        else if (i == playerTwo.getPosition().getX() && j == playerTwo.getPosition().getY()){
-            sb.draw(playerTwoView.getImage(playerTwo.getDirection()), j *Tile.getTileSize(), i *Tile.getTileSize());
+        else if (i == player2.getPosition().getX() && j == player2.getPosition().getY()){
+            playerTwoView.setupPlayerImage();
+            sb.draw(playerTwoView.getImage(player2.getDirection(), 2), j * TILESIZE, i * TILESIZE);
         }
+        //sb.draw(sprPermWall, j *Tile.getTileSize(), i *Tile.getTileSize());
+
     }
+
+    public SpriteBatch getSb() {
+        return sb;
+    }
+
     private void drawWall(int i, int j) {
-        if (!((Wall) tile.getEntities().get(0)).isDestroyable()) {
-            sb.draw(sprPermWall, (j *Tile.getTileSize()), i*Tile.getTileSize());
+        if (!(((Wall) tile.getEntities().get(0)).isDestroyable())) {
+            sb.draw(sprPermWall, (j * TILESIZE), i * TILESIZE);
         }
         else{
-            sb.draw(sprTempWall, j *Tile.getTileSize(), i *Tile.getTileSize());
+            sb.draw(sprTempWall, j * TILESIZE, i * TILESIZE);
         }
     }
 

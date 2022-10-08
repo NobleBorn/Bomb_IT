@@ -43,7 +43,7 @@ public class GameScreenView implements Screen {
         this.playerPosition = new Position(0, 0);
 
         player = new Player(playerPosition);
-        playerController = new PlayerController(player, playerView);
+        playerController = new PlayerController(player);
         playerView = new PlayerView(player);
         playerView.create();
     }
