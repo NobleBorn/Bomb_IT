@@ -34,7 +34,7 @@ public class MenuScreenView implements Screen {
 
         game_music = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
         game_music.setLooping(true);
-
+        click_sound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
         menuController = new MenuScreenController(this);
 
     }
@@ -75,7 +75,7 @@ public class MenuScreenView implements Screen {
         game.batch.end();
 
         if (startClicked)
-            this.game.setScreen(new GameScreen());
+            this.game.setScreen(new Boot());
 
         stage.act();
         stage.draw();

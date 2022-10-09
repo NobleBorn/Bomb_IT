@@ -108,9 +108,6 @@ public class PlayerView {
 
 
     public void setupPlayerImage() {
-        /* batch.begin();
-        draw();
-        batch.end(); */
         if (spriteCounter > 6){
             if (spriteNum == 1 && (Gdx.input.isKeyPressed(Input.Keys.DPAD_UP) ||
                     Gdx.input.isKeyPressed(Input.Keys.DPAD_DOWN) || Gdx.input.isKeyPressed(Input.Keys.DPAD_RIGHT)
