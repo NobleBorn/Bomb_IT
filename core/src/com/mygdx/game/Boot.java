@@ -1,20 +1,20 @@
 package com.mygdx.game;
 
 
+import Controllers.PanelController;
 import Controllers.PlayerController;
 import Models.*;
 //import Views.GameScreenView;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Boot implements Screen {
-
+    final Main game;
     public static Boot INSTANCE;
     private int widthScreen, heightScreen;
     private OrthographicCamera orthographicCamera;
@@ -25,8 +25,16 @@ public class Boot implements Screen {
     private PlayerController playerOneController;
     private PlayerController playerTwoController;
 
+    private PanelController panelController;
 
-    public Boot() {
+    public enum State{
+        Running, Paused
+    }
+
+    private State state = State.Running;
+
+    public Boot(final Main game) {
+        this.game = game;
         //INSTANCE = this;
         create();
     }
@@ -37,6 +45,7 @@ public class Boot implements Screen {
         Player playerOne = map.getPlayers().get(0);
         Player playerTwo = map.getPlayers().get(1);
 
+        this.panelController = new PanelController(this, playerOne, playerTwo);
 
         this.playerOneController = new PlayerController(playerOne, Input.Keys.DPAD_UP, Input.Keys.DPAD_DOWN,
                 Input.Keys.DPAD_RIGHT, Input.Keys.DPAD_LEFT);
@@ -78,16 +87,31 @@ public class Boot implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0.1f, 1, 0.2f, 1);
+        draw();
+        switch(state){
+            case Running:
+                update();
+                break;
+            case Paused:
+                panelController.render();
+                break;
+        }
+    }
+
+    public void draw(){
+        Gdx.gl.glClearColor(98/255f, 61/255f, 3/255f, 0.9f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
         batch.begin();
         batch.draw(img, 0,0,960,960);
         batch.end();
         drawer.setupMap();
+    }
+
+    public void update(){
         orthographicCamera.update();
         playerOneController.update();
         playerTwoController.update();
-
+        panelController.render();
     }
 
     @Override
@@ -99,16 +123,19 @@ public class Boot implements Screen {
     public void dispose(){
         //super.dispose();
         batch.dispose();
+        panelController.dispose();
     }
 
     @Override
     public void pause() {
         //super.pause();
+        state = State.Paused;
     }
 
     @Override
     public void resume() {
         //super.resume();
+        state = State.Running;
     }
 
     @Override

@@ -34,6 +34,10 @@ public class Player extends Entity{
         return direction;
     }
 
+    public int getScore() {
+        return score;
+    }
+
     private Position newPositionHandler() { //possible improvement?
         Position newPosition;
         if (direction == Direction.UP){

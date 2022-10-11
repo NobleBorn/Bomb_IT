@@ -1,25 +1,23 @@
 package Controllers;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.mygdx.game.*;
 import Views.*;
 
 public class MenuScreenController {
     private MenuScreenView menuScreenView;
 
-    TextButton play_button = new TextButton("Play", 2,1, 7, 3);
-    TextButton option_button = new TextButton("Option", 2,0.6f, 7, 4.9f);
-    TextButton exit_button = new TextButton("Exit", 2,0.6f, 7, 6.1f);
+    Text_Button play_button = new Text_Button("Play", 2,1, 7, 3);
+    Text_Button option_button = new Text_Button("Option", 2,1, 7, 4.9f);
+    Text_Button exit_button = new Text_Button("Exit", 2,1, 7, 6.1f);
 
-    ImageButton music_button = new ImageButton("music_on.png", "music_off.png",1.5f,
-            1.4f, 1, 7);
-    ImageButton sound_button = new ImageButton("sound_on.png", "sound_off.png",1.5f,
-            1.4f, 2.7f, 7);
+    Image_Button music_button = new Image_Button("volume_on.png", "volume_off.png",1,
+            0.8f, 1, 7);
+    Image_Button sound_button = new Image_Button("sound_on.png", "sound_off.png",1,
+            0.8f, 2.7f, 7);
 
     public MenuScreenController(final MenuScreenView menuScreenView){
         this.menuScreenView = menuScreenView;

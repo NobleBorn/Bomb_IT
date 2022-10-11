@@ -34,10 +34,10 @@ public class Drawer {
         //Sprite sprPermWall = new Sprite(new TileViewImage().getWallTexture(false));
         /*float pad = 1/100f * Gdx.graphics.getWidth();
         Skin skin = new Skin();
-        ImageButton pause = new ImageButton( skin, "menu-button-pause" );
-        ImageButton volume = new ImageButton( skin, "menu-button-volume" );
-        TextButton about = new TextButton( "about", skin, "menu-button" );
-        TextButton help = new TextButton( "help", skin, "menu-button" );
+        Image_Button pause = new Image_Button( skin, "menu-button-pause" );
+        Image_Button volume = new Image_Button( skin, "menu-button-volume" );
+        Text_Button about = new Text_Button( "about", skin, "menu-button" );
+        Text_Button help = new Text_Button( "help", skin, "menu-button" );
 
         Table menu = new Table( skin );
         menu.setBackground( "background" );

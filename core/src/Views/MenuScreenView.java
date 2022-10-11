@@ -43,10 +43,6 @@ public class MenuScreenView implements Screen {
         return stage;
     }
 
-    public Main getGame() {
-        return game;
-    }
-
     public Music getGame_music() {
         return game_music;
     }
@@ -75,7 +71,7 @@ public class MenuScreenView implements Screen {
         game.batch.end();
 
         if (startClicked)
-            this.game.setScreen(new Boot());
+            this.game.setScreen(new Boot(game));
 
         stage.act();
         stage.draw();
