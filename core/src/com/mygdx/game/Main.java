@@ -1,32 +1,38 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.graphics.Texture;
+import Views.MenuScreenView;
+import com.badlogic.gdx.*;
+
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.physics.box2d.*;
+import Controllers.MenuScreenController;
 
-public class Main extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture img;
-	
+//Help from Libgdx website, wiki and tutorials
+public class Main extends Game {
+	public SpriteBatch batch;
+	public BitmapFont font;
+
 	@Override
-	public void create () {
+	public void create() {
+		// The SpriteBatch object is used to render objects onto the screen
 		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
+		// BitmapFont object is used, along with a SpriteBatch, to render text onto the screen
+		font = new BitmapFont();
+		// Set the Screen of the Game to a MainMenuScreen object, with a Main instance as its first and only parameter
+		this.setScreen(new MenuScreenView(this));
 	}
 
 	@Override
-	public void render () {
-		ScreenUtils.clear(1, 0, 0, 1);
-		batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();
+	public void render() {
+		// super.render makes it possible to render the screen that is in the create method
+		super.render();
+
 	}
-	
+
 	@Override
-	public void dispose () {
+	public void dispose() {
 		batch.dispose();
-		img.dispose();
+		font.dispose();
 	}
 }

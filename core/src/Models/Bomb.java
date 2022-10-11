@@ -6,17 +6,18 @@ import java.util.List;
 public class Bomb extends Entity implements Runnable{
 
     private int bombLength;
+    private CollisionChecker cc;
 
-
-    public Bomb(Position position, int length){
+    public Bomb(Position position, int length, CollisionChecker cc){
         super(position);
         this.bombLength = length;
+        this.cc = cc;
         run();
 
     }
 
     private void detonate(){
-        BombExplosion bombExplosion = new BombExplosion(position, bombLength);
+        BombExplosion bombExplosion = new BombExplosion(position, bombLength, cc);
 
     }
 
@@ -36,4 +37,8 @@ public class Bomb extends Entity implements Runnable{
     }
 
 
+    @Override
+    protected Entity copyThis() {
+        return new Bomb(new Position(position), this.bombLength, cc);
+    }
 }
