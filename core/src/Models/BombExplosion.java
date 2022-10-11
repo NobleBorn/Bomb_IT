@@ -40,6 +40,10 @@ public class BombExplosion { //if extend Entity, BombExplosion and its center Bo
                 var--;
             }
         }
-
     }
+
+    public List<Position> getBombExplosionSquares() {
+        return bombExplosionSquares;
+    }
+
 }

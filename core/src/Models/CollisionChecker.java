@@ -19,11 +19,16 @@ public class CollisionChecker {
         return tiles[x][y].isTileEmpty(); //returns whether tile is empty or not
     }
 
-    public void bombCollision(BombExplosionSquare bombExplosion){
+    public boolean bombCollision(BombExplosion bombExplosion) {
 
-    }
+        Tile[][] tiles = map.getTiles();
+        List<Position> explosionSquares = bombExplosion.getBombExplosionSquares();
 
-    public void checkCollision(){
-
+        for (int i = 0; i <= bombExplosion.getBombExplosionSquares().size(); i++) {
+            if (!(tiles[explosionSquares.get(i).getX()][explosionSquares.get(i).getY()].isTileEmpty())) {
+                return true;
+            }
+        }
+        return false;
     }
 }
