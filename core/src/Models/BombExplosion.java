@@ -5,7 +5,7 @@ import java.util.List;
 
 public class BombExplosion { //if extend Entity, BombExplosion and its center BombExplosionSquare will cause collision with each other
 
-    private List<BombExplosionSquare> bombExplosionSquares = new ArrayList<>(1);
+    private List<Position> bombExplosionSquares = new ArrayList<>(1);
     private Position position;
     private CollisionChecker cc;
 
@@ -19,19 +19,19 @@ public class BombExplosion { //if extend Entity, BombExplosion and its center Bo
 
         int tailLength = (length-1)/2;
 
-        bombExplosionSquares.add(new BombExplosionSquare(new Position(position.getX(), position.getY()), cc));
+        bombExplosionSquares.add(new Position(position.getX(), position.getY()));
         for (int i = 1; i <= tailLength; i++) {
 
-            bombExplosionSquares.add(new BombExplosionSquare(new Position(position.getX() + i, position.getY()), cc));
-            bombExplosionSquares.add(new BombExplosionSquare(new Position(position.getX() - i, position.getY()), cc));
-            bombExplosionSquares.add(new BombExplosionSquare(new Position(position.getX(), position.getY() + i), cc));
-            bombExplosionSquares.add(new BombExplosionSquare(new Position(position.getX(), position.getY() - i), cc));
+            bombExplosionSquares.add(new Position(position.getX() + i, position.getY()));
+            bombExplosionSquares.add(new Position(position.getX() - i, position.getY()));
+            bombExplosionSquares.add(new Position(position.getX(), position.getY() + i));
+            bombExplosionSquares.add(new Position(position.getX(), position.getY() - i));
 
         }
 
         int var = 4;
         for(int n = 0; n <= bombExplosionSquares.size(); n++){
-            if((bombExplosionSquares.get(n).getPosition() == wall.getPosition()) && !(wall.isDestroyable())){
+            if((bombExplosionSquares.get(n) == wall.getPosition()) && !(wall.isDestroyable())){
                 int var2 = 0;
                 while(n+var2*var<bombExplosionSquares.size()){
                     bombExplosionSquares.remove(bombExplosionSquares.get(n+var*var2));
@@ -41,11 +41,5 @@ public class BombExplosion { //if extend Entity, BombExplosion and its center Bo
             }
         }
 
-    }
-
-
-
-    public List<BombExplosionSquare> getBombExplosionSquares() {
-        return bombExplosionSquares;
     }
 }
