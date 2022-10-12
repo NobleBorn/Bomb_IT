@@ -53,7 +53,10 @@ public class PlayerController {
         }
         else{
             //player.setLeftPressed(false);
+        }
 
+        if(keyH.dropBombPressed){
+            player.dropBomb();
         }
     }
 
