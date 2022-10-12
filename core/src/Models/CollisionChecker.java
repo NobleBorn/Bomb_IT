@@ -31,4 +31,10 @@ public class CollisionChecker {
         }
         return false;
     }
+
+    public boolean checkBombSpawn(Position bombPosition){
+        Tile[][] tiles = map.getTiles();
+        Entity entity = tiles[bombPosition.getX()][bombPosition.getY()].entities.get(0);
+        return bombPosition == entity.getPosition() && !(entity instanceof SoftWall);
+    }
 }
