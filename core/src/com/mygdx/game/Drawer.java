@@ -8,25 +8,23 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Drawer {
 
-    private final Map map;
-    private final SpriteBatch sb;
+    private Map map;
+    private SpriteBatch sb;
     private final Texture sprPermWall;
     private final Texture sprTempWall;
     private final PlayerView playerOneView;
     private final PlayerView playerTwoView;
-    private final Player player1;
-    private final Player player2;
+    private Player player1;
+    private Player player2;
     private Tile tile;
-
-    private final int TILESIZE = 48;
 
     public Drawer(SpriteBatch batch, Map map, Player player1, Player player2) {
         this.sb = batch;
         this.map = map;
         this.player1 = player1;
         this.player2 = player2;
-        sprPermWall = new TileViewImage().getWallTexture(false);
-        sprTempWall = new TileViewImage().getWallTexture(true);
+        sprPermWall = new TileViewImage().getPermWallTexture();
+        sprTempWall = new TileViewImage().getTempWallTexture();
         playerOneView = new PlayerView(this.player1);
         playerTwoView = new PlayerView(this.player2);
     }
@@ -36,10 +34,10 @@ public class Drawer {
         //Sprite sprPermWall = new Sprite(new TileViewImage().getWallTexture(false));
         /*float pad = 1/100f * Gdx.graphics.getWidth();
         Skin skin = new Skin();
-        ImageButton pause = new ImageButton( skin, "menu-button-pause" );
-        ImageButton volume = new ImageButton( skin, "menu-button-volume" );
-        TextButton about = new TextButton( "about", skin, "menu-button" );
-        TextButton help = new TextButton( "help", skin, "menu-button" );
+        Image_Button pause = new Image_Button( skin, "menu-button-pause" );
+        Image_Button volume = new Image_Button( skin, "menu-button-volume" );
+        Text_Button about = new Text_Button( "about", skin, "menu-button" );
+        Text_Button help = new Text_Button( "help", skin, "menu-button" );
 
         Table menu = new Table( skin );
         menu.setBackground( "background" );
@@ -55,13 +53,13 @@ public class Drawer {
             for (int j = 0; j < tilesMatrix.length; j++){
                 tile = tilesMatrix[i][j];
                 //sb.draw(background, j*Tile.getTileSize(), i*Tile.getTileSize());
-                if (!tile.isTileEmpty()){
+                if (!tilesMatrix[i][j].isTileEmpty()){
 
-                    if ((tile.getEntities().get(0) instanceof Wall)){
+                    if ((tilesMatrix[i][j].entities.get(0) instanceof Wall)){
                         drawWall(i, j);
 
                     }
-                    else if (tile.getEntities().get(0) instanceof Player){
+                    else if (tilesMatrix[i][j].entities.get(0) instanceof Player){
                         drawPlayer(i, j);
                     }
                 }
@@ -78,11 +76,11 @@ public class Drawer {
         sb.draw(playerTwoView.getImage(player2.getDirection()), j *Tile.getTileSize(), i *Tile.getTileSize());*/
         if (i == player1.getPosition().getX() && j == player1.getPosition().getY()){
             playerOneView.setupPlayerImage();
-            sb.draw(playerOneView.getImage(player1.getDirection(), 1), j * TILESIZE, i * TILESIZE);
+            sb.draw(playerOneView.getImage(player1.getDirection(), 1), j *Tile.getTileSize(), i *Tile.getTileSize());
         }
         else if (i == player2.getPosition().getX() && j == player2.getPosition().getY()){
             playerTwoView.setupPlayerImage();
-            sb.draw(playerTwoView.getImage(player2.getDirection(), 2), j * TILESIZE, i * TILESIZE);
+            sb.draw(playerTwoView.getImage(player2.getDirection(), 2), j *Tile.getTileSize(), i *Tile.getTileSize());
         }
         //sb.draw(sprPermWall, j *Tile.getTileSize(), i *Tile.getTileSize());
 
@@ -93,42 +91,11 @@ public class Drawer {
     }
 
     private void drawWall(int i, int j) {
-        if (!(((Wall) tile.getEntities().get(0)).isDestroyable())) {
-            sb.draw(sprPermWall, (j * TILESIZE), i * TILESIZE);
+        if (tile.entities.get(0) instanceof SoftWall) {
+            sb.draw(sprTempWall, j *Tile.getTileSize(), i *Tile.getTileSize());
         }
         else{
-            sb.draw(sprTempWall, j * TILESIZE, i * TILESIZE);
+            sb.draw(sprPermWall, j *Tile.getTileSize(), i *Tile.getTileSize());
         }
     }
-
-    /*private void parseMapObjects(MapObjects mapObjects) {
-        for(MapObject mapObject : mapObjects) {
-            if(mapObject instanceof PolygonMapObject) {
-                createStaticBody((PolygonMapObject) mapObject);
-            }
-        }
-    }
-    private void createStaticBody(PolygonMapObject polygonMapObject) {
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.StaticBody;
-        Body body = gameScreen.getWorld().createBody(bodyDef);
-        Shape shape = createPolygonShape(polygonMapObject);
-        body.createFixture(shape, 1000);
-        shape.dispose();
-    }
-
-    private Shape createPolygonShape(PolygonMapObject polygonMapObject) {
-        float[] vertices = polygonMapObject.getPolygon().getTransformedVertices();
-        Vector2[] worldVertices = new Vector2[vertices.length / 2];
-
-        for(int i = 0; i < vertices.length / 2; i++) {
-            Vector2 current = new Vector2(vertices[i * 2] / PPM, vertices[i * 2 + 1] / PPM);
-            worldVertices[i] = current;
-
-        }
-
-        PolygonShape shape = new PolygonShape();
-        shape.set(worldVertices);
-        return shape;
-    }*/
 }

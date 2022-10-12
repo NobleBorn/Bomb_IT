@@ -3,13 +3,13 @@ package Models;
 /**
  * The class represents a player as a subclass of {@link Models.Entity} and a navigable entity.
  */
-public class Player extends Entity{
+public class Player extends Entity implements Destroyable{
     private Direction direction;
     private Position nextPosition;
     private int score;
     private boolean alive;
     private int bombLength;
-    private CollisionChecker cc;
+    private INavigable navigation;
 
     public MoveObservable observable;
 
@@ -18,9 +18,9 @@ public class Player extends Entity{
      * @param position the initial {@link Models.Position} of a player at the time of creating it.
      * @param cc a {@link Models.CollisionChecker} for the player to be aware of its surroundings.
      */
-    public Player(Position position, CollisionChecker cc){
+    public Player(Position position, INavigable navigation){
         super(position);
-        this.cc = cc;
+        this.navigation = navigation;
         this.direction = Direction.UP;
         this.score = 0;
         this.alive = true;
@@ -36,10 +36,13 @@ public class Player extends Entity{
         this.direction = newDirection;
         nextPosition = newPositionHandler();
 
-        if (cc.isNextTileFree(nextPosition)){
-            observable.notifySubscribers(position, nextPosition);
+        if (navigation.tryMove(nextPosition, this)){
             position = nextPosition;
         }
+        //if (cc.isNextTileFree(nextPosition)){
+        //    observable.notifySubscribers(position, nextPosition);
+
+        //}
     }
 
     /**
@@ -47,6 +50,10 @@ public class Player extends Entity{
      */
     public Direction getDirection() {
         return direction;
+    }
+
+    public int getScore() {
+        return score;
     }
 
     private Position newPositionHandler() { //possible improvement?
@@ -72,10 +79,9 @@ public class Player extends Entity{
     public void dropBomb(){
         //add so you cannot drop infinite bombs
         //should bomb be placed a tile behind the player?
-        Bomb bomb = new Bomb(getPosition(), bombLength, cc);
+        //Bomb bomb = new Bomb(getPosition(), bombLength, cc);
 
     }
-
     public void terminate(){
         alive = false;
     }
@@ -86,6 +92,6 @@ public class Player extends Entity{
      */
     @Override
     protected Entity copyThis() {
-        return new Player(new Position(position), cc);
+        return new Player(new Position(position), navigation);
     }
 }

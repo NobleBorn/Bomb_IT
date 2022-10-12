@@ -19,11 +19,22 @@ public class CollisionChecker {
         return tiles[x][y].isTileEmpty(); //returns whether tile is empty or not
     }
 
-    public void bombCollision(BombExplosionSquare bombExplosion){
+    public boolean bombCollision(BombExplosion bombExplosion) {
 
+        Tile[][] tiles = map.getTiles();
+        List<Position> explosionSquares = bombExplosion.getBombExplosionSquares();
+
+        for (int i = 0; i <= bombExplosion.getBombExplosionSquares().size(); i++) {
+            if (!(tiles[explosionSquares.get(i).getX()][explosionSquares.get(i).getY()].isTileEmpty())) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    public void checkCollision(){
-
+    public boolean checkBombSpawn(Position bombPosition){
+        Tile[][] tiles = map.getTiles();
+        Entity entity = tiles[bombPosition.getX()][bombPosition.getY()].entities.get(0);
+        return bombPosition == entity.getPosition() && !(entity instanceof SoftWall);
     }
 }

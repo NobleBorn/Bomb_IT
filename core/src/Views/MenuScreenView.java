@@ -34,17 +34,13 @@ public class MenuScreenView implements Screen {
 
         game_music = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
         game_music.setLooping(true);
-
+        click_sound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
         menuController = new MenuScreenController(this);
 
     }
 
     public Stage getStage() {
         return stage;
-    }
-
-    public Main getGame() {
-        return game;
     }
 
     public Music getGame_music() {
@@ -75,7 +71,7 @@ public class MenuScreenView implements Screen {
         game.batch.end();
 
         if (startClicked)
-            this.game.setScreen(new GameScreen());
+            this.game.setScreen(new Boot(game));
 
         stage.act();
         stage.draw();
@@ -83,6 +79,7 @@ public class MenuScreenView implements Screen {
 
     @Override
     public void resize(int width, int height) {
+
     }
 
     @Override

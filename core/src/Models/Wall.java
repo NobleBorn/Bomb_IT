@@ -7,23 +7,8 @@ import Models.Position;
  */
 public class Wall extends Entity{
 
-    private final boolean isDestroyable;
-
-    /**
-     * Class constructor.
-     * @param isDestroyable an unchangeable {@link Boolean} that differentiates between destroyable and undestroyable walls.
-     * @param position a {@link Models.Position} that specifies which {@link Models.Tile} the wall belongs to.
-     */
-    public Wall(boolean isDestroyable, Position position){
+    public Wall(Position position){
         super(position);
-        this.isDestroyable = isDestroyable;
-    }
-
-    /**
-     * @return returns true if the wall is initialized as destroyable, false otherwise.
-     */
-    public boolean isDestroyable() {
-        return isDestroyable;
     }
 
     /**
@@ -32,6 +17,6 @@ public class Wall extends Entity{
      */
     @Override
     protected Entity copyThis() {
-        return new Wall(this.isDestroyable, new Position(this.position));
+        return new Wall(new Position(this.position));
     }
 }

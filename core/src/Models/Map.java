@@ -16,13 +16,13 @@ import java.util.List;
 /**
  * The class represents a map that contains tiles, see {@link Models.Tile} and entities, see {@link Models.Entity}
  */
-public class Map implements EventListener{
+public class Map implements EventListener, INavigable{
 
-    private int y;
-    private int x;
     private final CollisionChecker collision;
     private final int size = 20;
-    private Tile[][] tiles = new Tile[20][20];
+    private final int y = size;
+    private final int x = size;
+    private final Tile[][] tiles;
     private String[][] maps = new String[size][size];
     private List<Player> playerObjList = new ArrayList<>();
 
@@ -31,18 +31,12 @@ public class Map implements EventListener{
      */
     public Map(){
         this.collision = new CollisionChecker(this);
-        setMapSize(size);
-        tiles = createTiles(size);
+        tiles = createTiles();
         loadWalls();
         addObjects();
     }
 
-    private void setMapSize(int Size){
-        y = Size;
-        x = Size;
-    }
-
-    private Tile[][] createTiles(int Size) {
+    private Tile[][] createTiles() {
         Tile[][] tiles = new Tile[size][size];
         for (int i = 0; i < size; i++){
             for (int j = 0; j < size; j++){
@@ -65,31 +59,9 @@ public class Map implements EventListener{
 
     private void addObjects(){
 
-        String[][] mapInNumbers = ReadFile();
-        for (int i = 0; i < size; i++){
-            for (int j = 0; j < size; j++){
-                String decider = mapInNumbers[i][j];
-                switch (decider) {
-                    case "1":
-                        tiles[i][j].addEntity(new Wall(false, new Position(i, j)));
-                        break;
-                    case "2":
-                        tiles[i][j].addEntity(new Wall(true, new Position(i, j)));
-                        break;
-                    case "3":
-                        tiles[i][j].addEntity(new Player(new Position(i, j), collision));
-                        playerObjList.add((Player)tiles[i][j].getEntities().get(0));
-                        break;
-                }
-            }
-        }
-    }
-
-    private String[][] ReadFile() {
-        String[][] readNumbers = new String[size][size];
         try {
             List<String> rows = new ArrayList<String>();
-            BufferedReader bf = new BufferedReader(new FileReader("C:\\Users\\oyoun\\IdeaProjects\\Bomb_IT\\assets\\test.txt"));
+            BufferedReader bf = new BufferedReader(new FileReader("/Users/maxlevin/Documents/TDA367/Bomb_IT/assets/test.txt"));
             String line = bf.readLine();
             while (line != null) {
                 rows.add(line);
@@ -100,22 +72,33 @@ public class Map implements EventListener{
             int s = 0;
             for (int i=rows.size()-1;i>=0;i--) {
                 String[] stringSplit = (rows.get(i).split(","));
-                readNumbers[s] = stringSplit;
+                maps[s] = stringSplit;
                 s++;
             }
         } catch (IOException e){
             e.printStackTrace();
         }
-        return readNumbers;
+        for (int i = 0; i < size; i++){
+            for (int j = 0; j < size; j++){
+                String decider = maps[i][j];
+                switch (decider) {
+                    case "1":
+                        tiles[i][j].addEntity(new Wall(new Position(i, j)));
+                        break;
+                    case "2":
+                        tiles[i][j].addEntity(new SoftWall(new Position(i, j)));
+                        break;
+                    case "3":
+                        tiles[i][j].addEntity(new Player(new Position(i, j), this));
+                        playerObjList.add((Player)tiles[i][j].getEntities().get(0));
+                        break;
+                }
+            }
+        }
     }
-
-    /**
-     * @return returns a {@link List<Player>} that contains all the players' objects on the initialized map.
-     */
     public List<Player> getPlayers(){
         return playerObjList;
     }
-
     public int[] getSize(){
         int[] coordinates = new int[2];
 
@@ -140,5 +123,37 @@ public class Map implements EventListener{
             }
         }
         return returnTiles;
+
     }
+
+    @Override
+    public boolean tryMove(Position newPos, Player player) {
+        Position currPos = player.getPosition();
+        if (tiles[newPos.getX()][newPos.getY()].isTileEmpty()){
+            tiles[currPos.getX()][currPos.getY()].removeEntity();
+            tiles[newPos.getX()][newPos.getY()].addEntity(player);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean addEntityToWorld(Position pos, Entity ent) {
+        if (tiles[pos.getX()][pos.getY()].isTileEmpty()){
+            tiles[pos.getX()][pos.getY()].addEntity(ent);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean tryToKillEntity(Entity ent) {
+        if (!tiles[ent.getPosition().getX()][ent.getPosition().getY()].isTileEmpty()){
+            tiles[ent.getPosition().getX()][ent.getPosition().getY()].removeEntity();
+            return true;
+        }
+        return false;
+    }
+
+
 }

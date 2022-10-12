@@ -7,9 +7,9 @@ import java.util.List;
  * The class represents a place for entities to exist and be manipulated.
  */
 public class Tile {
-    private final Position position;
-
-    protected List<Entity> entities = new ArrayList<>(1);
+    private Position position;
+    public List<Entity> entities = new ArrayList<>(1);
+    private static final int tileSize = 48;
 
     /**
      * Class constructor that takes in relative position coordinates to specify the tile's position on a certain coordinate system.
@@ -36,13 +36,11 @@ public class Tile {
     public void addEntity(Entity e){
         entities.add(e);
     }
-
     /**
      * Remove an entity from the objects in the tile.
-     * @param e the entity to be removed from the tile's objects.
      */
-    public void removeEntity(Entity e){
-        entities.remove(e);
+    public void removeEntity(){
+        entities.remove(0);
     }
 
     /**
@@ -64,7 +62,6 @@ public class Tile {
         }
         return entitiesReturn;
     }
-
 
     private List<Entity> copyEntities(List<Entity> otherEntities) {
         for(Entity ent: otherEntities){
