@@ -14,7 +14,6 @@ public class BombExplosion { //if extend Entity, BombExplosion and its center Bo
         createBombExplosionSquares(position, length);
     }
 
-    private Wall wall;
     private void createBombExplosionSquares(Position position, int length) {
 
         int tailLength = (length-1)/2;
@@ -31,7 +30,7 @@ public class BombExplosion { //if extend Entity, BombExplosion and its center Bo
 
         int var = 4;
         for(int n = 0; n <= bombExplosionSquares.size(); n++){
-            if((bombExplosionSquares.get(n) == wall.getPosition()) && !(wall.isDestroyable())){
+            if(cc.checkBombSpawn(bombExplosionSquares.get(n))){
                 int var2 = 0;
                 while(n+var2*var<bombExplosionSquares.size()){
                     bombExplosionSquares.remove(bombExplosionSquares.get(n+var*var2));

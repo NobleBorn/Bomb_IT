@@ -5,6 +5,8 @@ import Controllers.PanelController;
 import Controllers.PlayerController;
 import Models.*;
 //import Views.GameScreenView;
+import Views.GameOverView;
+import Views.MenuScreenView;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -26,6 +28,8 @@ public class Boot implements Screen {
     private PlayerController playerTwoController;
 
     private PanelController panelController;
+    private float timeSeconds = 0f;
+    private float period = 10f;
 
     public enum State{
         Running, Paused
@@ -87,15 +91,25 @@ public class Boot implements Screen {
 
     @Override
     public void render(float delta) {
-        draw();
         switch(state){
             case Running:
-                update();
+                timeSeconds += Gdx.graphics.getDeltaTime();
+                if(timeSeconds > period){
+                    this.game.setScreen(new GameOverView(game));
+                }
+                else{
+                    draw();
+                    update();
+                }
                 break;
             case Paused:
-                panelController.render();
+                //panelController.render();
                 break;
         }
+    }
+
+    public float getTimeSeconds() {
+        return timeSeconds;
     }
 
     public void draw(){

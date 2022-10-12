@@ -20,7 +20,6 @@ public class PanelController {
     private Player player1;
     private Player player2;
 
-
     Text_Button pause_button = new Text_Button("Pause", 2,1, 9.5f, 6);
     Text_Button resume_button = new Text_Button("Resume", 2,1, 9.5f, 7);
 
@@ -35,7 +34,7 @@ public class PanelController {
         Gdx.input.setInputProcessor(this.stage);
         batch = new SpriteBatch();
         font = new BitmapFont();
-        font.setColor(Color.BLACK);
+        font.setColor(Color.WHITE);
         font.getData().setScale(1.2f);
 
         this.boot = boot;
@@ -75,6 +74,7 @@ public class PanelController {
         int row_height = Gdx.graphics.getWidth() / 12;
         int col_width = Gdx.graphics.getWidth() / 12;
         batch.begin();
+        font.draw(batch,"Timer: " + (int)boot.getTimeSeconds(), col_width*9.5f, row_height*6.5f);
         font.draw(batch,"Player 1 points: " + player1.getScore(), col_width*9.5f, row_height*6);
         font.draw(batch,"Player 2 points: " + player2.getScore(), col_width*9.5f, row_height*5.5f);
         batch.end();
