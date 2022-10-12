@@ -16,7 +16,7 @@ public class Player extends Entity implements Destroyable{
     /**
      * Class constructor
      * @param position the initial {@link Models.Position} of a player at the time of creating it.
-     * @param cc a {@link Models.CollisionChecker} for the player to be aware of its surroundings.
+     * @param navigation a {@link Models.INavigable} for the player to be able to request navigation commands from the {@link Models.Map}.
      */
     public Player(Position position, INavigable navigation){
         super(position);
@@ -29,7 +29,7 @@ public class Player extends Entity implements Destroyable{
     }
 
     /**
-     * Methods offers a way for the player to move one tile on the map, if possible, and change its position.
+     * Methods offers a way for the player to move one {@link Models.Tile} on the map, if possible, and change its position. Note that the player's {@link Models.Direction} will be changed regardless of the result of the attempt of moving the {@link Models.Player}.
      * @param newDirection the direction that the player is trying to move in.
      */
     public void walk(Direction newDirection) {
@@ -52,6 +52,9 @@ public class Player extends Entity implements Destroyable{
         return direction;
     }
 
+    /**
+     * @return returns a player's current score
+     */
     public int getScore() {
         return score;
     }

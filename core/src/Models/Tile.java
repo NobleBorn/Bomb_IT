@@ -9,7 +9,7 @@ import java.util.List;
 public class Tile {
     private Position position;
     public List<Entity> entities = new ArrayList<>(1);
-    private static final int tileSize = 48;
+    public static final int tileSize = 48;
 
     /**
      * Class constructor that takes in relative position coordinates to specify the tile's position on a certain coordinate system.

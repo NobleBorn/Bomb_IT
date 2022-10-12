@@ -61,7 +61,7 @@ public class Map implements EventListener, INavigable{
 
         try {
             List<String> rows = new ArrayList<String>();
-            BufferedReader bf = new BufferedReader(new FileReader("/Users/maxlevin/Documents/TDA367/Bomb_IT/assets/test.txt"));
+            BufferedReader bf = new BufferedReader(new FileReader("C:\\Users\\oyoun\\IdeaProjects\\Bomb_IT\\assets\\test.txt"));
             String line = bf.readLine();
             while (line != null) {
                 rows.add(line);
@@ -126,6 +126,12 @@ public class Map implements EventListener, INavigable{
 
     }
 
+    /**
+     * Offers a way for a player to request to move if the position the player is trying to move to is available.
+     * @param newPos the {@link Models.Position} that the player is trying to move to.
+     * @param player the {@link Models.Player} object that is trying to move.
+     * @return returns true if the {@link Models.Player} is moved successfully, false otherwise.
+     */
     @Override
     public boolean tryMove(Position newPos, Player player) {
         Position currPos = player.getPosition();
@@ -137,6 +143,12 @@ public class Map implements EventListener, INavigable{
         return false;
     }
 
+    /**
+     * Offers a way for objects to try adding an {@link Models.Entity} to the world.
+     * @param pos the {@link Models.Position} that the {@link Models.Entity} is trying to be added at.
+     * @param ent the {@link Models.Entity} that is trying to be added.
+     * @return returns true if the {@link Models.Entity} is added successfully to a {@link Models.Tile}, false otherwise.
+     */
     @Override
     public boolean addEntityToWorld(Position pos, Entity ent) {
         if (tiles[pos.getX()][pos.getY()].isTileEmpty()){
@@ -146,6 +158,11 @@ public class Map implements EventListener, INavigable{
         return false;
     }
 
+    /**
+     * Offers a way for objects to try removing an {@link Models.Entity} from the world.
+     * @param ent the {@link Models.Entity} that is trying to be removed.
+     * @return returns true if the {@link Models.Entity} is removed successfully, false otherwise.
+     */
     @Override
     public boolean tryToKillEntity(Entity ent) {
         if (!tiles[ent.getPosition().getX()][ent.getPosition().getY()].isTileEmpty()){
