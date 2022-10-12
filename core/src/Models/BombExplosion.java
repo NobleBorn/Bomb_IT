@@ -39,7 +39,6 @@ public class BombExplosion { //if extend Entity, BombExplosion and its center Bo
                 var--;
             }
         }
-
     }
 
 
