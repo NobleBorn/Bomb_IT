@@ -6,13 +6,13 @@ public class Player extends Entity implements Destroyable{
     private int score;
     private boolean alive;
     private int bombLength;
-    private CollisionChecker cc;
+    private INavigable navigation;
 
     public MoveObservable observable;
 
-    public Player(Position position, CollisionChecker cc){
+    public Player(Position position, INavigable navigation){
         super(position);
-        this.cc = cc;
+        this.navigation = navigation;
         this.direction = Direction.UP;
         this.score = 0;
         this.alive = true;
@@ -24,10 +24,13 @@ public class Player extends Entity implements Destroyable{
         this.direction = newDirection;
         nextPosition = newPositionHandler();
 
-        if (cc.isNextTileFree(nextPosition)){
-            observable.notifySubscribers(position, nextPosition);
+        if (navigation.tryMove(nextPosition, this)){
             position = nextPosition;
         }
+        //if (cc.isNextTileFree(nextPosition)){
+        //    observable.notifySubscribers(position, nextPosition);
+
+        //}
     }
 
     public Direction getDirection() {
@@ -58,17 +61,15 @@ public class Player extends Entity implements Destroyable{
     public void dropBomb(){
         //add so you cannot drop infinite bombs
         //should bomb be placed a tile behind the player?
-        Bomb bomb = new Bomb(getPosition(), bombLength, cc);
+        //Bomb bomb = new Bomb(getPosition(), bombLength, cc);
 
     }
-
-    @Override
     public void terminate(){
         alive = false;
     }
 
     @Override
     protected Entity copyThis() {
-        return new Player(new Position(position), cc);
+        return new Player(new Position(position), navigation);
     }
 }

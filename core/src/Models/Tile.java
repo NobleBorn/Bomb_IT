@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Tile {
     private Position position;
-    public List<Entity> entities = new ArrayList<>();
+    public List<Entity> entities = new ArrayList<>(1);
     private static final int tileSize = 48;
 
     public Tile(int x, int y){
@@ -19,8 +19,8 @@ public class Tile {
     public void addEntity(Entity e){
         entities.add(e);
     }
-    public void removeEntity(Entity e){
-        entities.remove(e);
+    public void removeEntity(){
+        entities.remove(0);
     }
     public boolean isTileEmpty(){
         return entities.size() == 0;
