@@ -52,7 +52,7 @@ public class Map implements EventListener, INavigable{
 
         try {
             List<String> rows = new ArrayList<String>();
-            BufferedReader bf = new BufferedReader(new FileReader("/Users/nobleborn/Desktop/Project/assets/test.txt"));
+            BufferedReader bf = new BufferedReader(new FileReader("/Users/maxlevin/Documents/TDA367/Bomb_IT/assets/test.txt"));
             String line = bf.readLine();
             while (line != null) {
                 rows.add(line);
@@ -74,10 +74,10 @@ public class Map implements EventListener, INavigable{
                 String decider = maps[i][j];
                 switch (decider) {
                     case "1":
-                        tiles[i][j].addEntity(new Wall(false, new Position(i, j)));
+                        tiles[i][j].addEntity(new Wall(new Position(i, j)));
                         break;
                     case "2":
-                        tiles[i][j].addEntity(new Wall(true, new Position(i, j)));
+                        tiles[i][j].addEntity(new SoftWall(new Position(i, j)));
                         break;
                     case "3":
                         tiles[i][j].addEntity(new Player(new Position(i, j), this));
@@ -111,6 +111,7 @@ public class Map implements EventListener, INavigable{
             }
         }
         return returnTiles;
+
     }
 
     @Override

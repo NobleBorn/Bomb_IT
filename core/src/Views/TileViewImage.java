@@ -7,18 +7,18 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 
 public class TileViewImage {
-    private final Texture permWall;
-    private final Texture tempWall;
+    private final Texture permWallTexture;
+    private final Texture tempWallTexture;
     public TileViewImage(){
-        this.permWall = new Texture(Gdx.files.internal("wallperm.jpg"));
-        this.tempWall = new Texture(Gdx.files.internal("walltemp.jpg"));
+        this.permWallTexture = new Texture(Gdx.files.internal("wallperm.jpg"));
+        this.tempWallTexture = new Texture(Gdx.files.internal("walltemp.jpg"));
     }
-    public Texture getWallTexture(boolean isDestroyable){
-        if(isDestroyable){
-            return tempWall;
-        }
-        else {
-            return permWall;
-        }
+
+    public Texture getPermWallTexture() {
+        return permWallTexture;
+    }
+
+    public Texture getTempWallTexture() {
+        return tempWallTexture;
     }
 }
