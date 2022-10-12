@@ -18,7 +18,6 @@ public class Bomb extends Entity implements Runnable{
 
     private void detonate(){
         BombExplosion bombExplosion = new BombExplosion(position, bombLength, cc);
-
     }
 
     @Override
