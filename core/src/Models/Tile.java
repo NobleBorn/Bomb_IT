@@ -6,7 +6,7 @@ import java.util.List;
 public class Tile {
     private Position position;
     public List<Entity> entities = new ArrayList<>(1);
-    private static final int tileSize = 48;
+    public static final int tileSize = 48;
 
     public Tile(int x, int y){
         this.position = new Position(x, y);
