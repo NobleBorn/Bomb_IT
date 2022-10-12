@@ -4,7 +4,6 @@ import Models.Position;
 
 public class Wall extends Entity{
 
-
     public Wall(Position position){
         super(position);
     }

@@ -31,7 +31,7 @@ public class BombExplosion { //if extend Entity, BombExplosion and its center Bo
 
         int var = 4;
         for(int n = 0; n <= bombExplosionSquares.size(); n++){
-            if((bombExplosionSquares.get(n) == wall.getPosition()) && !(wall.isDestroyable())){
+            if((bombExplosionSquares.get(n) == wall.getPosition()) && !(wall instanceof SoftWall)){
                 int var2 = 0;
                 while(n+var2*var<bombExplosionSquares.size()){
                     bombExplosionSquares.remove(bombExplosionSquares.get(n+var*var2));
