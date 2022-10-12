@@ -92,11 +92,10 @@ public class Drawer {
 
     private void drawWall(int i, int j) {
         if (tile.entities.get(0) instanceof SoftWall) {
-            sb.draw(sprPermWall, j *Tile.getTileSize(), i *Tile.getTileSize());
+            sb.draw(sprTempWall, j *Tile.getTileSize(), i *Tile.getTileSize());
         }
         else{
-            sb.draw(sprTempWall, j *Tile.getTileSize(), i *Tile.getTileSize());
-
+            sb.draw(sprPermWall, j *Tile.getTileSize(), i *Tile.getTileSize());
         }
     }
 }
