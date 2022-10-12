@@ -1,6 +1,6 @@
 package Models;
 
-public class Player extends Entity{
+public class Player extends Entity implements Destroyable{
     private Direction direction;
     private Position nextPosition;
     private int score;
@@ -62,6 +62,7 @@ public class Player extends Entity{
 
     }
 
+    @Override
     public void terminate(){
         alive = false;
     }

@@ -91,11 +91,11 @@ public class Drawer {
     }
 
     private void drawWall(int i, int j) {
-        if (!(((Wall) tile.entities.get(0)).isDestroyable())) {
-            sb.draw(sprPermWall, (j *Tile.getTileSize()), i *Tile.getTileSize());
+        if (tile.entities.get(0) instanceof SoftWall) {
+            sb.draw(sprTempWall, j *Tile.getTileSize(), i *Tile.getTileSize());
         }
         else{
-            sb.draw(sprTempWall, j *Tile.getTileSize(), i *Tile.getTileSize());
+            sb.draw(sprPermWall, (j *Tile.getTileSize()), i *Tile.getTileSize());
         }
     }
 
