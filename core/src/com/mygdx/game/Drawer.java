@@ -23,8 +23,8 @@ public class Drawer {
         this.map = map;
         this.player1 = player1;
         this.player2 = player2;
-        sprPermWall = new TileViewImage().getWallTexture(false);
-        sprTempWall = new TileViewImage().getWallTexture(true);
+        sprPermWall = new TileViewImage().getPermWallTexture();
+        sprTempWall = new TileViewImage().getTempWallTexture();
         playerOneView = new PlayerView(this.player1);
         playerTwoView = new PlayerView(this.player2);
     }
@@ -53,13 +53,13 @@ public class Drawer {
             for (int j = 0; j < tilesMatrix.length; j++){
                 tile = tilesMatrix[i][j];
                 //sb.draw(background, j*Tile.getTileSize(), i*Tile.getTileSize());
-                if (!tile.isTileEmpty()){
+                if (!tilesMatrix[i][j].isTileEmpty()){
 
-                    if ((tile.entities.get(0) instanceof Wall)){
+                    if ((tilesMatrix[i][j].entities.get(0) instanceof Wall)){
                         drawWall(i, j);
 
                     }
-                    else if (tile.entities.get(0) instanceof Player){
+                    else if (tilesMatrix[i][j].entities.get(0) instanceof Player){
                         drawPlayer(i, j);
                     }
                 }
@@ -91,42 +91,12 @@ public class Drawer {
     }
 
     private void drawWall(int i, int j) {
-        if (!(((Wall) tile.entities.get(0)).isDestroyable())) {
-            sb.draw(sprPermWall, (j *Tile.getTileSize()), i *Tile.getTileSize());
+        if (tile.entities.get(0) instanceof SoftWall) {
+            sb.draw(sprPermWall, j *Tile.getTileSize(), i *Tile.getTileSize());
         }
         else{
             sb.draw(sprTempWall, j *Tile.getTileSize(), i *Tile.getTileSize());
-        }
-    }
-
-    /*private void parseMapObjects(MapObjects mapObjects) {
-        for(MapObject mapObject : mapObjects) {
-            if(mapObject instanceof PolygonMapObject) {
-                createStaticBody((PolygonMapObject) mapObject);
-            }
-        }
-    }
-    private void createStaticBody(PolygonMapObject polygonMapObject) {
-        BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.StaticBody;
-        Body body = gameScreen.getWorld().createBody(bodyDef);
-        Shape shape = createPolygonShape(polygonMapObject);
-        body.createFixture(shape, 1000);
-        shape.dispose();
-    }
-
-    private Shape createPolygonShape(PolygonMapObject polygonMapObject) {
-        float[] vertices = polygonMapObject.getPolygon().getTransformedVertices();
-        Vector2[] worldVertices = new Vector2[vertices.length / 2];
-
-        for(int i = 0; i < vertices.length / 2; i++) {
-            Vector2 current = new Vector2(vertices[i * 2] / PPM, vertices[i * 2 + 1] / PPM);
-            worldVertices[i] = current;
 
         }
-
-        PolygonShape shape = new PolygonShape();
-        shape.set(worldVertices);
-        return shape;
-    }*/
+    }
 }
