@@ -7,11 +7,14 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.*;
 import Controllers.MenuScreenController;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 
 //Help from Libgdx website, wiki and tutorials
 public class Main extends Game {
 	public SpriteBatch batch;
 	public BitmapFont font;
+	public Stage stage;
+
 
 	@Override
 	public void create() {
@@ -20,6 +23,8 @@ public class Main extends Game {
 		// BitmapFont object is used, along with a SpriteBatch, to render text onto the screen
 		font = new BitmapFont();
 		// Set the Screen of the Game to a MainMenuScreen object, with a Main instance as its first and only parameter
+
+		stage = new Stage();
 		this.setScreen(new MenuScreenView(this));
 	}
 
@@ -34,5 +39,6 @@ public class Main extends Game {
 	public void dispose() {
 		batch.dispose();
 		font.dispose();
+		stage.dispose();
 	}
 }
