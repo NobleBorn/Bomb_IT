@@ -60,17 +60,14 @@ public class Drawer {
             for (int j = 0; j < tilesMatrix.length; j++){
                 tile = tilesMatrix[i][j];
                 //sb.draw(background, j*Tile.getTileSize(), i*Tile.getTileSize());
-                if (!tilesMatrix[i][j].isTileEmpty()){
+                if (!tilesMatrix[i][j].isTileEmpty()) {
 
-                    if ((tilesMatrix[i][j].entities.get(0) instanceof Wall)){
+                    if ((tilesMatrix[i][j].entities.get(0) instanceof Wall)) {
                         drawWall(i, j);
 
-                    }
-                    else if (tilesMatrix[i][j].entities.get(0) instanceof Player){
+                    } else if (tilesMatrix[i][j].entities.get(0) instanceof Player) {
                         drawPlayer(i, j);
-                    }
-
-                    else if(tile.entities.get(0) instanceof Bomb){
+                    } else if (tile.entities.get(0) instanceof Bomb) {
                         drawBomb(i, j);
                     }
                 }
@@ -85,13 +82,18 @@ public class Drawer {
         sb.draw(playerOneView.getImage(player1.getDirection()), j *Tile.getTileSize(), i *Tile.getTileSize());
         playerTwoView.setupPlayerImage();
         sb.draw(playerTwoView.getImage(player2.getDirection()), j *Tile.getTileSize(), i *Tile.getTileSize());*/
-        if (i == player1.getPosition().getX() && j == player1.getPosition().getY()){
-            playerOneView.setupPlayerImage();
-            sb.draw(playerOneView.getImage(player1.getDirection(), 1), j *Tile.tileSize, i *Tile.tileSize);
+        if (i == player1.getPosition().getX() && j == player1.getPosition().getY()) {
+            if (player1.isAlive()) {
+                playerOneView.setupPlayerImage();
+                sb.draw(playerOneView.getImage(player1.getDirection(), 1), j * Tile.tileSize, i * Tile.tileSize);
+            }
         }
-        else if (i == player2.getPosition().getX() && j == player2.getPosition().getY()){
-            playerTwoView.setupPlayerImage();
-            sb.draw(playerTwoView.getImage(player2.getDirection(), 2), j *Tile.tileSize, i *Tile.tileSize);
+        if (i == player2.getPosition().getX() && j == player2.getPosition().getY()) {
+            if (player2.isAlive()) {
+                playerTwoView.setupPlayerImage();
+                sb.draw(playerTwoView.getImage(player2.getDirection(), 2), j * Tile.tileSize, i * Tile.tileSize);
+            }
+
         }
         //sb.draw(sprPermWall, j *Tile.getTileSize(), i *Tile.getTileSize());
 
@@ -111,7 +113,7 @@ public class Drawer {
     }
 
     private void drawBomb(int i, int j){
-        sb.draw(bombView.getBombImage(), j *Tile.getTileSize(), i *Tile.getTileSize());
+        sb.draw(bombView.getBombImage(), j *Tile.tileSize, i *Tile.tileSize);
     }
 }
 
