@@ -54,9 +54,9 @@ public class Boot implements Screen {
         this.panelController = new PanelController(this, playerOne, playerTwo);
 
         this.playerOneController = new PlayerController(playerOne, Input.Keys.DPAD_UP, Input.Keys.DPAD_DOWN,
-                Input.Keys.DPAD_RIGHT, Input.Keys.DPAD_LEFT);
+                Input.Keys.DPAD_RIGHT, Input.Keys.DPAD_LEFT, Input.Keys.SHIFT_RIGHT);
         this.playerTwoController = new PlayerController(playerTwo, Input.Keys.W, Input.Keys.S,
-                Input.Keys.D, Input.Keys.A);
+                Input.Keys.D, Input.Keys.A, Input.Keys.SHIFT_LEFT);
 
         this.widthScreen = Gdx.graphics.getWidth();
         this.heightScreen = Gdx.graphics.getHeight();
