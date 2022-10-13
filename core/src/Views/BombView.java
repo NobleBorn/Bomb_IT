@@ -13,36 +13,37 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class BombView extends ApplicationAdapter {
     SpriteBatch batch;
-    Texture bombImage;
     Bomb bomb;
     PlayerController playerController;
+
+    Texture bombImage;
     KeyHandler keyH;
-    TextureRegion bomb1;
+    TextureRegion bombPlayerImage;
 
     public BombView(Bomb bomb){
         keyH = new KeyHandler();
-        bombImage = new Texture("bomb.png");
-        addsprites();
+        bombImage = new Texture("bombImage.png");
+        addsprite();
     }
 
-    private void addsprites(){
-        bomb1 = new TextureRegion(bombImage, 0, 0, 64, 64);
+    private void addsprite(){
+        bombPlayerImage = new TextureRegion(bombImage, 0, 0, 64, 64);
     }
 
     public TextureRegion getBombImage(){
-        TextureRegion image = null;
+        TextureRegion image = bombPlayerImage;
 
-        if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT)){
-            image = bomb1;
-        }
+        /*if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT) || Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)){
+            image = bombPlayerImage;
+        }*/
         return image;
     }
 
-    public Texture setupPlayerImage() {
-        if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT) ){
+    /*public Texture setupPlayerImage() {
+        if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT) || Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)){
                 return bombImage;
-            } return null;
-    }
+        } return null;
+    }*/
 
     /*@Override
     public void create () {

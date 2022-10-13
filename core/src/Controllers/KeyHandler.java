@@ -18,7 +18,7 @@ public class KeyHandler implements InputProcessor {
         if (keycode == Input.Keys.DPAD_LEFT)
             leftPressed = true;
 
-        if(keycode == Input.Keys.SHIFT_RIGHT)
+        if(keycode == Input.Keys.SHIFT_RIGHT || keycode == Input.Keys.SHIFT_LEFT)
             dropBombPressed = true;
 
         return false;
@@ -35,7 +35,7 @@ public class KeyHandler implements InputProcessor {
         if (keycode == Input.Keys.DPAD_LEFT)
             leftPressed = false;
 
-        if(keycode == Input.Keys.SHIFT_RIGHT)
+        if(keycode == Input.Keys.SHIFT_RIGHT || keycode == Input.Keys.SHIFT_LEFT)
             dropBombPressed = false;
 
         return false;

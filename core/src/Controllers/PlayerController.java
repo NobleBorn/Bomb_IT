@@ -9,9 +9,9 @@ public class PlayerController {
     Direction direction;
     KeyHandler keyH;
     Player player;
-    private final int keyUp, keyLeft, keyDown, keyRight;
+    private final int keyUp, keyLeft, keyDown, keyRight, keyDropBomb;
 
-    public PlayerController(Player player, int up, int down, int right, int left){
+    public PlayerController(Player player, int up, int down, int right, int left, int dropBomb){
         this.player = player;
         //this.playerView = playerView;
         this.keyH = new KeyHandler();
@@ -19,6 +19,7 @@ public class PlayerController {
         this.keyLeft = left;
         this.keyDown = down;
         this.keyRight = right;
+        this.keyDropBomb = dropBomb;
     }
 
     public void update(){
@@ -51,11 +52,11 @@ public class PlayerController {
             player.walk(Direction.LEFT);
 
         }
-        else{
+        else
             //player.setLeftPressed(false);
-        }
 
-        if(keyH.dropBombPressed){
+
+        if(Gdx.input.isKeyPressed(keyDropBomb)){
             player.dropBomb();
         }
     }

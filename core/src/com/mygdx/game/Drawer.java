@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import Models.*;
+import Views.BombView;
 import Views.PlayerView;
 import Views.TileViewImage;
 import com.badlogic.gdx.graphics.Texture;
@@ -18,6 +19,9 @@ public class Drawer {
     private Player player2;
     private Tile tile;
 
+    private final BombView bombView;
+    private Bomb bomb;
+
     public Drawer(SpriteBatch batch, Map map, Player player1, Player player2) {
         this.sb = batch;
         this.map = map;
@@ -27,6 +31,9 @@ public class Drawer {
         sprTempWall = new TileViewImage().getTempWallTexture();
         playerOneView = new PlayerView(this.player1);
         playerTwoView = new PlayerView(this.player2);
+
+        //this.bomb = bomb;
+        bombView = new BombView(this.bomb);
     }
 
     public void setupMap() {
@@ -61,6 +68,10 @@ public class Drawer {
                     }
                     else if (tilesMatrix[i][j].entities.get(0) instanceof Player){
                         drawPlayer(i, j);
+                    }
+
+                    else if(tile.entities.get(0) instanceof Bomb){
+                        drawBomb(i, j);
                     }
                 }
             }
@@ -98,4 +109,18 @@ public class Drawer {
             sb.draw(sprPermWall, j *Tile.getTileSize(), i *Tile.getTileSize());
         }
     }
+
+    private void drawBomb(int i, int j){
+        sb.draw(bombView.getBombImage(), j *Tile.getTileSize(), i *Tile.getTileSize());
+    }
 }
+
+
+    /*private void parseMapObjects(MapObjects mapObjects) {
+        for(MapObject mapObject : mapObjects) {
+            if(mapObject instanceof PolygonMapObject) {
+                createStaticBody((PolygonMapObject) mapObject);
+            }
+        }
+    }
+}*/
