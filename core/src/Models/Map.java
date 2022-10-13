@@ -61,7 +61,7 @@ public class Map implements EventListener, INavigable{
 
         try {
             List<String> rows = new ArrayList<String>();
-            BufferedReader bf = new BufferedReader(new FileReader("/Users/nobleborn/Desktop/Project/assets/test.txt"));
+            BufferedReader bf = new BufferedReader(new FileReader("/Users/maxlevin/Documents/TDA367/Bomb_IT/assets/test.txt"));
 
             String line = bf.readLine();
             while (line != null) {
@@ -165,10 +165,13 @@ public class Map implements EventListener, INavigable{
      * @return returns true if the {@link Models.Entity} is removed successfully, false otherwise.
      */
     @Override
-    public boolean tryToKillEntity(Entity ent) {
-        if (!tiles[ent.getPosition().getX()][ent.getPosition().getY()].isTileEmpty()){
-            tiles[ent.getPosition().getX()][ent.getPosition().getY()].removeEntity();
-            return true;
+    public boolean tryToKillEntity(Position position) {
+        Entity entity = tiles[position.getX()][position.getY()].entities.get(0);
+        if (!tiles[position.getX()][position.getY()].isTileEmpty()){
+            if (entity instanceof Destroyable){
+                tiles[position.getX()][position.getY()].removeEntity();
+                return true;
+            }
         }
         return false;
     }
