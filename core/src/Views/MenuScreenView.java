@@ -6,6 +6,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -17,6 +18,7 @@ public class MenuScreenView implements Screen {
     private Stage stage;
     private OrthographicCamera camera;
     private MenuScreenController menuController;
+    private Texture menuImg;
     private boolean startClicked = false;
     private Music game_music;
     private Sound click_sound;
@@ -28,9 +30,11 @@ public class MenuScreenView implements Screen {
         Gdx.input.setInputProcessor(this.stage);
 
         this.camera = new OrthographicCamera();
-        this.camera.setToOrtho(false, 960, 720);
+        this.camera.setToOrtho(false, 960, 960);
 
         game.batch = new SpriteBatch();
+
+        menuImg = new Texture(Gdx.files.internal("mainMenu.png"));
 
         game_music = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
         game_music.setLooping(true);
@@ -68,6 +72,7 @@ public class MenuScreenView implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();
+        game.batch.draw(menuImg,0,0,960,960);
         game.batch.end();
 
         if (startClicked)

@@ -24,6 +24,8 @@ public class Boot implements Screen {
     private Texture img;
     private SpriteBatch batch;
     private Map map;
+    private Player playerOne;
+    private Player playerTwo;
     private PlayerController playerOneController;
     private PlayerController playerTwoController;
 
@@ -46,8 +48,8 @@ public class Boot implements Screen {
     public void create() {
         this.map = new Map();
         img = new Texture(Gdx.files.internal("karta.jpg"));
-        Player playerOne = map.getPlayers().get(0);
-        Player playerTwo = map.getPlayers().get(1);
+        playerOne = map.getPlayers().get(0);
+        playerTwo = map.getPlayers().get(1);
 
         this.panelController = new PanelController(this, playerOne, playerTwo);
 
@@ -59,7 +61,7 @@ public class Boot implements Screen {
         this.widthScreen = Gdx.graphics.getWidth();
         this.heightScreen = Gdx.graphics.getHeight();
         this.orthographicCamera = new OrthographicCamera();
-        this.orthographicCamera.setToOrtho(false, widthScreen, heightScreen);
+        this.orthographicCamera.setToOrtho(false, 960, 960);
         this.batch = new SpriteBatch();
         MovementListener walkListener = new MovementListener(map);
         playerOne.observable.addSubscriber(walkListener);
@@ -91,11 +93,16 @@ public class Boot implements Screen {
 
     @Override
     public void render(float delta) {
+        int num;
         switch(state){
             case Running:
                 timeSeconds += Gdx.graphics.getDeltaTime();
-                if(timeSeconds > period){
-                    this.game.setScreen(new GameOverView(game));
+                if(timeSeconds > period || !playerOne.isAlive() || !playerTwo.isAlive()){
+                    if(playerTwo.isAlive())
+                        num = 2;
+                    else
+                        num = 1;
+                    this.game.setScreen(new GameOverView(game, num));
                 }
                 else{
                     draw();
