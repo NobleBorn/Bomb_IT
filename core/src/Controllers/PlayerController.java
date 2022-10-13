@@ -10,6 +10,7 @@ public class PlayerController {
     KeyHandler keyH;
     Player player;
     private final int keyUp, keyLeft, keyDown, keyRight, keyDropBomb;
+    private float time = 0f;
 
     public PlayerController(Player player, int up, int down, int right, int left, int dropBomb){
         this.player = player;
@@ -23,41 +24,47 @@ public class PlayerController {
     }
 
     public void update(){
-        //Gdx.input.setInputProcessor(keyH);
-        if (Gdx.input.isKeyJustPressed(keyUp)) {
-            //player.setUpPressed(true);
-            player.walk(Direction.UP);
+        if (player.isAlive()) {
+            //Gdx.input.setInputProcessor(keyH);
+            time += Gdx.graphics.getDeltaTime();
+            if (Gdx.input.isKeyPressed(keyUp)) {
+                //player.setUpPressed(true);
+                tryWalk(Direction.UP);
+            } else
+                //player.setUpPressed(false);
+
+                if (Gdx.input.isKeyPressed(keyDown)) {
+                    //player.setDownPressed(true);
+                    tryWalk(Direction.DOWN);
+
+                } else
+                    //player.setDownPressed(false);
+
+                    if (Gdx.input.isKeyPressed(keyRight)) {
+                        //player.setRightPressed(true);
+                        tryWalk(Direction.RIGHT);
+
+                    } else
+                        //player.setRightPressed(false);
+
+                        if (Gdx.input.isKeyPressed(keyLeft)) {
+                            //player.setLeftPressed(true);
+                            tryWalk(Direction.LEFT);
+
+                        } else
+                            //player.setLeftPressed(false);
+
+
+                            if (Gdx.input.isKeyPressed(keyDropBomb)) {
+                                player.dropBomb();
+                            }
         }
-        else
-            //player.setUpPressed(false);
+    }
 
-        if (Gdx.input.isKeyJustPressed(keyDown)) {
-            //player.setDownPressed(true);
-            player.walk(Direction.DOWN);
-
-        }
-        else
-            //player.setDownPressed(false);
-
-        if (Gdx.input.isKeyJustPressed(keyRight)) {
-            //player.setRightPressed(true);
-            player.walk(Direction.RIGHT);
-
-        }
-        else
-            //player.setRightPressed(false);
-
-        if (Gdx.input.isKeyJustPressed(keyLeft)) {
-            //player.setLeftPressed(true);
-            player.walk(Direction.LEFT);
-
-        }
-        else
-            //player.setLeftPressed(false);
-
-
-        if(Gdx.input.isKeyPressed(keyDropBomb)){
-            player.dropBomb();
+    private void tryWalk(Direction up) {
+        if (time > 0.15) {
+            player.walk(up);
+            time = 0;
         }
     }
 
