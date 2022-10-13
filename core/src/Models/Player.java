@@ -1,16 +1,19 @@
 package Models;
+import java.util.Random;
+import java.util.concurrent.atomic.AtomicInteger;
 
-public class Player extends Entity{
+public class Player extends Entity {
     private Direction direction;
     private Position nextPosition;
     private int score;
     private boolean alive;
     private int bombLength;
     private CollisionChecker cc;
+    private int id;
 
     public MoveObservable observable;
 
-    public Player(Position position, CollisionChecker cc){
+    public Player(Position position, CollisionChecker cc) {
         super(position);
         this.cc = cc;
         this.direction = Direction.UP;
@@ -18,13 +21,14 @@ public class Player extends Entity{
         this.alive = true;
         this.bombLength = 1;
         this.observable = new MoveObservable();
+        this.id = 2;
     }
 
     public void walk(Direction newDirection) {
         this.direction = newDirection;
         nextPosition = newPositionHandler();
 
-        if (cc.isNextTileFree(nextPosition)){
+        if (cc.isNextTileFree(nextPosition)) {
             observable.notifySubscribers(position, nextPosition);
             position = nextPosition;
         }
@@ -38,53 +42,35 @@ public class Player extends Entity{
         return score;
     }
 
+
     private Position newPositionHandler() { //possible improvement?
         Position newPosition;
-        if (direction == Direction.UP){
-            newPosition = new Position(position.getX()+1, position.getY());
-        }
-        else if (direction == Direction.RIGHT){
-            newPosition = new Position(position.getX(), position.getY()+1);
-        }
-        else if (direction == Direction.DOWN){
-            newPosition = new Position(position.getX()-1, position.getY());
-        }
-        else{
-            newPosition = new Position(position.getX(), position.getY()-1);
+        if (direction == Direction.UP) {
+            newPosition = new Position(position.getX() + 1, position.getY());
+        } else if (direction == Direction.RIGHT) {
+            newPosition = new Position(position.getX(), position.getY() + 1);
+        } else if (direction == Direction.DOWN) {
+            newPosition = new Position(position.getX() - 1, position.getY());
+        } else {
+            newPosition = new Position(position.getX(), position.getY() - 1);
         }
         return newPosition;
-    }
 
-    public void dropBomb(){
-        //add so you cannot drop infinite bombs
-        //should bomb be placed a tile behind the player?
-        Bomb bomb = new Bomb(getPosition(), bombLength, cc);
 
-    }
+        public void dropBomb () {
+            Bomb bomb = new Bomb(getPosition(), bombLength, cc);
+        }
 
-    CollisionChecker isWallHit = new CollisionChecker();
-    private Wall wall;
-    private BombExplosion bombex;
 
-    public collectPoints() {
-        // make the players collect 10 points when wall is destroyed
-        //skriv ut på spelplanen
+        public void terminate () {
+            alive = false;
+        }
 
-        if (isWallHit.bombCollision(wall, bombex)) {
-            score = score + 10;
-            //updatera
+        @Override
+        protected Entity copyThis () {
+            return new Player(new Position(position), cc);
         }
     }
-
-    public
-    // när tiden är slut vinner spelaren med mest poäng
-
-    public void terminate(){
-        alive = false;
-    }
-
-    @Override
-    protected Entity copyThis() {
-        return new Player(new Position(position), cc);
-    }
 }
+
+
