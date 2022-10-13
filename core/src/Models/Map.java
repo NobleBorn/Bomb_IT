@@ -135,10 +135,13 @@ public class Map implements EventListener, INavigable{
     }
 
     @Override
-    public boolean tryToKillEntity(Entity ent) {
-        if (!tiles[ent.getPosition().getX()][ent.getPosition().getY()].isTileEmpty()){
-            tiles[ent.getPosition().getX()][ent.getPosition().getY()].removeEntity();
-            return true;
+    public boolean tryToKillEntity(Position position) {
+        Entity entity = tiles[position.getX()][position.getY()].entities.get(0);
+        if (!tiles[position.getX()][position.getY()].isTileEmpty()){
+            if (entity instanceof Destroyable){
+                tiles[position.getX()][position.getY()].removeEntity();
+                return true;
+            }
         }
         return false;
     }

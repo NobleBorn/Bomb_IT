@@ -22,9 +22,9 @@ public class CollisionChecker {
     public boolean bombCollision(BombExplosion bombExplosion) {
 
         Tile[][] tiles = map.getTiles();
-        List<Position> explosionSquares = bombExplosion.getBombExplosionSquares();
+        List<Position> explosionSquares = bombExplosion.getBombExplosionPositions();
 
-        for (int i = 0; i <= bombExplosion.getBombExplosionSquares().size(); i++) {
+        for (int i = 0; i <= bombExplosion.getBombExplosionPositions().size(); i++) {
             if (!(tiles[explosionSquares.get(i).getX()][explosionSquares.get(i).getY()].isTileEmpty())) {
                 return true;
             }
