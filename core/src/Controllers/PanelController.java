@@ -5,17 +5,21 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.Boot;
 
+import java.awt.*;
+
 public class PanelController {
     private Boot boot;
     private Stage stage;
     private SpriteBatch batch;
     private BitmapFont font;
+    private ShapeRenderer shapeRenderer;
 
     private Player player1;
     private Player player2;
@@ -36,6 +40,8 @@ public class PanelController {
         font = new BitmapFont();
         font.setColor(Color.WHITE);
         font.getData().setScale(1.2f);
+
+        shapeRenderer = new ShapeRenderer();
 
         this.boot = boot;
         this.player1 = player1;
@@ -73,10 +79,16 @@ public class PanelController {
     public void render(){
         int row_height = Gdx.graphics.getWidth() / 12;
         int col_width = Gdx.graphics.getWidth() / 12;
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.setColor(148/255f,92/255f,43/255f,0.8f);
+        shapeRenderer.rect(col_width*9.4f, row_height*7.2f, 230, 50);
+        shapeRenderer.rect(col_width*9.4f, row_height*5.2f, 230, 50);
+        shapeRenderer.rect(col_width*9.4f, row_height*3.2f, 230, 50);
+        shapeRenderer.end();
         batch.begin();
-        font.draw(batch,"Timer: " + (int)boot.getTimeSeconds(), col_width*9.5f, row_height*6.5f);
-        font.draw(batch,"Player 1 points: " + player1.getScore(), col_width*9.5f, row_height*6);
-        font.draw(batch,"Player 2 points: " + player2.getScore(), col_width*9.5f, row_height*5.5f);
+        font.draw(batch,"Timer: " + (int)boot.getTimeSeconds(), col_width*9.7f, row_height*7.5f);
+        font.draw(batch,"Player 1 points: " + player1.getScore(), col_width*9.7f, row_height*5.5f);
+        font.draw(batch,"Player 2 points: " + player2.getScore(), col_width*9.7f, row_height*3.5f);
         batch.end();
         stage.act();
         stage.draw();

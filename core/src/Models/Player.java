@@ -41,6 +41,10 @@ public class Player extends Entity implements Destroyable{
         return score;
     }
 
+    public boolean isAlive() {
+        return alive;
+    }
+
     private Position newPositionHandler() { //possible improvement?
         Position newPosition;
         if (direction == Direction.UP){
