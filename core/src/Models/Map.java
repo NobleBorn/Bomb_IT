@@ -61,7 +61,7 @@ public class Map implements EventListener, INavigable{
 
         try {
             List<String> rows = new ArrayList<String>();
-            BufferedReader bf = new BufferedReader(new FileReader("C:\\Users\\oyoun\\IdeaProjects\\Bomb_IT\\assets\\test.txt"));
+            BufferedReader bf = new BufferedReader(new FileReader("/Users/maxlevin/Documents/TDA367/Bomb_IT/assets/test.txt"));
             String line = bf.readLine();
             while (line != null) {
                 rows.add(line);

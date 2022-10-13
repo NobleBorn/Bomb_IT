@@ -76,11 +76,11 @@ public class Drawer {
         sb.draw(playerTwoView.getImage(player2.getDirection()), j *Tile.getTileSize(), i *Tile.getTileSize());*/
         if (i == player1.getPosition().getX() && j == player1.getPosition().getY()){
             playerOneView.setupPlayerImage();
-            sb.draw(playerOneView.getImage(player1.getDirection(), 1), j *Tile.getTileSize(), i *Tile.getTileSize());
+            sb.draw(playerOneView.getImage(player1.getDirection(), 1), j *Tile.tileSize, i *Tile.tileSize);
         }
         else if (i == player2.getPosition().getX() && j == player2.getPosition().getY()){
             playerTwoView.setupPlayerImage();
-            sb.draw(playerTwoView.getImage(player2.getDirection(), 2), j *Tile.getTileSize(), i *Tile.getTileSize());
+            sb.draw(playerTwoView.getImage(player2.getDirection(), 2), j *Tile.tileSize, i *Tile.tileSize);
         }
         //sb.draw(sprPermWall, j *Tile.getTileSize(), i *Tile.getTileSize());
 
@@ -92,10 +92,10 @@ public class Drawer {
 
     private void drawWall(int i, int j) {
         if (tile.entities.get(0) instanceof SoftWall) {
-            sb.draw(sprTempWall, j *Tile.getTileSize(), i *Tile.getTileSize());
+            sb.draw(sprTempWall, j *Tile.tileSize, i *Tile.tileSize);
         }
         else{
-            sb.draw(sprPermWall, j *Tile.getTileSize(), i *Tile.getTileSize());
+            sb.draw(sprPermWall, j *Tile.tileSize, i *Tile.tileSize);
         }
     }
 }

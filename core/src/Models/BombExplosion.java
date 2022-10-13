@@ -12,7 +12,8 @@ public class BombExplosion { //if extend Entity, BombExplosion and its center Bo
 
     public BombExplosion(Position position, int length, INavigable navigation){
         this.position = position;
-        bombLength = length;
+        this.bombLength = length;
+        this.navigation = navigation;
         createBombExplosionPositions(position, length);
         bombContact();}
 
@@ -50,8 +51,8 @@ public class BombExplosion { //if extend Entity, BombExplosion and its center Bo
 
     private void bombContact() {
         for (int i = 0; i < 4; i++){
-            for (int j = 0; i < bombLength; i++){
-                if (navigation.tryToKillEntity(bombExplosionPositions.get(j*i+1))){
+            for (int j = 1; i <= bombLength; i++){
+                if (navigation.tryToKillEntity(bombExplosionPositions.get(j*i+bombLength*i))){
                     break;
                 }
             }
