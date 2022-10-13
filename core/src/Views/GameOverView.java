@@ -16,8 +16,8 @@ import com.mygdx.game.Main;
 public class GameOverView implements Screen {
     final Main game;
     private GameOverController gameOverController;
-    private Texture gameOverImg1;
-    private Texture gameOverImg2;
+    private Texture gameOverImgOne;
+    private Texture gameOverImgTwo;
     private BitmapFont font;
     private boolean mainMenu = false;
     private boolean exit = false;
@@ -29,8 +29,8 @@ public class GameOverView implements Screen {
         this.num = num;
         game.stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(game.stage);
-        gameOverImg1 = new Texture(Gdx.files.internal("playerOne.png"));
-        gameOverImg2 = new Texture(Gdx.files.internal("playerTwo.png"));
+        gameOverImgOne = new Texture(Gdx.files.internal("playerOne.png"));
+        gameOverImgTwo = new Texture(Gdx.files.internal("playerTwo.png"));
         font = new BitmapFont();
         font.setColor(Color.BLACK);
         font.getData().setScale(1.4f);
@@ -59,11 +59,11 @@ public class GameOverView implements Screen {
 
         game.batch.begin();
         if(num == 1){
-            game.batch.draw(gameOverImg1,0,0,960,960);
+            game.batch.draw(gameOverImgOne,0,0,960,960);
             font.draw(game.batch,"Player One Won!", col_width*2.9f, row_height*5.5f);
         }
         else{
-            game.batch.draw(gameOverImg2,0,0,960,960);
+            game.batch.draw(gameOverImgTwo,0,0,960,960);
             font.draw(game.batch,"Player Two Won!", col_width*2.9f, row_height*5.5f);
         }
         game.batch.end();
@@ -100,6 +100,7 @@ public class GameOverView implements Screen {
 
     @Override
     public void dispose() {
-
+        gameOverImgOne.dispose();
+        gameOverImgTwo.dispose();
     }
 }
