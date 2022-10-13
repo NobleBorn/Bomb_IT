@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.EventListener;
 import java.util.List;
 
+/**
+ * The class represents a map that contains tiles, see {@link Models.Tile} and entities, see {@link Models.Entity}
+ */
 public class Map implements EventListener, INavigable{
 
     private final CollisionChecker collision;
@@ -23,6 +26,9 @@ public class Map implements EventListener, INavigable{
     private String[][] maps = new String[size][size];
     private List<Player> playerObjList = new ArrayList<>();
 
+    /**
+     * Class constructor.
+     */
     public Map(){
         this.collision = new CollisionChecker(this);
         tiles = createTiles();
@@ -40,7 +46,10 @@ public class Map implements EventListener, INavigable{
         return tiles;
     }
 
-    public Tile[][] getTiles(){
+    /**
+     * @return returns the original 2D array of tiles and the objects they each contain.
+     */
+    protected Tile[][] getTiles(){
         return tiles;
     }
 
@@ -53,6 +62,7 @@ public class Map implements EventListener, INavigable{
         try {
             List<String> rows = new ArrayList<String>();
             BufferedReader bf = new BufferedReader(new FileReader("/Users/nobleborn/Desktop/Project/assets/test.txt"));
+
             String line = bf.readLine();
             while (line != null) {
                 rows.add(line);
@@ -102,7 +112,10 @@ public class Map implements EventListener, INavigable{
     public int createPowerUps(){
         return 0;
     }
-
+    /**
+     * Offers a way to get access to the information of the objects on the map, without being able to change them from outside the package
+     * @return returns a 2D array of all the tiles on the map, see {@link Models.Tile}.
+     */
     public Tile[][] getMapMatrix() {
         Tile[][] returnTiles  = new Tile[size][size];
         for(int i = 0; i < size; i++){
@@ -114,6 +127,12 @@ public class Map implements EventListener, INavigable{
 
     }
 
+    /**
+     * Offers a way for a player to request to move if the position the player is trying to move to is available.
+     * @param newPos the {@link Models.Position} that the player is trying to move to.
+     * @param player the {@link Models.Player} object that is trying to move.
+     * @return returns true if the {@link Models.Player} is moved successfully, false otherwise.
+     */
     @Override
     public boolean tryMove(Position newPos, Player player) {
         Position currPos = player.getPosition();
@@ -125,6 +144,12 @@ public class Map implements EventListener, INavigable{
         return false;
     }
 
+    /**
+     * Offers a way for objects to try adding an {@link Models.Entity} to the world.
+     * @param pos the {@link Models.Position} that the {@link Models.Entity} is trying to be added at.
+     * @param ent the {@link Models.Entity} that is trying to be added.
+     * @return returns true if the {@link Models.Entity} is added successfully to a {@link Models.Tile}, false otherwise.
+     */
     @Override
     public boolean addEntityToWorld(Position pos, Entity ent) {
         if (tiles[pos.getX()][pos.getY()].isTileEmpty()){
@@ -134,6 +159,11 @@ public class Map implements EventListener, INavigable{
         return false;
     }
 
+    /**
+     * Offers a way for objects to try removing an {@link Models.Entity} from the world.
+     * @param ent the {@link Models.Entity} that is trying to be removed.
+     * @return returns true if the {@link Models.Entity} is removed successfully, false otherwise.
+     */
     @Override
     public boolean tryToKillEntity(Entity ent) {
         if (!tiles[ent.getPosition().getX()][ent.getPosition().getY()].isTileEmpty()){
