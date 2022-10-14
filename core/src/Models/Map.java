@@ -169,14 +169,10 @@ public class Map implements EventListener, INavigable{
             Entity entity = tiles[position.getX()][position.getY()].entities.get(0);
             if (entity instanceof Destroyable){
                 tiles[position.getX()][position.getY()].removeEntity();
-                if (entity instanceof Player){
-                    ((Player) entity).terminate();
-                }
+                ((Destroyable) entity).terminate();
                 return true;
             }
-            if (entity instanceof Wall){
-                return true;
-            }
+            return true;
         }
         return false;
     }
