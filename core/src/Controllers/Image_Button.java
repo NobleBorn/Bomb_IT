@@ -41,8 +41,6 @@ public class Image_Button extends Buttons{
     public void create(){
         int row_height = Gdx.graphics.getWidth() / 12;
         int col_width = Gdx.graphics.getWidth() / 12;
-        System.out.println(row_height);
-        System.out.println(col_width);
         Skin mySkin = new Skin(Gdx.files.internal("skin2/starsoldierui/star-soldier-ui.json"));
 
         button = new ImageButton(mySkin);

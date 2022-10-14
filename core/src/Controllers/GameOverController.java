@@ -10,8 +10,8 @@ public class GameOverController {
     private GameOverView gameOverView;
     final Main game;
 
-    Text_Button menu_button = new Text_Button("Main menu", 2, 1, 7, 3);
-    Text_Button exit_button = new Text_Button("Exit", 2, 1, 7, 4.9f);
+    Text_Button menu_button = new Text_Button("Main menu", 2, 1, 7, 3.7f);
+    Text_Button exit_button = new Text_Button("Exit", 2, 1, 7, 4.5f);
 
     public GameOverController(final GameOverView gameOverView, Main game) {
         this.gameOverView = gameOverView;

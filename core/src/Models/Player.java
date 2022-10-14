@@ -59,6 +59,10 @@ public class Player extends Entity implements Destroyable{
         return score;
     }
 
+    public boolean isAlive() {
+        return alive;
+    }
+
     private Position newPositionHandler() { //possible improvement?
         Position newPosition;
         if (direction == Direction.UP){
@@ -82,7 +86,7 @@ public class Player extends Entity implements Destroyable{
     public void dropBomb(){
         //add so you cannot drop infinite bombs
         //should bomb be placed a tile behind the player?
-        //Bomb bomb = new Bomb(getPosition(), bombLength, cc);
+        Bomb bomb = new Bomb(getPosition(), bombLength, navigation);
 
     }
     public void terminate(){

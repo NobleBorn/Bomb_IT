@@ -1,25 +1,31 @@
 package Models;
 
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimerTask;
 
-public class Bomb extends Entity implements Runnable{
+public class Bomb extends Entity{
 
     private int bombLength;
-    private CollisionChecker cc;
+    private INavigable navigation;
+    private Timer timer;
 
-    public Bomb(Position position, int length, CollisionChecker cc){
+    public Bomb(Position position, int length, INavigable navigation){
         super(position);
         this.bombLength = length;
-        this.cc = cc;
-        run();
+        this.navigation = navigation;
+        timer();
 
     }
 
     private void detonate(){
-        BombExplosion bombExplosion = new BombExplosion(position, bombLength, cc);
+        BombExplosion bombExplosion = new BombExplosion(position, bombLength, navigation);
     }
 
+    /*
     @Override
     public void run(){
         boolean run = true;
@@ -35,9 +41,20 @@ public class Bomb extends Entity implements Runnable{
         }
     }
 
+     */
+
 
     @Override
     protected Entity copyThis() {
-        return new Bomb(new Position(position), this.bombLength, cc);
+        return new Bomb(new Position(position), this.bombLength, navigation);
+    }
+
+    private void timer(){
+        new java.util.Timer().schedule(new java.util.TimerTask() {
+            @Override
+            public void run() {
+                detonate();
+            }
+        }, 2000);
     }
 }

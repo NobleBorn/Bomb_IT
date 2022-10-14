@@ -3,46 +3,65 @@ package Models;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BombExplosion { //if extend Entity, BombExplosion and its center BombExplosionSquare will cause collision with each other
+public class BombExplosion { //if extend Entity, BombExplosion and its center BombExplosionPositio// will cause collision with each other
 
-    private List<Position> bombExplosionSquares = new ArrayList<>(1);
+    private List<Position> bombExplosionPositions = new ArrayList<>(1);
     private Position position;
-    private CollisionChecker cc;
+    private INavigable navigation;
+    private final int bombLength;
 
-    public BombExplosion(Position position, int length, CollisionChecker cc){
+    public BombExplosion(Position position, int length, INavigable navigation){
         this.position = position;
-        createBombExplosionSquares(position, length);
-    }
+        this.bombLength = length;
+        this.navigation = navigation;
+        createBombExplosionPositions(position, length);
+        bombContact();}
 
-    private void createBombExplosionSquares(Position position, int length) {
-
-        int tailLength = (length-1)/2;
-
-        bombExplosionSquares.add(new Position(position.getX(), position.getY()));
-        for (int i = 1; i <= tailLength; i++) {
-
-            bombExplosionSquares.add(new Position(position.getX() + i, position.getY()));
-            bombExplosionSquares.add(new Position(position.getX() - i, position.getY()));
-            bombExplosionSquares.add(new Position(position.getX(), position.getY() + i));
-            bombExplosionSquares.add(new Position(position.getX(), position.getY() - i));
-
+    private void createBombExplosionPositions(Position position, int length) {
+        
+        bombExplosionPositions.add(new Position(position.getX(), position.getY()));
+        for (int i = 1; i <= length; i++) {
+            bombExplosionPositions.add(new Position(position.getX() + i, position.getY()));
+        }
+        for (int i = 1; i <= length; i++) {
+            bombExplosionPositions.add(new Position(position.getX(), position.getY() + i));
+        }
+        for (int i = 1; i <= length; i++) {
+            bombExplosionPositions.add(new Position(position.getX() - i, position.getY()));
+        }
+        for (int i = 1; i <= length; i++) {
+            bombExplosionPositions.add(new Position(position.getX(), position.getY() - i));
         }
 
+        /*
         int var = 4;
-        for(int n = 0; n <= bombExplosionSquares.size(); n++){
-            if(cc.checkBombSpawn(bombExplosionSquares.get(n))){
+        for(int n = 0; n <= bombExplosionPositions.size(); n++){
+            if(navigation.tryToKillEntity(bombExplosionPositions.get(n))){
                 int var2 = 0;
-                while(n+var2*var<bombExplosionSquares.size()){
-                    bombExplosionSquares.remove(bombExplosionSquares.get(n+var*var2));
+                while(n+var2*var<bombExplosionPositions.size()){
+                    bombExplosionPositions.remove(bombExplosionPositions.get(n+var*var2));
                     var2++;
                 }
                 var--;
             }
         }
+         */
     }
 
-    public List<Position> getBombExplosionSquares() {
-        return bombExplosionSquares;
+
+    private void bombContact() {
+        navigation.tryToKillEntity(bombExplosionPositions.get(0));
+        for (int i = 0; i < 4; i++){
+            for (int j = 1; j <= bombLength; j++){
+                if (navigation.tryToKillEntity(bombExplosionPositions.get(i*bombLength+j))){
+                    break;
+                }
+            }
+        }
+    }
+
+    public List<Position> getBombExplosionPositions() {
+        return bombExplosionPositions;
     }
 
 }
