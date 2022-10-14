@@ -4,9 +4,7 @@ package com.mygdx.game;
 import Controllers.PanelController;
 import Controllers.PlayerController;
 import Models.*;
-//import Views.GameScreenView;
 import Views.GameOverView;
-import Views.MenuScreenView;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -18,8 +16,6 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public class Boot implements Screen {
     final Main game;
-    public static Boot INSTANCE;
-    private int widthScreen, heightScreen;
     private OrthographicCamera orthographicCamera;
     private Drawer drawer;
     private Texture img;
@@ -43,7 +39,6 @@ public class Boot implements Screen {
 
     public Boot(final Main game) {
         this.game = game;
-        //INSTANCE = this;
         create();
     }
 
@@ -60,38 +55,17 @@ public class Boot implements Screen {
         this.playerTwoController = new PlayerController(playerTwo, Input.Keys.W, Input.Keys.S,
                 Input.Keys.D, Input.Keys.A, Input.Keys.SHIFT_LEFT);
 
-        this.widthScreen = Gdx.graphics.getWidth();
-        this.heightScreen = Gdx.graphics.getHeight();
+        int widthScreen = Gdx.graphics.getWidth();
+        int heightScreen = Gdx.graphics.getHeight();
         this.orthographicCamera = new OrthographicCamera();
-        this.orthographicCamera.setToOrtho(false, 960, 960);
-        this.viewPort = new FitViewport(1280, 960, orthographicCamera);
+        this.orthographicCamera.setToOrtho(false, widthScreen, heightScreen);
+        this.viewPort = new FitViewport(1280, heightScreen, orthographicCamera);
         this.batch = new SpriteBatch();
-        MovementListener walkListener = new MovementListener(map);
-        playerOne.observable.addSubscriber(walkListener);
-        playerTwo.observable.addSubscriber(walkListener);
-        //this.loop = new GameLoop(map);
-        //setScreen(new GameScreen());
         this.drawer = new Drawer(batch, map, playerOne, playerTwo);
-        //drawer.setupMap();
     }
-    /*@Override
-    public void render(){
-        //super.render();
-        Gdx.gl.glClearColor(0.1f, 1, 0.2f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-        batch.begin();
-        batch.draw(img, 0,0,960,960);
-        batch.end();
-        drawer.setupMap();
-        orthographicCamera.update();
-        playerOneController.update();
-        playerTwoController.update();
-        //screen.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-    }*/
 
     @Override
     public void show() {
-
     }
 
     @Override
@@ -113,7 +87,6 @@ public class Boot implements Screen {
                 }
                 break;
             case Paused:
-                //panelController.render();
                 break;
         }
         batch.setProjectionMatrix(orthographicCamera.combined);
@@ -146,26 +119,22 @@ public class Boot implements Screen {
 
     @Override
     public void dispose(){
-        //super.dispose();
         batch.dispose();
         panelController.dispose();
     }
 
     @Override
     public void pause() {
-        //super.pause();
         state = State.Paused;
     }
 
     @Override
     public void resume() {
-        //super.resume();
         state = State.Running;
     }
 
     @Override
     public void hide() {
-
     }
 
 }

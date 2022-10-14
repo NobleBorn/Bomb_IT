@@ -9,13 +9,11 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class PlayerTest {
     private final Map map = new Map();
-    MovementListener listener = new MovementListener(map);
 
 
     @Test
     void testWalk(){
         Player testPlayer = map.getPlayers().get(0);
-        testPlayer.observable.addSubscriber(listener);
         assertEquals(1, testPlayer.getPosition().getX());
         assertEquals(18, testPlayer.getPosition().getY());
         testPlayer.walk(Direction.LEFT);

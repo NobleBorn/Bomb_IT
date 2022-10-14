@@ -11,8 +11,6 @@ public class Player extends Entity implements Destroyable{
     private int bombLength;
     private INavigable navigation;
 
-    public MoveObservable observable;
-
     /**
      * Class constructor
      * @param position the initial {@link Models.Position} of a player at the time of creating it.
@@ -25,7 +23,6 @@ public class Player extends Entity implements Destroyable{
         this.score = 0;
         this.alive = status;
         this.bombLength = 1;
-        this.observable = new MoveObservable();
     }
 
     /**
