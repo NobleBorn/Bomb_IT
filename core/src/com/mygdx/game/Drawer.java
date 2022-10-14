@@ -29,8 +29,8 @@ public class Drawer {
         this.player2 = player2;
         sprPermWall = new TileViewImage().getPermWallTexture();
         sprTempWall = new TileViewImage().getTempWallTexture();
-        playerOneView = new PlayerView(this.player1, "spelare.png");
-        playerTwoView = new PlayerView(this.player2, "spelare2.png");
+        playerOneView = new PlayerView(this.player1);
+        playerTwoView = new PlayerView(this.player2);
         bombView = new BombView(this.bomb);
     }
 
@@ -59,14 +59,14 @@ public class Drawer {
     private void drawPlayer(int i, int j) {
         if (i == player1.getPosition().getX() && j == player1.getPosition().getY()) {
             if (player1.isAlive()) {
-                //playerOneView.setupPlayerImage();
-                sb.draw(playerOneView.getImage(), j * Tile.tileSize, i * Tile.tileSize);
+                playerOneView.setupPlayerImage();
+                sb.draw(playerOneView.getImage(player1.getDirection(), 1), j * Tile.tileSize, i * Tile.tileSize);
             }
         }
         if (i == player2.getPosition().getX() && j == player2.getPosition().getY()) {
             if (player2.isAlive()) {
-                //playerTwoView.setupPlayerImage();
-                sb.draw(playerTwoView.getImage(), j * Tile.tileSize, i * Tile.tileSize);
+                playerTwoView.setupPlayerImage();
+                sb.draw(playerTwoView.getImage(player2.getDirection(), 2), j * Tile.tileSize, i * Tile.tileSize);
             }
         }
     }
