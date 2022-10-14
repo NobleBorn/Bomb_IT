@@ -1,7 +1,5 @@
 package Models;
 
-import Models.Position;
-
 /**
  * The class represents a wall object of the supertype {@link Models.Entity} on the map.
  */

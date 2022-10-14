@@ -1,12 +1,6 @@
 package Models;
 
-import Models.Position;
-import com.sun.tools.javac.util.ArrayUtils;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,7 +12,6 @@ import java.util.List;
  */
 public class Map implements EventListener, INavigable{
 
-    private final CollisionChecker collision;
     private final int size = 20;
     private final int y = size;
     private final int x = size;
@@ -30,7 +23,6 @@ public class Map implements EventListener, INavigable{
      * Class constructor.
      */
     public Map(){
-        this.collision = new CollisionChecker(this);
         tiles = createTiles();
         loadWalls();
         addObjects();
@@ -161,7 +153,7 @@ public class Map implements EventListener, INavigable{
 
     /**
      * Offers a way for objects to try removing an {@link Models.Entity} from the world.
-     * @param ent the {@link Models.Entity} that is trying to be removed.
+     * @param position the {@link Models.Entity} that is trying to be removed.
      * @return returns true if the {@link Models.Entity} is removed successfully, false otherwise.
      */
     @Override

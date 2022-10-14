@@ -5,8 +5,6 @@ import com.badlogic.gdx.*;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.physics.box2d.*;
-import Controllers.MenuScreenController;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 //Help from Libgdx website, wiki and tutorials
