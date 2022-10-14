@@ -41,7 +41,7 @@ public class Map implements EventListener, INavigable{
     /**
      * @return returns the original 2D array of tiles and the objects they each contain.
      */
-    protected Tile[][] getTiles(){
+    public Tile[][] getTiles(){
         return tiles;
     }
 
@@ -53,7 +53,7 @@ public class Map implements EventListener, INavigable{
 
         try {
             List<String> rows = new ArrayList<String>();
-            BufferedReader bf = new BufferedReader(new FileReader("/Users/maxlevin/Documents/TDA367/Bomb_IT/assets/test.txt"));
+            BufferedReader bf = new BufferedReader(new FileReader("C:\\Users\\oyoun\\IdeaProjects\\Bomb_IT\\assets\\test.txt"));
 
             String line = bf.readLine();
             while (line != null) {
@@ -82,7 +82,7 @@ public class Map implements EventListener, INavigable{
                         tiles[i][j].addEntity(new SoftWall(new Position(i, j)));
                         break;
                     case "3":
-                        tiles[i][j].addEntity(new Player(new Position(i, j), this));
+                        tiles[i][j].addEntity(new Player(new Position(i, j), this, true));
                         playerObjList.add((Player)tiles[i][j].getEntities().get(0));
                         break;
                 }
@@ -92,6 +92,7 @@ public class Map implements EventListener, INavigable{
     public List<Player> getPlayers(){
         return playerObjList;
     }
+
     public int[] getSize(){
         int[] coordinates = new int[2];
 
