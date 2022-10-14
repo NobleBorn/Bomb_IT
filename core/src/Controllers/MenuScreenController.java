@@ -10,13 +10,15 @@ import Views.*;
 public class MenuScreenController {
     private MenuScreenView menuScreenView;
 
-    Text_Button play_button = new Text_Button("Play", 2,1, 7, 3.3f);
-    Text_Button option_button = new Text_Button("Option", 2,1, 7, 4.2f);
-    Text_Button exit_button = new Text_Button("Exit", 2,1, 7, 5.1f);
+    ButtonFactory buttonFactory = new ButtonFactory();
 
-    Image_Button music_button = new Image_Button("volume_on.png", "volume_off.png",1,
+    Buttons play_button = new Text_Button("Play", 2,1, 7, 3.3f);
+    Buttons option_button = new Text_Button("Option", 2,1, 7, 4.2f);
+    Buttons exit_button = new Text_Button("Exit", 2,1, 7, 5.1f);
+
+    Buttons music_button = new Image_Button("volume_on.png", "volume_off.png",1,
             0.8f, 0.3f, 6.2f);
-    Image_Button sound_button = new Image_Button("sound_on.png", "sound_off.png",1,
+    Buttons sound_button = new Image_Button("sound_on.png", "sound_off.png",1,
             0.8f, 1, 6.2f);
 
     public MenuScreenController(final MenuScreenView menuScreenView){

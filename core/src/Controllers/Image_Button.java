@@ -31,16 +31,18 @@ public class Image_Button extends Buttons{
     /**
      * @return the button itself
      */
-    public com.badlogic.gdx.scenes.scene2d.ui.ImageButton getButton() {
+    public ImageButton getButton() {
         return button;
     }
 
     /**
      * Creates the new button instance and sets its size, style and position
      */
+    @Override
     public void create(){
         int row_height = Gdx.graphics.getWidth() / 12;
         int col_width = Gdx.graphics.getWidth() / 12;
+
         Skin mySkin = new Skin(Gdx.files.internal("skin2/starsoldierui/star-soldier-ui.json"));
 
         button = new ImageButton(mySkin);

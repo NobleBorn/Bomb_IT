@@ -7,53 +7,46 @@ import com.badlogic.gdx.Input;
 
 public class PlayerController {
     Player player;
-    private final int keyUp, keyLeft, keyDown, keyRight, keyDropBomb;
+    private final int keyUp, keyLeft, keyDown, keyRight;
     private float time = 0f;
 
-    public PlayerController(Player player, int up, int down, int right, int left, int dropBomb){
+    public PlayerController(Player player, int up, int down, int right, int left){
         this.player = player;
         this.keyUp = up;
         this.keyLeft = left;
         this.keyDown = down;
         this.keyRight = right;
-        this.keyDropBomb = dropBomb;
     }
 
     public void update(){
-        if (player.isAlive()) {
-            time += Gdx.graphics.getDeltaTime();
-            if (Gdx.input.isKeyPressed(keyUp)) {
-                tryWalk(Direction.UP);
-            } else
+        time += Gdx.graphics.getDeltaTime();
+        if (Gdx.input.isKeyPressed(keyUp)) {
+            tryWalk(Direction.UP);
+        }
 
-                if (Gdx.input.isKeyPressed(keyDown)) {
-                    tryWalk(Direction.DOWN);
+        if (Gdx.input.isKeyPressed(keyDown)) {
+            tryWalk(Direction.DOWN);
 
-                } else
+        }
 
-                    if (Gdx.input.isKeyPressed(keyRight)) {
-                        tryWalk(Direction.RIGHT);
+        if (Gdx.input.isKeyPressed(keyRight)) {
+            tryWalk(Direction.RIGHT);
 
-                    } else
+        }
 
-                        if (Gdx.input.isKeyPressed(keyLeft)) {
-                            tryWalk(Direction.LEFT);
+        if (Gdx.input.isKeyPressed(keyLeft)) {
+            tryWalk(Direction.LEFT);
 
-                        } else
-
-
-                            if (Gdx.input.isKeyPressed(keyDropBomb)) {
-                                player.dropBomb();
-                            }
         }
     }
 
-    private void tryWalk(Direction dir) {
-        if (time > 0.15) {
-            player.setWalking(true);
-            player.walk(dir);
+    private void tryWalk(Direction down) {
+        if (time > 0.2){
+            player.walk(down);
             time = 0;
         }
+
+
     }
 
 }
