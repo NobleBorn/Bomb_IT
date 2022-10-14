@@ -26,6 +26,7 @@ public class Bomb extends Entity implements Runnable{
         return bombExplosion.getWallsDestroyed();
     }
 
+
     @Override
     public void run(){
         boolean run = true;
