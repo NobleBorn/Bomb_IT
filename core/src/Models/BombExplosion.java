@@ -8,7 +8,7 @@ public class BombExplosion { //if extend Entity, BombExplosion and its center Bo
     private List<Position> bombExplosionPositions = new ArrayList<>(1);
     private Position position;
     private INavigable navigation;
-    int bombLength;
+    private final int bombLength;
 
     public BombExplosion(Position position, int length, INavigable navigation){
         this.position = position;
@@ -24,10 +24,10 @@ public class BombExplosion { //if extend Entity, BombExplosion and its center Bo
             bombExplosionPositions.add(new Position(position.getX() + i, position.getY()));
         }
         for (int i = 1; i <= length; i++) {
-            bombExplosionPositions.add(new Position(position.getX() - i, position.getY()));
+            bombExplosionPositions.add(new Position(position.getX(), position.getY() + i));
         }
         for (int i = 1; i <= length; i++) {
-            bombExplosionPositions.add(new Position(position.getX(), position.getY() + i));
+            bombExplosionPositions.add(new Position(position.getX() - i, position.getY()));
         }
         for (int i = 1; i <= length; i++) {
             bombExplosionPositions.add(new Position(position.getX(), position.getY() - i));
@@ -50,9 +50,10 @@ public class BombExplosion { //if extend Entity, BombExplosion and its center Bo
 
 
     private void bombContact() {
+        navigation.tryToKillEntity(bombExplosionPositions.get(0));
         for (int i = 0; i < 4; i++){
-            for (int j = 1; i <= bombLength; i++){
-                if (navigation.tryToKillEntity(bombExplosionPositions.get(j*i+bombLength*i))){
+            for (int j = 1; j <= bombLength; j++){
+                if (navigation.tryToKillEntity(bombExplosionPositions.get(i*bombLength+j))){
                     break;
                 }
             }

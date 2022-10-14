@@ -39,8 +39,10 @@ public class Tile {
     /**
      * Remove an entity from the objects in the tile.
      */
-    public void removeEntity(){
-        entities.remove(0);
+    public void removeEntity() {
+        if (entities.size() > 0) {
+            entities.remove(0);
+        }
     }
 
     /**

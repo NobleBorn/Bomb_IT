@@ -14,6 +14,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public class Boot implements Screen {
     final Main game;
@@ -31,7 +32,8 @@ public class Boot implements Screen {
 
     private PanelController panelController;
     private float timeSeconds = 0f;
-    private float period = 10f;
+    private float period = 600f;
+    private FitViewport viewPort;
 
     public enum State{
         Running, Paused
@@ -54,14 +56,15 @@ public class Boot implements Screen {
         this.panelController = new PanelController(this, playerOne, playerTwo);
 
         this.playerOneController = new PlayerController(playerOne, Input.Keys.DPAD_UP, Input.Keys.DPAD_DOWN,
-                Input.Keys.DPAD_RIGHT, Input.Keys.DPAD_LEFT);
+                Input.Keys.DPAD_RIGHT, Input.Keys.DPAD_LEFT, Input.Keys.SHIFT_RIGHT);
         this.playerTwoController = new PlayerController(playerTwo, Input.Keys.W, Input.Keys.S,
-                Input.Keys.D, Input.Keys.A);
+                Input.Keys.D, Input.Keys.A, Input.Keys.SHIFT_LEFT);
 
         this.widthScreen = Gdx.graphics.getWidth();
         this.heightScreen = Gdx.graphics.getHeight();
         this.orthographicCamera = new OrthographicCamera();
         this.orthographicCamera.setToOrtho(false, 960, 960);
+        this.viewPort = new FitViewport(1280, 960, orthographicCamera);
         this.batch = new SpriteBatch();
         MovementListener walkListener = new MovementListener(map);
         playerOne.observable.addSubscriber(walkListener);
@@ -113,6 +116,7 @@ public class Boot implements Screen {
                 //panelController.render();
                 break;
         }
+        batch.setProjectionMatrix(orthographicCamera.combined);
     }
 
     public float getTimeSeconds() {
@@ -137,7 +141,7 @@ public class Boot implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        //super.resize(width, height);
+        this.viewPort.update(width, height);
     }
 
     @Override

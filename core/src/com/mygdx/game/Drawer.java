@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 import Models.*;
+import Views.BombView;
 import Views.PlayerView;
 import Views.TileViewImage;
 import com.badlogic.gdx.graphics.Texture;
@@ -18,6 +19,9 @@ public class Drawer {
     private Player player2;
     private Tile tile;
 
+    private final BombView bombView;
+    private Bomb bomb;
+
     public Drawer(SpriteBatch batch, Map map, Player player1, Player player2) {
         this.sb = batch;
         this.map = map;
@@ -27,6 +31,9 @@ public class Drawer {
         sprTempWall = new TileViewImage().getTempWallTexture();
         playerOneView = new PlayerView(this.player1);
         playerTwoView = new PlayerView(this.player2);
+
+        //this.bomb = bomb;
+        bombView = new BombView(this.bomb);
     }
 
     public void setupMap() {
@@ -53,14 +60,15 @@ public class Drawer {
             for (int j = 0; j < tilesMatrix.length; j++){
                 tile = tilesMatrix[i][j];
                 //sb.draw(background, j*Tile.getTileSize(), i*Tile.getTileSize());
-                if (!tilesMatrix[i][j].isTileEmpty()){
+                if (!tilesMatrix[i][j].isTileEmpty()) {
 
-                    if ((tilesMatrix[i][j].entities.get(0) instanceof Wall)){
+                    if ((tilesMatrix[i][j].entities.get(0) instanceof Wall)) {
                         drawWall(i, j);
 
-                    }
-                    else if (tilesMatrix[i][j].entities.get(0) instanceof Player){
+                    } else if (tilesMatrix[i][j].entities.get(0) instanceof Player) {
                         drawPlayer(i, j);
+                    } else if (tile.entities.get(0) instanceof Bomb) {
+                        drawBomb(i, j);
                     }
                 }
             }
@@ -74,13 +82,18 @@ public class Drawer {
         sb.draw(playerOneView.getImage(player1.getDirection()), j *Tile.getTileSize(), i *Tile.getTileSize());
         playerTwoView.setupPlayerImage();
         sb.draw(playerTwoView.getImage(player2.getDirection()), j *Tile.getTileSize(), i *Tile.getTileSize());*/
-        if (i == player1.getPosition().getX() && j == player1.getPosition().getY()){
-            playerOneView.setupPlayerImage();
-            sb.draw(playerOneView.getImage(player1.getDirection(), 1), j *Tile.tileSize, i *Tile.tileSize);
+        if (i == player1.getPosition().getX() && j == player1.getPosition().getY()) {
+            if (player1.isAlive()) {
+                playerOneView.setupPlayerImage();
+                sb.draw(playerOneView.getImage(player1.getDirection(), 1), j * Tile.tileSize, i * Tile.tileSize);
+            }
         }
-        else if (i == player2.getPosition().getX() && j == player2.getPosition().getY()){
-            playerTwoView.setupPlayerImage();
-            sb.draw(playerTwoView.getImage(player2.getDirection(), 2), j *Tile.tileSize, i *Tile.tileSize);
+        if (i == player2.getPosition().getX() && j == player2.getPosition().getY()) {
+            if (player2.isAlive()) {
+                playerTwoView.setupPlayerImage();
+                sb.draw(playerTwoView.getImage(player2.getDirection(), 2), j * Tile.tileSize, i * Tile.tileSize);
+            }
+
         }
         //sb.draw(sprPermWall, j *Tile.getTileSize(), i *Tile.getTileSize());
 
@@ -98,4 +111,18 @@ public class Drawer {
             sb.draw(sprPermWall, j *Tile.tileSize, i *Tile.tileSize);
         }
     }
+
+    private void drawBomb(int i, int j){
+        sb.draw(bombView.getBombImage(), j *Tile.tileSize, i *Tile.tileSize);
+    }
 }
+
+
+    /*private void parseMapObjects(MapObjects mapObjects) {
+        for(MapObject mapObject : mapObjects) {
+            if(mapObject instanceof PolygonMapObject) {
+                createStaticBody((PolygonMapObject) mapObject);
+            }
+        }
+    }
+}*/
