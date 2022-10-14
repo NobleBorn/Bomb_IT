@@ -12,7 +12,7 @@ public class TileTest {
     private final Tile[][] matrix = map.getMapMatrix();
     private final List<Player> testPlayers = map.getPlayers();
     private final Entity testEnt = new Wall(new Position(1, 1));
-
+/*
     @Test
     void testAddEntity(){
         Tile testTile = new Tile(1, 1);
@@ -47,4 +47,6 @@ public class TileTest {
         assertNotEquals(testEnt, testTile.getEntities().get(0)); //the type of both objects is the same, but getEntities() creates a deep-copy
         assertNotEquals(testWalls, testTile.getEntities()); //the list type and element object's type are the same, but deep-copied
     }
+
+*/
 }
