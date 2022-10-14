@@ -32,8 +32,8 @@ public class MapTest {
     @Test
     void test_players_positions(){
         List<Player> expected = new ArrayList<>(2);
-        expected.add(new Player(new Position(1, 18), map));
-        expected.add(new Player(new Position(16, 2), map));
+        //expected.add(new Player(new Position(1, 18), map));
+        //expected.add(new Player(new Position(16, 2), map));
         for (int i=0; i<testPlayers.size(); i++){
             assertEquals(testPlayers.get(i).getPosition().getX(), expected.get(i).getPosition().getX());
             assertEquals(testPlayers.get(i).getPosition().getY(), expected.get(i).getPosition().getY());

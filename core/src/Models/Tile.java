@@ -57,12 +57,8 @@ public class Tile {
      * Methods offers a way to get a deep-copy of the objects on the tile. Requires entities to be a subclass of {@link Models.Entity}.
      * @return returns a deep-copy of the tile's entity array.
      */
-    public List<Entity> getEntities(){
-        List<Entity> entitiesReturn = new ArrayList<>();
-        for (Entity ent: entities){
-            entitiesReturn.add(ent.copyThis());
-        }
-        return entitiesReturn;
+    protected List<Entity> getEntities(){
+        return entities;
     }
 
     private List<Entity> copyEntities(List<Entity> otherEntities) {
