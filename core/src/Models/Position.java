@@ -5,8 +5,8 @@ package Models;
  * @see Models.Tile
  */
 public class Position {
-    private int x;
-    private int y;
+    private final int x;
+    private final int y;
     /**
      * Class constructor.
      * @param x an integer that specifies the x-coordinate for the position.
