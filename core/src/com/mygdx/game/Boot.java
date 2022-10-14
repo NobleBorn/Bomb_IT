@@ -4,9 +4,7 @@ package com.mygdx.game;
 import Controllers.PanelController;
 import Controllers.PlayerController;
 import Models.*;
-//import Views.GameScreenView;
 import Views.GameOverView;
-import Views.MenuScreenView;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -14,10 +12,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public class Boot implements Screen {
     final Main game;
-    private int widthScreen, heightScreen;
     private OrthographicCamera orthographicCamera;
     private Drawer drawer;
     private Texture img;
@@ -30,7 +28,8 @@ public class Boot implements Screen {
 
     private PanelController panelController;
     private float timeSeconds = 0f;
-    private float period = 10f;
+    private float period = 600f;
+    private FitViewport viewPort;
 
     public enum State{
         Running, Paused
@@ -56,38 +55,31 @@ public class Boot implements Screen {
         this.playerTwoController = new PlayerController(playerTwo, Input.Keys.W, Input.Keys.S,
                 Input.Keys.D, Input.Keys.A, Input.Keys.SHIFT_LEFT);
 
-        this.widthScreen = Gdx.graphics.getWidth();
-        this.heightScreen = Gdx.graphics.getHeight();
+        int widthScreen = Gdx.graphics.getWidth();
+        int heightScreen = Gdx.graphics.getHeight();
         this.orthographicCamera = new OrthographicCamera();
-        this.orthographicCamera.setToOrtho(false, 960, 960);
+        this.orthographicCamera.setToOrtho(false, widthScreen, heightScreen);
+        this.viewPort = new FitViewport(1280, heightScreen, orthographicCamera);
         this.batch = new SpriteBatch();
-        MovementListener walkListener = new MovementListener(map);
-        playerOne.observable.addSubscriber(walkListener);
-        playerTwo.observable.addSubscriber(walkListener);
         this.drawer = new Drawer(batch, map, playerOne, playerTwo);
     }
 
     @Override
     public void show() {
-
     }
 
     @Override
     public void render(float delta) {
-        gameState();
-    }
-
-    private void gameState() {
-        int winner;
+        int num;
         switch(state){
             case Running:
                 timeSeconds += Gdx.graphics.getDeltaTime();
                 if(timeSeconds > period || !playerOne.isAlive() || !playerTwo.isAlive()){
-                    if(playerOne.isAlive())
-                        winner = 1;
+                    if(playerTwo.isAlive())
+                        num = 2;
                     else
-                        winner = 2;
-                    this.game.setScreen(new GameOverView(game, winner));
+                        num = 1;
+                    this.game.setScreen(new GameOverView(game, num));
                 }
                 else{
                     draw();
@@ -97,13 +89,14 @@ public class Boot implements Screen {
             case Paused:
                 break;
         }
+        batch.setProjectionMatrix(orthographicCamera.combined);
     }
 
     public float getTimeSeconds() {
         return timeSeconds;
     }
 
-    private void draw(){
+    public void draw(){
         Gdx.gl.glClearColor(98/255f, 61/255f, 3/255f, 0.9f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
         batch.begin();
@@ -112,16 +105,16 @@ public class Boot implements Screen {
         drawer.setupMap();
     }
 
-    private void update(){
+    public void update(){
         orthographicCamera.update();
         playerOneController.update();
         playerTwoController.update();
-        panelController.update();
+        panelController.render();
     }
 
     @Override
     public void resize(int width, int height) {
-
+        this.viewPort.update(width, height);
     }
 
     @Override
@@ -142,7 +135,6 @@ public class Boot implements Screen {
 
     @Override
     public void hide() {
-
     }
 
 }
