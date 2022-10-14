@@ -7,17 +7,23 @@ public class Bomb extends Entity implements Runnable{
 
     private int bombLength;
     private INavigable navigation;
+    BombExplosion bombExplosion;
+    //private int playerID;
 
     public Bomb(Position position, int length, INavigable navigation){
         super(position);
         this.bombLength = length;
         this.navigation = navigation;
+        //this.playerID = playerID;
         run();
-
     }
 
     private void detonate(){
-        BombExplosion bombExplosion = new BombExplosion(position, bombLength, navigation);
+        this.bombExplosion = new BombExplosion(position, bombLength, navigation);
+    }
+
+    public int getWallsDestroyedFromExplosion() {
+        return bombExplosion.getWallsDestroyed();
     }
 
     @Override

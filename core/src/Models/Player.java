@@ -10,8 +10,8 @@ public class Player extends Entity implements Destroyable{
     private boolean alive;
     private int bombLength;
     private INavigable navigation;
-
     public MoveObservable observable;
+    private Bomb bomb;
 
     /**
      * Class constructor
@@ -27,6 +27,7 @@ public class Player extends Entity implements Destroyable{
         this.bombLength = 1;
         this.observable = new MoveObservable();
     }
+
 
     /**
      * Methods offers a way for the player to move one {@link Models.Tile} on the map, if possible, and change its position. Note that the player's {@link Models.Direction} will be changed regardless of the result of the attempt of moving the {@link Models.Player}.
@@ -86,9 +87,14 @@ public class Player extends Entity implements Destroyable{
     public void dropBomb(){
         //add so you cannot drop infinite bombs
         //should bomb be placed a tile behind the player?
-        Bomb bomb = new Bomb(getPosition(), bombLength, navigation);
-
+        this.bomb = new Bomb(getPosition(), bombLength, navigation);
+        addScore();
     }
+
+    private void addScore() {
+        score = bomb.getWallsDestroyedFromExplosion() * 10;
+    }
+
     public void terminate(){
         alive = false;
     }
