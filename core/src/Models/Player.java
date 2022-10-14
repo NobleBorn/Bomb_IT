@@ -89,6 +89,7 @@ public class Player extends Entity implements Destroyable{
         return newPosition;
     }
 
+
     /**
      * Creates a {@link Models.Bomb} at the current {@link Models.Position}.
      */
