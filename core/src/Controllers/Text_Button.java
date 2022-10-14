@@ -42,6 +42,7 @@ public class Text_Button extends Buttons{
     /**
      * Creates the new button instance and sets the size and position
      */
+    @Override
     public void create(){
         int row_height = Gdx.graphics.getWidth() / 12;
         int col_width = Gdx.graphics.getWidth() / 12;
@@ -55,4 +56,23 @@ public class Text_Button extends Buttons{
         button.setPosition(col_width*this.getButton_x(),Gdx.graphics.getHeight()-row_height*this.getButton_y());
 
     }
+
+    public static class TextButtonBuilder {
+        private int nestedWidth;
+        private int nestedHeight;
+        private int nestedX_pos;
+        private int nestedY_pos;
+        private String nestedName;
+
+        public TextButtonBuilder(String newName, int newWidth, int newHeight, int newX, int newY){
+            this.nestedName = newName;
+            this.nestedWidth = newWidth;
+            this.nestedHeight = newHeight;
+            this.nestedX_pos = newX;
+            this.nestedY_pos = newY;
+        }
+
+
+    }
 }
+

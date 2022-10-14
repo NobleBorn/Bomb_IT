@@ -6,6 +6,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
@@ -18,15 +19,15 @@ public class PlayerView {
     SpriteBatch batch;
     Player player;
     PlayerController playerController;
-    KeyHandler keyH;
     int spriteCounter = 0;
     int standCounter;
     int spriteNum = 1;
     int spriteNum2 = 1;
+    Animation<TextureRegion> walkAnimation;
+    float stateTime;
 
 
     public PlayerView(Player player){
-        keyH = new KeyHandler();
         playerImages = new Texture("spelare.png");
         player2Images = new Texture("spelare2.png");
         addSprites();
@@ -67,8 +68,6 @@ public class PlayerView {
         else{
             image = getTextureRegion(direction, image, spriteNum2, uppe1, uppe2, ner1, ner2, hoger1, hoger2, vanster1, vanster2);
         }
-
-        //batch.draw(image, player.getPosition().x, player.getPosition().y, 48, 48);
         return image;
     }
 
@@ -108,7 +107,7 @@ public class PlayerView {
 
 
     public void setupPlayerImage() {
-        if (spriteCounter > 6){
+        if (spriteCounter > 15){
             if (spriteNum == 1 && (Gdx.input.isKeyPressed(Input.Keys.DPAD_UP) ||
                     Gdx.input.isKeyPressed(Input.Keys.DPAD_DOWN) || Gdx.input.isKeyPressed(Input.Keys.DPAD_RIGHT)
                     || Gdx.input.isKeyPressed(Input.Keys.DPAD_LEFT))){

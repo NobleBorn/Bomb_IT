@@ -6,15 +6,12 @@ import Views.*;
 import com.badlogic.gdx.Input;
 
 public class PlayerController {
-    Direction direction;
-    KeyHandler keyH;
     Player player;
     private final int keyUp, keyLeft, keyDown, keyRight;
+    private float time = 0f;
 
     public PlayerController(Player player, int up, int down, int right, int left){
         this.player = player;
-        //this.playerView = playerView;
-        this.keyH = new KeyHandler();
         this.keyUp = up;
         this.keyLeft = left;
         this.keyDown = down;
@@ -22,39 +19,34 @@ public class PlayerController {
     }
 
     public void update(){
-        //Gdx.input.setInputProcessor(keyH);
-        if (Gdx.input.isKeyJustPressed(keyUp)) {
-            //player.setUpPressed(true);
-            player.walk(Direction.UP);
+        time += Gdx.graphics.getDeltaTime();
+        if (Gdx.input.isKeyPressed(keyUp)) {
+            tryWalk(Direction.UP);
         }
-        else
-            //player.setUpPressed(false);
 
-        if (Gdx.input.isKeyJustPressed(keyDown)) {
-            //player.setDownPressed(true);
-            player.walk(Direction.DOWN);
+        if (Gdx.input.isKeyPressed(keyDown)) {
+            tryWalk(Direction.DOWN);
 
         }
-        else
-            //player.setDownPressed(false);
 
-        if (Gdx.input.isKeyJustPressed(keyRight)) {
-            //player.setRightPressed(true);
-            player.walk(Direction.RIGHT);
+        if (Gdx.input.isKeyPressed(keyRight)) {
+            tryWalk(Direction.RIGHT);
 
         }
-        else
-            //player.setRightPressed(false);
 
-        if (Gdx.input.isKeyJustPressed(keyLeft)) {
-            //player.setLeftPressed(true);
-            player.walk(Direction.LEFT);
+        if (Gdx.input.isKeyPressed(keyLeft)) {
+            tryWalk(Direction.LEFT);
 
         }
-        else{
-            //player.setLeftPressed(false);
+    }
 
+    private void tryWalk(Direction down) {
+        if (time > 0.2){
+            player.walk(down);
+            time = 0;
         }
+
+
     }
 
 }

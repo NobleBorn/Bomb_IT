@@ -17,7 +17,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class Boot implements Screen {
     final Main game;
-    public static Boot INSTANCE;
     private int widthScreen, heightScreen;
     private OrthographicCamera orthographicCamera;
     private Drawer drawer;
@@ -41,7 +40,6 @@ public class Boot implements Screen {
 
     public Boot(final Main game) {
         this.game = game;
-        //INSTANCE = this;
         create();
     }
 
@@ -66,25 +64,8 @@ public class Boot implements Screen {
         MovementListener walkListener = new MovementListener(map);
         playerOne.observable.addSubscriber(walkListener);
         playerTwo.observable.addSubscriber(walkListener);
-        //this.loop = new GameLoop(map);
-        //setScreen(new GameScreen());
         this.drawer = new Drawer(batch, map, playerOne, playerTwo);
-        //drawer.setupMap();
     }
-    /*@Override
-    public void render(){
-        //super.render();
-        Gdx.gl.glClearColor(0.1f, 1, 0.2f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-        batch.begin();
-        batch.draw(img, 0,0,960,960);
-        batch.end();
-        drawer.setupMap();
-        orthographicCamera.update();
-        playerOneController.update();
-        playerTwoController.update();
-        //screen.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-    }*/
 
     @Override
     public void show() {
@@ -110,7 +91,6 @@ public class Boot implements Screen {
                 }
                 break;
             case Paused:
-                //panelController.render();
                 break;
         }
     }
@@ -137,25 +117,22 @@ public class Boot implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        //super.resize(width, height);
+
     }
 
     @Override
     public void dispose(){
-        //super.dispose();
         batch.dispose();
         panelController.dispose();
     }
 
     @Override
     public void pause() {
-        //super.pause();
         state = State.Paused;
     }
 
     @Override
     public void resume() {
-        //super.resume();
         state = State.Running;
     }
 

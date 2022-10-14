@@ -1,11 +1,20 @@
 package Controllers;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+
 //A button class for the common attributes of a button
 public class Buttons {
     private float button_width;
     private float button_height;
     private float button_x;
     private float button_y;
+    private Button button;
 
     /**
      * Constructor.
@@ -49,6 +58,14 @@ public class Buttons {
      */
     public float getButton_y() {
         return button_y;
+    }
+
+    public Button getButton() {
+        return button;
+    }
+
+    public void create(){
+
     }
 }
 
