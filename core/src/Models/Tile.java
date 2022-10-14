@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class Tile {
     private Position position;
-    public List<Entity> entities = new ArrayList<>(1);
+    private List<Entity> entities = new ArrayList<>(1);
     public static final int tileSize = 48;
 
     /**
@@ -33,13 +33,13 @@ public class Tile {
      * Add an entity to the objects in the tile.
      * @param e the entity to be added to the tile's objects.
      */
-    public void addEntity(Entity e){
+    protected void addEntity(Entity e){
         entities.add(e);
     }
     /**
      * Remove an entity from the objects in the tile.
      */
-    public void removeEntity() {
+    protected void removeEntity() {
         if (entities.size() > 0) {
             entities.remove(0);
         }
@@ -57,7 +57,7 @@ public class Tile {
      * Methods offers a way to get a deep-copy of the objects on the tile. Requires entities to be a subclass of {@link Models.Entity}.
      * @return returns entities array with {@link Models.Entity} objects.
      */
-    protected List<Entity> getEntities(){
+    public List<Entity> getEntities(){
         return entities;
     }
 

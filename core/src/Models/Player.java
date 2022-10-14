@@ -16,12 +16,12 @@ public class Player extends Entity implements Destroyable{
      * @param position the initial {@link Models.Position} of a player at the time of creating it.
      * @param navigation a {@link Models.INavigable} for the player to be able to request navigation commands from the {@link Models.Map}.
      */
-    public Player(Position position, INavigable navigation, boolean status){
+    public Player(Position position, INavigable navigation){
         super(position);
         this.navigation = navigation;
         this.direction = Direction.UP;
         this.score = 0;
-        this.alive = status;
+        this.alive = true;
         this.bombLength = 1;
     }
 
@@ -92,10 +92,10 @@ public class Player extends Entity implements Destroyable{
 
     /**
      * Offers a way to create a deep-copy of the player.
-     * @return returns a deep-copy of the player with a new {@link Models.Position} object but same coordinates, and the same {@link Models.CollisionChecker} object.
+     * @return returns a deep-copy of the player with a new {@link Models.Position} object but same coordinates, and the same {@link Models.INavigable} object.
      */
     @Override
     protected Entity copyThis() {
-        return new Player(new Position(position), navigation, this.alive);
+        return new Player(new Position(position), navigation);
     }
 }
