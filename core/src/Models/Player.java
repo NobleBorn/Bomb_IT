@@ -99,7 +99,7 @@ public class Player extends Entity implements Destroyable{
 
     /**
      * Offers a way to create a deep-copy of the player.
-     * @return returns a deep-copy of the player with a new {@link Models.Position} object but same coordinates, and the same {@link Models.CollisionChecker} object.
+     * @return returns a deep-copy of the player with a new {@link Models.Position} object but same coordinates, and the same {@link Models.INavigable} object.
      */
     @Override
     protected Entity copyThis() {

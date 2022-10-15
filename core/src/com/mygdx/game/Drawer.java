@@ -42,11 +42,12 @@ public class Drawer {
                 tile = tilesMatrix[i][j];
                 if (!tilesMatrix[i][j].isTileEmpty()) {
 
-                    if ((tilesMatrix[i][j].entities.get(0) instanceof Wall)) {
+                    if ((tile.getEntities().get(0) instanceof Wall)) {
                         drawWall(i, j);
-                    } else if (tilesMatrix[i][j].entities.get(0) instanceof Player) {
+
+                    } else if (tile.getEntities().get(0) instanceof Player) {
                         drawPlayer(i, j);
-                    } else if (tile.entities.get(0) instanceof Bomb) {
+                    } else if (tile.getEntities().get(0) instanceof Bomb) {
                         drawBomb(i, j);
                     }
                 }
@@ -71,7 +72,7 @@ public class Drawer {
     }
 
     private void drawWall(int i, int j) {
-        if (tile.entities.get(0) instanceof SoftWall) {
+        if (tile.getEntities().get(0) instanceof SoftWall) {
             sb.draw(sprTempWall, j *Tile.tileSize, i *Tile.tileSize);
         }
         else{
