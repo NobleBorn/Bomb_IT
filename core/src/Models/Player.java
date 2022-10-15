@@ -4,6 +4,7 @@ package Models;
  * The class represents a player as a subclass of {@link Models.Entity} and a navigable entity.
  */
 public class Player extends Entity implements Destroyable{
+    private boolean isWalking = false;
     private Direction direction;
     private Position nextPosition;
     private int score;
@@ -25,6 +26,12 @@ public class Player extends Entity implements Destroyable{
         this.bombLength = 1;
     }
 
+    public boolean isWalking(){
+        return isWalking;
+    }
+    public void setWalking(boolean isWalking){
+        this.isWalking = isWalking;
+    }
     /**
      * Methods offers a way for the player to move one {@link Models.Tile} on the map, if possible, and change its position. Note that the player's {@link Models.Direction} will be changed regardless of the result of the attempt of moving the {@link Models.Player}.
      * @param newDirection the direction that the player is trying to move in.
