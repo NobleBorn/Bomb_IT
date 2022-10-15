@@ -74,16 +74,20 @@ public class Boot implements Screen {
 
     @Override
     public void render(float delta) {
-        int num;
+        gameState();
+    }
+
+    private void gameState() {
+        int winner;
         switch(state){
             case Running:
                 timeSeconds += Gdx.graphics.getDeltaTime();
                 if(timeSeconds > period || !playerOne.isAlive() || !playerTwo.isAlive()){
-                    if(playerTwo.isAlive())
-                        num = 2;
+                    if(playerOne.isAlive())
+                        winner = 1;
                     else
-                        num = 1;
-                    this.game.setScreen(new GameOverView(game, num));
+                        winner = 2;
+                    this.game.setScreen(new GameOverView(game, winner));
                 }
                 else{
                     draw();
@@ -99,7 +103,7 @@ public class Boot implements Screen {
         return timeSeconds;
     }
 
-    public void draw(){
+    private void draw(){
         Gdx.gl.glClearColor(98/255f, 61/255f, 3/255f, 0.9f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
         batch.begin();
@@ -108,11 +112,11 @@ public class Boot implements Screen {
         drawer.setupMap();
     }
 
-    public void update(){
+    private void update(){
         orthographicCamera.update();
         playerOneController.update();
         playerTwoController.update();
-        panelController.render();
+        panelController.update();
     }
 
     @Override
