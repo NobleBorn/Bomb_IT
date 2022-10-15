@@ -9,137 +9,94 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Array;
 
 
 public class PlayerView {
-    public TextureRegion up1, up2, down1, down2, right1, right2, left1, left2;
-    public TextureRegion uppe1, uppe2, ner1, ner2, hoger1, hoger2, vanster1, vanster2;
     Texture playerImages;
-    Texture player2Images;
-    SpriteBatch batch;
     Player player;
-    PlayerController playerController;
-    int spriteCounter = 0;
-    int standCounter;
-    int spriteNum = 1;
-    int spriteNum2 = 1;
-    Animation<TextureRegion> walkAnimation;
-    float stateTime;
+    private TextureRegion[][] playerTexture2D;
+    private final int col = 8;
+    private final int row = 1;
+    private float timer = 0f;
+    private Direction previousDir;
+    private Animation<TextureRegion> animationRight, animationLeft, animationUp, animationDown;
+    private TextureRegion image;
+    private Array<TextureRegion> walkFrames = new Array<TextureRegion>(2);
 
 
-    public PlayerView(Player player){
-        playerImages = new Texture("spelare.png");
-        player2Images = new Texture("spelare2.png");
+    public PlayerView(Player player, String imagesFileName){
+        playerImages = new Texture(imagesFileName);
+
+        this.playerTexture2D = TextureRegion.split(playerImages,
+                playerImages.getWidth() / col, playerImages.getHeight() / row);
+
+        this.player = player;
+        this.previousDir = player.getDirection();
+
         addSprites();
+        changeTextureRegion(this.player.getDirection());
     }
 
     private void addSprites() {
-        down1 =  new TextureRegion(playerImages, 0,0,48,48);
-        down2 = new TextureRegion(playerImages, 48,0,48,48);
 
-        left1 = new TextureRegion(playerImages, 96,0,48,48);
-        left2 = new TextureRegion(playerImages, 144,0,48,48);
+        float updateFrames = 1/60f;
 
-        right1 = new TextureRegion(playerImages, 192,0,48,48);
-        right2 = new TextureRegion(playerImages, 240,0,48,48);
+        setupWalkFrames(0, 2);
+        this.animationDown = new Animation<TextureRegion>(updateFrames, walkFrames);
+        walkFrames.clear();
 
-        up1 = new TextureRegion(playerImages, 288,0,48,48);
-        up2 = new TextureRegion(playerImages, 336,0,48,48);
+        setupWalkFrames(2, 4);
+        this.animationLeft = new Animation<TextureRegion>(updateFrames, walkFrames);
+        walkFrames.clear();
 
-        ner1 =  new TextureRegion(player2Images, 0,0,48,48);
-        ner2 = new TextureRegion(player2Images, 48,0,48,48);
+        setupWalkFrames(4, 6);
+        this.animationRight = new Animation<TextureRegion>(updateFrames, walkFrames);
+        walkFrames.clear();
 
-        vanster1 = new TextureRegion(player2Images, 96,0,48,48);
-        vanster2 = new TextureRegion(player2Images, 144,0,48,48);
+        setupWalkFrames(6, 8);
+        this.animationUp = new Animation<TextureRegion>(updateFrames, walkFrames);
+        walkFrames.clear();
+    }
 
-        hoger1 = new TextureRegion(player2Images, 192,0,48,48);
-        hoger2 = new TextureRegion(player2Images, 240,0,48,48);
-
-        uppe1 = new TextureRegion(player2Images, 288,0,48,48);
-        uppe2 = new TextureRegion(player2Images, 336,0,48,48);
+    private void setupWalkFrames(int start, int finish){
+        for (int i = start; i < finish; i++)
+            walkFrames.add(playerTexture2D[0][i]);
 
     }
 
-    public TextureRegion getImage(Direction direction, int n){
-        TextureRegion image = null;
-        if (n == 1){
-            image = getTextureRegion(direction, image, spriteNum, up1, up2, down1, down2, right1, right2, left1, left2);
+    public TextureRegion getImage(){
+        if (player.isWalking()){
+            changeTextureRegion(player.getDirection());
         }
-        else{
-            image = getTextureRegion(direction, image, spriteNum2, uppe1, uppe2, ner1, ner2, hoger1, hoger2, vanster1, vanster2);
-        }
-        return image;
+        return this.image;
     }
 
-    private TextureRegion getTextureRegion(Direction direction, TextureRegion image, int spriteNum2, TextureRegion uppe1,
-                                           TextureRegion uppe2, TextureRegion ner1, TextureRegion ner2, TextureRegion hoger1,
-                                           TextureRegion hoger2, TextureRegion vanster1, TextureRegion vanster2) {
+    private void changeTextureRegion(Direction direction) {
         switch (direction){
             case UP:
-                if (spriteNum2 == 1){
-                    image = uppe1;
-                }
-                if (spriteNum2 == 2){
-                    image = uppe2;
-                }
+                this.image = animationUp.getKeyFrame(timer, true);
                 break;
+
             case DOWN:
-                if (spriteNum2 == 1)
-                    image = ner1;
-                if (spriteNum2 == 2)
-                    image = ner2;
+                this.image = animationDown.getKeyFrame(timer, true);
                 break;
+
             case RIGHT:
-                if (spriteNum2 == 1)
-                    image = hoger1;
-                if (spriteNum2 == 2)
-                    image = hoger2;
+                this.image = animationRight.getKeyFrame(timer, true);
                 break;
+
             case LEFT:
-                if (spriteNum2 == 1)
-                    image = vanster1;
-                if (spriteNum2 == 2)
-                    image = vanster2;
+                this.image = animationLeft.getKeyFrame(timer, true);
                 break;
         }
-        return image;
-    }
-
-
-    public void setupPlayerImage() {
-        if (spriteCounter > 15){
-            if (spriteNum == 1 && (Gdx.input.isKeyPressed(Input.Keys.DPAD_UP) ||
-                    Gdx.input.isKeyPressed(Input.Keys.DPAD_DOWN) || Gdx.input.isKeyPressed(Input.Keys.DPAD_RIGHT)
-                    || Gdx.input.isKeyPressed(Input.Keys.DPAD_LEFT))){
-                spriteNum = 2;
-            }
-            else if (spriteNum == 2 && (Gdx.input.isKeyPressed(Input.Keys.DPAD_UP) ||
-                    Gdx.input.isKeyPressed(Input.Keys.DPAD_DOWN) || Gdx.input.isKeyPressed(Input.Keys.DPAD_RIGHT)
-                    || Gdx.input.isKeyPressed(Input.Keys.DPAD_LEFT))){
-                spriteNum = 1;
-            }
-
-            if (spriteNum2 == 1 && (Gdx.input.isKeyPressed(Input.Keys.W) ||
-                    Gdx.input.isKeyPressed(Input.Keys.S) || Gdx.input.isKeyPressed(Input.Keys.D)
-                    || Gdx.input.isKeyPressed(Input.Keys.A))){
-                spriteNum2 = 2;
-            }
-            else if (spriteNum2 == 2 && (Gdx.input.isKeyPressed(Input.Keys.W) ||
-                    Gdx.input.isKeyPressed(Input.Keys.S) || Gdx.input.isKeyPressed(Input.Keys.D)
-                    || Gdx.input.isKeyPressed(Input.Keys.A))){
-                spriteNum2 = 1;
-            }
-
-            spriteCounter = 0;
+        player.setWalking(false);
+        if (previousDir == direction){
+            timer += Gdx.graphics.getDeltaTime();
         }
-        else {
-            standCounter++;
-            if (standCounter == 20){
-                spriteNum = 1;
-                spriteNum2 = 1;
-                standCounter = 0;
-            }
+        else{
+            timer = 0f;
         }
-        spriteCounter++;
+        previousDir = direction;
     }
 }
