@@ -30,7 +30,7 @@ public class GameOverController {
                 return true;
             }
         });
-        game.stage.addActor(menu_button.getButton());
+        game.getStage().addActor(menu_button.getButton());
 
         exit_button.getButton().addListener(new InputListener() {
             @Override
@@ -43,6 +43,6 @@ public class GameOverController {
                 return true;
             }
         });
-        game.stage.addActor(exit_button.getButton());
+        game.getStage().addActor(exit_button.getButton());
     }
 }

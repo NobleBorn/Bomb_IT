@@ -54,4 +54,44 @@ public class Image_Button extends Buttons{
         button.setPosition(col_width*this.getButton_x(),Gdx.graphics.getHeight()-row_height*this.getButton_y());
 
     }
+
+    public static class ImageButtonBuilder {
+        private float nestedWidth = 1;
+        private float nestedHeight = 1;
+        private float nestedX_pos;
+        private float nestedY_pos;
+        private String nestedPath1;
+        private String nestedPath2;
+
+        public ImageButtonBuilder(float x_pos, float y_pos){
+            this.nestedX_pos = x_pos;
+            this.nestedY_pos = y_pos;
+
+        }
+
+        public ImageButtonBuilder buttonPath1(String path1){
+            this.nestedPath1 = path1;
+            return this;
+        }
+
+        public ImageButtonBuilder buttonSize(float width, float height){
+            this.nestedWidth = width;
+            this.nestedHeight = height;
+            return this;
+        }
+
+        public ImageButtonBuilder buttonPath2(String path2){
+            this.nestedPath2 = path2;
+            return this;
+        }
+
+
+        public Image_Button createImageButton()
+        {
+            return new Image_Button(
+                    nestedPath1, nestedPath2, nestedWidth, nestedHeight, nestedX_pos, nestedY_pos);
+        }
+
+
+    }
 }

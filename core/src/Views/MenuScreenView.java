@@ -32,7 +32,7 @@ public class MenuScreenView implements Screen {
         this.camera = new OrthographicCamera();
         this.camera.setToOrtho(false, 960, 960);
 
-        game.batch = new SpriteBatch();
+        game.setBatch(new SpriteBatch());
 
         menuImg = new Texture(Gdx.files.internal("mainMenu.png"));
 
@@ -69,11 +69,11 @@ public class MenuScreenView implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         camera.update();
-        game.batch.setProjectionMatrix(camera.combined);
+        game.getBatch().setProjectionMatrix(camera.combined);
 
-        game.batch.begin();
-        game.batch.draw(menuImg,0,0,960,960);
-        game.batch.end();
+        game.getBatch().begin();
+        game.getBatch().draw(menuImg,0,0,960,960);
+        game.getBatch().end();
 
         if (startClicked)
             this.game.setScreen(new Boot(game));

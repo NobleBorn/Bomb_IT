@@ -7,28 +7,43 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import Views.*;
 
+import java.util.ArrayList;
+
 public class MenuScreenController {
     private MenuScreenView menuScreenView;
+    ArrayList<Buttons> create = new ArrayList<>();
 
-    ButtonFactory buttonFactory = new ButtonFactory();
+    Text_Button play_button = new Text_Button.TextButtonBuilder(7, 3.3f).buttonSize(2, 1).
+            buttonName("Play").createTextButton();
 
-    Buttons play_button = new Text_Button("Play", 2,1, 7, 3.3f);
-    Buttons option_button = new Text_Button("Option", 2,1, 7, 4.2f);
-    Buttons exit_button = new Text_Button("Exit", 2,1, 7, 5.1f);
+    Buttons option_button = new Text_Button.TextButtonBuilder(7,4.2f).buttonSize(2, 1).
+            buttonName("Option").createTextButton();
 
-    Buttons music_button = new Image_Button("volume_on.png", "volume_off.png",1,
-            0.8f, 0.3f, 6.2f);
-    Buttons sound_button = new Image_Button("sound_on.png", "sound_off.png",1,
-            0.8f, 1, 6.2f);
+    Buttons exit_button = new Text_Button.TextButtonBuilder( 7,5.1f).buttonSize(2, 1).
+            buttonName("Exit").createTextButton();
+
+
+
+    Image_Button music_button = new Image_Button.ImageButtonBuilder( 0.3f, 6.2f).buttonSize(1, 0.8f)
+            .buttonPath1("volume_on.png").buttonPath2("volume_off.png").createImageButton();
+
+    Buttons sound_button = new Image_Button.ImageButtonBuilder( 1, 6.2f).buttonSize(1, 0.8f)
+            .buttonPath1("sound_on.png").buttonPath2("sound_off.png").createImageButton();
+
+
 
     public MenuScreenController(final MenuScreenView menuScreenView){
         this.menuScreenView = menuScreenView;
-        play_button.create();
-        option_button.create();
-        exit_button.create();
 
-        music_button.create();
-        sound_button.create();
+        create.add(play_button);
+        create.add(option_button);
+        create.add(exit_button);
+        create.add(music_button);
+        create.add(sound_button);
+
+        for (Buttons buttons : create)
+            buttons.create();
+
 
         play_button.getButton().addListener(new InputListener(){
             @Override
@@ -92,9 +107,6 @@ public class MenuScreenController {
             }
         });
         menuScreenView.getStage().addActor(sound_button.getButton());
-
-
-
 
     }
 }
