@@ -27,8 +27,8 @@ public class GameOverView implements Screen {
     public GameOverView(final Main game, int num){
         this.game = game;
         this.num = num;
-        game.stage = new Stage(new ScreenViewport());
-        Gdx.input.setInputProcessor(game.stage);
+        game.setStage(new Stage(new ScreenViewport()));
+        Gdx.input.setInputProcessor(game.getStage());
         gameOverImgOne = new Texture(Gdx.files.internal("playerOne.png"));
         gameOverImgTwo = new Texture(Gdx.files.internal("playerTwo.png"));
         font = new BitmapFont();
@@ -57,24 +57,24 @@ public class GameOverView implements Screen {
         int row_height = Gdx.graphics.getWidth() / 12;
         int col_width = Gdx.graphics.getWidth() / 12;
 
-        game.batch.begin();
+        game.getBatch().begin();
         if(num == 1){
-            game.batch.draw(gameOverImgOne,0,0,960,960);
-            font.draw(game.batch,"Player One Won!", col_width*2.9f, row_height*5.5f);
+            game.getBatch().draw(gameOverImgOne,0,0,960,960);
+            font.draw(game.getBatch(),"Player One Won!", col_width*2.9f, row_height*5.5f);
         }
         else{
-            game.batch.draw(gameOverImgTwo,0,0,960,960);
-            font.draw(game.batch,"Player Two Won!", col_width*2.9f, row_height*5.5f);
+            game.getBatch().draw(gameOverImgTwo,0,0,960,960);
+            font.draw(game.getBatch(),"Player Two Won!", col_width*2.9f, row_height*5.5f);
         }
-        game.batch.end();
+        game.getBatch().end();
 
         if (mainMenu)
-            game.setScreen(new MenuScreenView(this.game));
+            game.setScreen(new MenuScreenView(game));
         else if (exit)
             Gdx.app.exit();
 
-        game.stage.act();
-        game.stage.draw();
+        game.getStage().act();
+        game.getStage().draw();
 
     }
 

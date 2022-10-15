@@ -40,7 +40,7 @@ public class Text_Button extends Buttons{
     }
 
     /**
-     * Creates the new button instance and sets the size and position
+     * Creates the new button instance with skin and sets the size and position
      */
     @Override
     public void create(){
@@ -58,18 +58,34 @@ public class Text_Button extends Buttons{
     }
 
     public static class TextButtonBuilder {
-        private int nestedWidth;
-        private int nestedHeight;
-        private int nestedX_pos;
-        private int nestedY_pos;
+        private float nestedWidth = 1;
+        private float nestedHeight = 1;
+        private float nestedX_pos;
+        private float nestedY_pos;
         private String nestedName;
 
-        public TextButtonBuilder(String newName, int newWidth, int newHeight, int newX, int newY){
-            this.nestedName = newName;
-            this.nestedWidth = newWidth;
-            this.nestedHeight = newHeight;
-            this.nestedX_pos = newX;
-            this.nestedY_pos = newY;
+        public TextButtonBuilder(float x_pos, float y_pos){
+            this.nestedX_pos = x_pos;
+            this.nestedY_pos = y_pos;
+
+        }
+
+        public TextButtonBuilder buttonName(String Name){
+            this.nestedName = Name;
+            return this;
+        }
+
+        public TextButtonBuilder buttonSize(float width, float height){
+            this.nestedWidth = width;
+            this.nestedHeight = height;
+            return this;
+        }
+
+
+        public Text_Button createTextButton()
+        {
+            return new Text_Button(
+                    nestedName, nestedWidth, nestedHeight, nestedX_pos, nestedY_pos);
         }
 
 

@@ -5,38 +5,55 @@ import com.badlogic.gdx.*;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.physics.box2d.*;
-import Controllers.MenuScreenController;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
-//Help from Libgdx website, wiki and tutorials
 public class Main extends Game {
-	public SpriteBatch batch;
-	public BitmapFont font;
-	public Stage stage;
-
+	private SpriteBatch batch;
+	private BitmapFont font;
+	private Stage stage;
 
 	@Override
 	public void create() {
-		// The SpriteBatch object is used to render objects onto the screen
 		batch = new SpriteBatch();
-		// BitmapFont object is used, along with a SpriteBatch, to render text onto the screen
 		font = new BitmapFont();
-		// Set the Screen of the Game to a MainMenuScreen object, with a Main instance as its first and only parameter
-
 		stage = new Stage();
+
 		this.setScreen(new MenuScreenView(this));
+	}
+
+	public void setBatch(SpriteBatch batch) {
+		this.batch = batch;
+	}
+
+	public void setStage(Stage stage) {
+		this.stage = stage;
+	}
+
+	public void setFont(BitmapFont font) {
+		this.font = font;
+	}
+
+	public SpriteBatch getBatch() {
+		return batch;
+	}
+
+	public BitmapFont getFont() {
+		return font;
+	}
+
+	public Stage getStage() {
+		return stage;
 	}
 
 	@Override
 	public void render() {
-		// super.render makes it possible to render the screen that is in the create method
 		super.render();
 
 	}
 
 	@Override
 	public void dispose() {
+		super.dispose();
 		batch.dispose();
 		font.dispose();
 		stage.dispose();
