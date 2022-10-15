@@ -34,4 +34,9 @@ public class PlayerTest {
         assertEquals(Direction.DOWN, testPlayer.getDirection());
     }
 
+    @Test
+    void testGetScore(){
+        assertEquals(0, map.getPlayers().get(0).getScore());
+    }
+
 }

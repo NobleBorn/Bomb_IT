@@ -38,22 +38,15 @@ public class Map implements EventListener, INavigable{
         return tiles;
     }
 
-    /**
-     * @return returns the original 2D array of tiles and the objects they each contain.
-     */
-    protected Tile[][] getTiles(){
-        return tiles;
-    }
-
     private void loadWalls(){
-        createPowerUps();
+        //createPowerUps();
     }
 
     private void addObjects(){
 
         try {
             List<String> rows = new ArrayList<String>();
-            BufferedReader bf = new BufferedReader(new FileReader("/Users/maxlevin/Documents/TDA367/Bomb_IT/assets/test.txt"));
+            BufferedReader bf = new BufferedReader(new FileReader("C:\\Users\\oyoun\\IdeaProjects\\Bomb_IT\\assets\\test.txt"));
 
             String line = bf.readLine();
             while (line != null) {
@@ -92,6 +85,7 @@ public class Map implements EventListener, INavigable{
     public List<Player> getPlayers(){
         return playerObjList;
     }
+
     public int[] getSize(){
         int[] coordinates = new int[2];
 
@@ -99,10 +93,6 @@ public class Map implements EventListener, INavigable{
         coordinates[1] = y;
 
         return coordinates;
-    }
-
-    public int createPowerUps(){
-        return 0;
     }
     /**
      * Offers a way to get access to the information of the objects on the map, without being able to change them from outside the package
@@ -159,7 +149,7 @@ public class Map implements EventListener, INavigable{
     @Override
     public boolean tryToKillEntity(Position position) {
         if (!tiles[position.getX()][position.getY()].isTileEmpty()){
-            Entity entity = tiles[position.getX()][position.getY()].entities.get(0);
+            Entity entity = tiles[position.getX()][position.getY()].getEntities().get(0);
             if (entity instanceof Destroyable){
                 tiles[position.getX()][position.getY()].removeEntity();
                 ((Destroyable) entity).terminate();
