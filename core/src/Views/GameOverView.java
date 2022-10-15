@@ -2,18 +2,19 @@ package Views;
 
 import Controllers.GameOverController;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.mygdx.game.Boot;
 import com.mygdx.game.Main;
 
-public class GameOverView implements Screen {
+/**
+ * Game Over screen
+ */
+public class GameOverView extends ScreenAdapter {
     final Main game;
     private GameOverController gameOverController;
     private Texture gameOverImgOne;
@@ -21,35 +22,48 @@ public class GameOverView implements Screen {
     private BitmapFont font;
     private boolean mainMenu = false;
     private boolean exit = false;
-    private int num;
+    private int winner_num;
 
-
-    public GameOverView(final Main game, int num){
+    /**
+     * Constructor
+     *
+     * @param game - an instance of Main class
+     * @param winnerNum - A number that shows which player has won the game
+     */
+    public GameOverView(final Main game, int winnerNum){
         this.game = game;
-        this.num = num;
+        this.winner_num = winnerNum;
         game.setStage(new Stage(new ScreenViewport()));
         Gdx.input.setInputProcessor(game.getStage());
         gameOverImgOne = new Texture(Gdx.files.internal("playerOne.png"));
         gameOverImgTwo = new Texture(Gdx.files.internal("playerTwo.png"));
         font = new BitmapFont();
+
         font.setColor(Color.BLACK);
         font.getData().setScale(1.4f);
         gameOverController = new GameOverController(this, this.game);
     }
 
+    /**
+     *
+     * @param mainMenu - set the new value of the boolean variable
+     */
     public void setMainMenu(boolean mainMenu) {
         this.mainMenu = mainMenu;
     }
 
+    /**
+     *
+     * @param exit - set the new value of the boolean variable
+     */
     public void setExit(boolean exit) {
         this.exit = exit;
     }
 
-    @Override
-    public void show() {
-
-    }
-
+    /**
+     *
+     * @param delta - the game's delta time
+     */
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(1, 1, 1, 1);
@@ -58,7 +72,7 @@ public class GameOverView implements Screen {
         int col_width = Gdx.graphics.getWidth() / 12;
 
         game.getBatch().begin();
-        if(num == 1){
+        if(winner_num == 1){
             game.getBatch().draw(gameOverImgOne,0,0,960,960);
             font.draw(game.getBatch(),"Player One Won!", col_width*2.9f, row_height*5.5f);
         }
@@ -84,20 +98,13 @@ public class GameOverView implements Screen {
     }
 
     @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
     public void hide() {
 
     }
 
+    /**
+     * Disposes of images
+     */
     @Override
     public void dispose() {
         gameOverImgOne.dispose();

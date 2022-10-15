@@ -12,8 +12,10 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.Boot;
 
-import java.awt.*;
-
+/**
+ * A class that shows player information such as points, shows game timer and creates pause and resume button see
+ * {@link Controllers.Text_Button}
+ */
 public class PanelController {
     private Boot boot;
     private Stage stage;
@@ -33,6 +35,13 @@ public class PanelController {
     Image_Button sound_button = new Image_Button("sound_on.png", "sound_off.png",1,
             0.8f, 2.7f, 7);
 
+    /**
+     * Constructor
+     *
+     * @param boot - an instance of the boot class
+     * @param player1 - an instance of the player class for player one
+     * @param player2 - an instance of the player class for player two
+     */
     public PanelController(final Boot boot, Player player1, Player player2){
         this.stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(this.stage);
@@ -76,24 +85,40 @@ public class PanelController {
         stage.addActor(resume_button.getButton());
     }
 
-    public void render(){
+    /**
+     * Draws the stage, text areas and the text fonts
+     */
+    public void update(){
         int row_height = Gdx.graphics.getWidth() / 12;
         int col_width = Gdx.graphics.getWidth() / 12;
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(148/255f,92/255f,43/255f,0.8f);
-        shapeRenderer.rect(col_width*9.4f, row_height*7.2f, 230, 50);
-        shapeRenderer.rect(col_width*9.4f, row_height*5.2f, 230, 50);
-        shapeRenderer.rect(col_width*9.4f, row_height*3.2f, 230, 50);
-        shapeRenderer.end();
+
+        drawTextArea(row_height, col_width);
         batch.begin();
-        font.draw(batch,"Timer: " + (int)boot.getTimeSeconds(), col_width*9.7f, row_height*7.5f);
-        font.draw(batch,"Player 1 points: " + player1.getScore(), col_width*9.7f, row_height*5.5f);
-        font.draw(batch,"Player 2 points: " + player2.getScore(), col_width*9.7f, row_height*3.5f);
+        drawFonts(row_height, col_width);
         batch.end();
+
         stage.act();
         stage.draw();
     }
 
+    private void drawFonts(int row_height, int col_width) {
+        font.draw(batch,"Timer: " + (int)boot.getTimeSeconds(), col_width *9.7f, row_height *7.5f);
+        font.draw(batch,"Player 1 points: " + player1.getScore(), col_width *9.7f, row_height *5.5f);
+        font.draw(batch,"Player 2 points: " + player2.getScore(), col_width *9.7f, row_height *3.5f);
+    }
+
+    private void drawTextArea(int row_height, int col_width) {
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        shapeRenderer.setColor(148/255f,92/255f,43/255f,0.8f);
+        shapeRenderer.rect(col_width *9.4f, row_height *7.2f, 230, 50);
+        shapeRenderer.rect(col_width *9.4f, row_height *5.2f, 230, 50);
+        shapeRenderer.rect(col_width *9.4f, row_height *3.2f, 230, 50);
+        shapeRenderer.end();
+    }
+
+    /**
+     * Disposes the stage and font
+     */
     public void dispose(){
         stage.dispose();
         font.dispose();
