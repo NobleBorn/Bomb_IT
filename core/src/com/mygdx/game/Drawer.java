@@ -22,6 +22,8 @@ public class Drawer {
     private final BombView bombView;
     private Bomb bomb;
 
+    private Object Wall;
+
     public Drawer(SpriteBatch batch, Map map, Player player1, Player player2) {
         this.sb = batch;
         this.map = map;
@@ -34,6 +36,7 @@ public class Drawer {
         bombView = new BombView(this.bomb);
     }
 
+
     public void setupMap() {
         Tile[][] tilesMatrix = map.getMapMatrix();
         sb.begin();
@@ -44,7 +47,6 @@ public class Drawer {
 
                     if ((tile.getEntities().get(0) instanceof Wall)) {
                         drawWall(i, j);
-
                     } else if (tile.getEntities().get(0) instanceof Player) {
                         drawPlayer(i, j);
                     } else if (tile.getEntities().get(0) instanceof Bomb) {
@@ -59,13 +61,11 @@ public class Drawer {
     private void drawPlayer(int i, int j) {
         if (i == player1.getPosition().getX() && j == player1.getPosition().getY()) {
             if (player1.isAlive()) {
-                //playerOneView.setupPlayerImage();
                 sb.draw(playerOneView.getImage(), j * Tile.tileSize, i * Tile.tileSize);
             }
         }
         if (i == player2.getPosition().getX() && j == player2.getPosition().getY()) {
             if (player2.isAlive()) {
-                //playerTwoView.setupPlayerImage();
                 sb.draw(playerTwoView.getImage(), j * Tile.tileSize, i * Tile.tileSize);
             }
         }

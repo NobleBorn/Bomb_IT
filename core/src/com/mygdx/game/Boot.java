@@ -25,6 +25,7 @@ public class Boot implements Screen {
     private Player playerTwo;
     private PlayerController playerOneController;
     private PlayerController playerTwoController;
+    private Bomb bomb;
 
     private PanelController panelController;
     private float timeSeconds = 0f;
