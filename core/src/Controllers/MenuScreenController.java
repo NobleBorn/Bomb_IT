@@ -96,6 +96,7 @@ public class MenuScreenController {
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
                 Gdx.app.exit();
+                System.exit(0);
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {

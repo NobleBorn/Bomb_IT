@@ -1,13 +1,9 @@
 package Views;
 
-import Controllers.*;
 import Models.*;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 
@@ -22,9 +18,14 @@ public class PlayerView {
     private Direction previousDir;
     private Animation<TextureRegion> animationRight, animationLeft, animationUp, animationDown;
     private TextureRegion image;
-    private Array<TextureRegion> walkFrames = new Array<TextureRegion>(2);
+    private Array<TextureRegion> walkFrames = new Array<>(2);
 
-
+    /**
+     * Constructor
+     *
+     * @param player - an instance of the player
+     * @param imagesFileName - image path for the player
+     */
     public PlayerView(Player player, String imagesFileName){
         playerImages = new Texture(imagesFileName);
 
@@ -43,19 +44,19 @@ public class PlayerView {
         float updateFrames = 1/60f;
 
         setupWalkFrames(0, 2);
-        this.animationDown = new Animation<TextureRegion>(updateFrames, walkFrames);
+        this.animationDown = new Animation<>(updateFrames, walkFrames);
         walkFrames.clear();
 
         setupWalkFrames(2, 4);
-        this.animationLeft = new Animation<TextureRegion>(updateFrames, walkFrames);
+        this.animationLeft = new Animation<>(updateFrames, walkFrames);
         walkFrames.clear();
 
         setupWalkFrames(4, 6);
-        this.animationRight = new Animation<TextureRegion>(updateFrames, walkFrames);
+        this.animationRight = new Animation<>(updateFrames, walkFrames);
         walkFrames.clear();
 
         setupWalkFrames(6, 8);
-        this.animationUp = new Animation<TextureRegion>(updateFrames, walkFrames);
+        this.animationUp = new Animation<>(updateFrames, walkFrames);
         walkFrames.clear();
     }
 
@@ -65,6 +66,10 @@ public class PlayerView {
 
     }
 
+    /**
+     *
+     * @return current player image
+     */
     public TextureRegion getImage(){
         if (player.isWalking()){
             changeTextureRegion(player.getDirection());
