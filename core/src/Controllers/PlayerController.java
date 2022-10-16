@@ -10,6 +10,16 @@ public class PlayerController {
     private final int keyUp, keyLeft, keyDown, keyRight, keyDropBomb;
     private float time = 0f;
 
+    /**
+     * Constructor
+     *
+     * @param player - an instance of the player class for the player
+     * @param up - a key code for the player's up direction
+     * @param down - a key code for the player's down direction
+     * @param right - a key code for the player's right direction
+     * @param left - a key code for the player's left direction
+     * @param dropBomb - a key code for the player to drop a bomb
+     */
     public PlayerController(Player player, int up, int down, int right, int left, int dropBomb){
         this.player = player;
         this.keyUp = up;
@@ -19,32 +29,27 @@ public class PlayerController {
         this.keyDropBomb = dropBomb;
     }
 
+    /**
+     * Depending on the key input sends the correct direction to tryWalk method
+     * Or calls the dropBomb method for the player
+     */
     public void update(){
         if (player.isAlive()) {
             time += Gdx.graphics.getDeltaTime();
-            if (Gdx.input.isKeyPressed(keyUp)) {
+            if(Gdx.input.isKeyPressed(keyUp))
                 tryWalk(Direction.UP);
-            } else
 
-                if (Gdx.input.isKeyPressed(keyDown)) {
-                    tryWalk(Direction.DOWN);
+            if(Gdx.input.isKeyPressed(keyDown))
+                tryWalk(Direction.DOWN);
 
-                } else
+            if(Gdx.input.isKeyPressed(keyRight))
+                tryWalk(Direction.RIGHT);
 
-                    if (Gdx.input.isKeyPressed(keyRight)) {
-                        tryWalk(Direction.RIGHT);
+            if (Gdx.input.isKeyPressed(keyLeft))
+                tryWalk(Direction.LEFT);
 
-                    } else
-
-                        if (Gdx.input.isKeyPressed(keyLeft)) {
-                            tryWalk(Direction.LEFT);
-
-                        } else
-
-
-                            if (Gdx.input.isKeyPressed(keyDropBomb)) {
-                                player.dropBomb();
-                            }
+            if (Gdx.input.isKeyPressed(keyDropBomb))
+                player.dropBomb();
         }
     }
 

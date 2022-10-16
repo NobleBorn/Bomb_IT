@@ -1,6 +1,6 @@
 package Views;
 
-import Controllers.KeyHandler;
+//import Controllers.KeyHandler;
 import Controllers.PlayerController;
 import Models.Bomb;
 import com.badlogic.gdx.ApplicationAdapter;
@@ -17,11 +17,11 @@ public class BombView extends ApplicationAdapter {
     PlayerController playerController;
 
     Texture bombImage;
-    KeyHandler keyH;
+    //KeyHandler keyH;
     TextureRegion bombPlayerImage;
 
     public BombView(Bomb bomb){
-        keyH = new KeyHandler();
+        //keyH = new KeyHandler();
         bombImage = new Texture("bombImage.png");
         addsprite();
     }

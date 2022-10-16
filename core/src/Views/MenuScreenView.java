@@ -1,10 +1,9 @@
 package Views;
 import Controllers.MenuScreenController;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -12,7 +11,10 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.*;
 
-public class MenuScreenView implements Screen {
+/**
+ * Main menu screen
+ */
+public class MenuScreenView extends ScreenAdapter {
     final Main game;
 
     private Stage stage;
@@ -23,7 +25,11 @@ public class MenuScreenView implements Screen {
     private Music game_music;
     private Sound click_sound;
 
-
+    /**
+     * Constructor
+     *
+     * @param game - an instance of Main class
+     */
     public MenuScreenView(final Main game){
         this.game = game;
         this.stage = new Stage(new ScreenViewport());
@@ -32,7 +38,7 @@ public class MenuScreenView implements Screen {
         this.camera = new OrthographicCamera();
         this.camera.setToOrtho(false, 960, 960);
 
-        game.batch = new SpriteBatch();
+        game.setBatch(new SpriteBatch());
 
         menuImg = new Texture(Gdx.files.internal("mainMenu.png"));
 
@@ -43,43 +49,68 @@ public class MenuScreenView implements Screen {
 
     }
 
+    /**
+     *
+     * @return current stage
+     */
     public Stage getStage() {
         return stage;
     }
 
+    /**
+     *
+     * @return current game_music
+     */
     public Music getGame_music() {
         return game_music;
     }
 
+    /**
+     *
+     * @return current click_sound
+     */
     public Sound getClick_sound() {
         return click_sound;
     }
 
+    /**
+     *
+     * @param click_sound - click_sound to set (a path to the sound in assets)
+     */
     public void setClick_sound(Sound click_sound) {
         this.click_sound = click_sound;
     }
 
+    /**
+     *
+     * @param startClicked - startClicked to set (true or false)
+     */
     public void setStartClicked(boolean startClicked) {
         this.startClicked = startClicked;
     }
 
+    /**
+     * Updates the Main Menu screen
+     * @param delta - the game's delta time
+     */
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(1, 1, 1, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
         camera.update();
-        game.batch.setProjectionMatrix(camera.combined);
+        game.getBatch().setProjectionMatrix(camera.combined);
 
-        game.batch.begin();
-        game.batch.draw(menuImg,0,0,960,960);
-        game.batch.end();
+        game.getBatch().begin();
+        game.getBatch().draw(menuImg,0,0,960,960);
+        game.getBatch().end();
 
-        if (startClicked)
-            this.game.setScreen(new Boot(game));
+        setScreen();
 
         stage.act();
         stage.draw();
+    }
+
+    private void setScreen() {
+        if (startClicked)
+            this.game.setScreen(new Boot(game));
     }
 
     @Override
@@ -96,14 +127,9 @@ public class MenuScreenView implements Screen {
     public void hide() {
     }
 
-    @Override
-    public void pause() {
-    }
-
-    @Override
-    public void resume() {
-    }
-
+    /**
+     * Disposes of music and sound
+     */
     @Override
     public void dispose() {
         game_music.dispose();
