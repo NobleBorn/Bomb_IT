@@ -79,7 +79,7 @@ public class Text_Button extends Buttons{
 
         /**
          * @param Name - the name that will display on the button
-         * @return - the name
+         * @return - the name on the button
          */
         public TextButtonBuilder buttonName(String Name){
             this.nestedName = Name;

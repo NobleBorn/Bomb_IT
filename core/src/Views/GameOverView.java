@@ -61,7 +61,7 @@ public class GameOverView extends ScreenAdapter {
     }
 
     /**
-     *
+     * Updates the Game Over screen
      * @param delta - the game's delta time
      */
     @Override
@@ -82,14 +82,20 @@ public class GameOverView extends ScreenAdapter {
         }
         game.getBatch().end();
 
-        if (mainMenu)
-            game.setScreen(new MenuScreenView(game));
-        else if (exit)
-            Gdx.app.exit();
+        setScreen();
 
         game.getStage().act();
         game.getStage().draw();
 
+    }
+
+    private void setScreen() {
+        if (mainMenu)
+            game.setScreen(new MenuScreenView(game));
+        else if (exit){
+            Gdx.app.exit();
+            System.exit(0);
+        }
     }
 
     @Override

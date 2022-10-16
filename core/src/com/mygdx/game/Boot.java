@@ -109,7 +109,7 @@ public class Boot implements Screen {
         orthographicCamera.update();
         playerOneController.update();
         playerTwoController.update();
-        panelController.render();
+        panelController.update();
     }
 
     @Override

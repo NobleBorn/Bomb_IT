@@ -90,7 +90,7 @@ public class MenuScreenView extends ScreenAdapter {
     }
 
     /**
-     *
+     * Updates the Main Menu screen
      * @param delta - the game's delta time
      */
     @Override
