@@ -56,6 +56,7 @@ public class Boot implements Screen {
         this.playerTwoController = new PlayerController(playerTwo, Input.Keys.W, Input.Keys.S,
                 Input.Keys.D, Input.Keys.A, Input.Keys.SHIFT_LEFT);
 
+
         int widthScreen = Gdx.graphics.getWidth();
         int heightScreen = Gdx.graphics.getHeight();
         this.orthographicCamera = new OrthographicCamera();
