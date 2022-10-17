@@ -31,7 +31,7 @@ public class PlayerController {
      * Depending on the key input sends the correct direction to tryWalk method
      * Or calls the dropBomb method for the player
      */
-    public void update() {
+    public void update(){
         if (player.isAlive()) {
             time += Gdx.graphics.getDeltaTime();
             if (Gdx.input.isKeyPressed(keyUp))
@@ -59,5 +59,6 @@ public class PlayerController {
             time = 0;
         }
     }
+
 }
 
