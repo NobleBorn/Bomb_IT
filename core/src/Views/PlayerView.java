@@ -1,6 +1,5 @@
 package Views;
 
-import Controllers.*;
 import Models.*;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -26,6 +25,13 @@ public class PlayerView implements IDrawable{
     private Animation<TextureRegion> animationRight, animationLeft, animationUp, animationDown;
     private TextureRegion image;
     private Array<TextureRegion> walkFrames = new Array<TextureRegion>(2);
+
+    /**
+     * Constructor
+     *
+     * @param player - an instance of the player
+     * @param imagesFileName - image path for the player
+     */
 
     public PlayerView(Player player, String imagesFileName){
         playerImages = new Texture(imagesFileName);
@@ -66,6 +72,10 @@ public class PlayerView implements IDrawable{
 
     }
 
+    /**
+     *
+     * @return current player image
+     */
     public TextureRegion getImage(){
         if (player.isWalking()){
             changeTextureRegion(player.getDirection());
