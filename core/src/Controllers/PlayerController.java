@@ -48,17 +48,10 @@ public class PlayerController {
             if (Gdx.input.isKeyPressed(keyLeft))
                 tryWalk(Direction.LEFT);
 
-                    } else
-
-                        if (Gdx.input.isKeyPressed(keyLeft)) {
-                            tryWalk(Direction.LEFT);
-
-                        } else
-
-
-                            if (Gdx.input.isKeyJustPressed(keyDropBomb)) {
-                                player.dropBomb();
-                            }
+            if (Gdx.input.isKeyJustPressed(keyDropBomb)) {
+                player.dropBomb();
+            }
+        }
     }
 
     private void tryWalk(Direction dir) {

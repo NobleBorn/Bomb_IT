@@ -19,12 +19,10 @@ public class BombView extends ApplicationAdapter implements IDrawable{
     PlayerController playerController;
 
     Texture bombImage;
-    //KeyHandler keyH;
     TextureRegion bombPlayerImage;
 
     public BombView(Bomb bomb, Texture bombImage){
         this.bomb = bomb;
-        keyH = new KeyHandler();
         this.bombImage = bombImage;
 
     }
