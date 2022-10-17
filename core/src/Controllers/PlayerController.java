@@ -42,7 +42,7 @@ public class PlayerController {
                         } else
 
 
-                            if (Gdx.input.isKeyPressed(keyDropBomb)) {
+                            if (Gdx.input.isKeyJustPressed(keyDropBomb)) {
                                 player.dropBomb();
                             }
         }

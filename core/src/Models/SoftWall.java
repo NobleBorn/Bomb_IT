@@ -1,19 +1,20 @@
 package Models;
 
-public class SoftWall extends Wall implements Destroyable {
+import java.util.ArrayList;
+import java.util.List;
 
-    public SoftWall(Position position) {
+public class SoftWall extends Wall implements Destroyable {
+    private List<SoftWall> objArray;
+    public SoftWall(Position position, List<SoftWall> objArray) {
         super(position);
+        this.objArray = objArray;
     }
 
     @Override
     public void terminate() {
-        //here goes code to generate power-ups
+        objArray.remove(this);
+
     }
 
-    @Override //does this break Interface Segregation Principle?
-    protected Entity copyThis() {
-        return new SoftWall(new Position(this.position));
-    }
 
 }

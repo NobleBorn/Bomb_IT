@@ -5,17 +5,18 @@ import java.util.List;
 
 public class BombExplosion {
 
-    private List<Position> bombExplosionPositions = new ArrayList<>(1);
+    protected List<Position> bombExplosionPositions = new ArrayList<>();
     private Position position;
-    private INavigable navigation;
+    private IExplodable navigation;
     private final int bombLength;
 
-    public BombExplosion(Position position, int length, INavigable navigation){
+    public BombExplosion(Position position, int length, IExplodable navigation){
         this.position = position;
         this.bombLength = length;
         this.navigation = navigation;
         createBombExplosionPositions(position, length);
-        bombContact();}
+        bombContact();
+    }
 
     private void createBombExplosionPositions(Position position, int length) {
         

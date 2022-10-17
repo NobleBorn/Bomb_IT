@@ -10,14 +10,21 @@ import java.util.List;
 /**
  * The class represents a map that contains tiles, see {@link Models.Tile} and entities, see {@link Models.Entity}
  */
-public class Map implements EventListener, INavigable{
+public class Map implements EventListener, IExplodable, IPlayable {
 
     private final int size = 20;
     private final int y = size;
     private final int x = size;
     private final Tile[][] tiles;
+    private Player player;
+    private Wall wall;
+    private SoftWall softWall;
     private String[][] maps = new String[size][size];
     private List<Player> playerObjList = new ArrayList<>();
+    private List<Wall> wallObjList = new ArrayList<>();
+    private List<SoftWall> softWallObjList = new ArrayList<>();
+    private List<Bomb> bombObjList = new ArrayList<>();
+
 
     /**
      * Class constructor.
@@ -69,14 +76,19 @@ public class Map implements EventListener, INavigable{
                 String decider = maps[i][j];
                 switch (decider) {
                     case "1":
-                        tiles[i][j].addEntity(new Wall(new Position(i, j)));
+                        wall = new Wall(new Position(i, j));
+                        tiles[i][j].addEntity(wall);
+                        wallObjList.add(wall);
                         break;
                     case "2":
-                        tiles[i][j].addEntity(new SoftWall(new Position(i, j)));
+                        softWall = new SoftWall(new Position(i, j), softWallObjList);
+                        tiles[i][j].addEntity(softWall);
+                        softWallObjList.add(softWall);
                         break;
                     case "3":
-                        tiles[i][j].addEntity(new Player(new Position(i, j), this));
-                        playerObjList.add((Player)tiles[i][j].getEntities().get(0));
+                        player = new Player(new Position(i, j), this, playerObjList);
+                        tiles[i][j].addEntity(player);
+                        playerObjList.add(player);
                         break;
                 }
             }
@@ -85,7 +97,15 @@ public class Map implements EventListener, INavigable{
     public List<Player> getPlayers(){
         return playerObjList;
     }
-
+    public List<Wall> getPermWalls(){
+        return wallObjList;
+    }
+    public List<SoftWall> getSoftWalls(){
+        return softWallObjList;
+    }
+    public List<Bomb> getBombs(){
+        return bombObjList;
+    }
     public int[] getSize(){
         int[] coordinates = new int[2];
 
@@ -93,20 +113,6 @@ public class Map implements EventListener, INavigable{
         coordinates[1] = y;
 
         return coordinates;
-    }
-    /**
-     * Offers a way to get access to the information of the objects on the map, without being able to change them from outside the package
-     * @return returns a 2D array of all the tiles on the map, see {@link Models.Tile}.
-     */
-    public Tile[][] getMapMatrix() {
-        Tile[][] returnTiles  = new Tile[size][size];
-        for(int i = 0; i < size; i++){
-            for (int j = 0; j < size; j++){
-                returnTiles[i][j] = new Tile(tiles[i][j]);
-            }
-        }
-        return returnTiles;
-
     }
 
     /**
@@ -119,11 +125,17 @@ public class Map implements EventListener, INavigable{
     public boolean tryMove(Position newPos, Player player) {
         Position currPos = player.getPosition();
         if (tiles[newPos.getX()][newPos.getY()].isTileEmpty()){
-            tiles[currPos.getX()][currPos.getY()].removeEntity();
+            tiles[currPos.getX()][currPos.getY()].removePlayer(player);
             tiles[newPos.getX()][newPos.getY()].addEntity(player);
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void dropBomb(Player player) {
+        Bomb bomb = new Bomb(player.getPosition(), player.getBombLength(), this);
+        tryAddBombToWorld(player.getPosition(), bomb);
     }
 
     /**
@@ -133,11 +145,9 @@ public class Map implements EventListener, INavigable{
      * @return returns true if the {@link Models.Entity} is added successfully to a {@link Models.Tile}, false otherwise.
      */
     @Override
-    public boolean addEntityToWorld(Position pos, Entity ent) {
-        if (tiles[pos.getX()][pos.getY()].isTileEmpty()){
-            tiles[pos.getX()][pos.getY()].addEntity(ent);
-            return true;
-        }
+    public boolean tryAddBombToWorld(Position pos, Bomb bomb) {
+        tiles[pos.getX()][pos.getY()].addEntity(bomb);
+        bombObjList.add(bomb);
         return false;
     }
 
@@ -158,6 +168,13 @@ public class Map implements EventListener, INavigable{
             return true;
         }
         return false;
+    }
+
+    @Override
+    public boolean removeBombFromWorld(Bomb bomb) {
+        tiles[bomb.getPosition().getX()][bomb.getPosition().getY()].removeEntity();
+        bombObjList.remove(bomb);
+        return true;
     }
 
 

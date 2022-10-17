@@ -20,14 +20,6 @@ public class Tile {
         this.position = new Position(x, y);
     }
 
-    /**
-     * Class constructor that takes in a tile object and copies its content.
-     * @param otherTile a separate tile to replicate.
-     */
-    public Tile(Tile otherTile){
-        this.position = new Position(otherTile.position);
-        this.entities = copyEntities(otherTile.entities);
-    }
 
     /**
      * Add an entity to the objects in the tile.
@@ -40,9 +32,7 @@ public class Tile {
      * Remove an entity from the objects in the tile.
      */
     protected void removeEntity() {
-        if (entities.size() > 0) {
-            entities.remove(0);
-        }
+        entities.clear();
     }
 
     /**
@@ -52,19 +42,15 @@ public class Tile {
     public boolean isTileEmpty(){
         return entities.size() == 0;
     }
+    protected void removePlayer(Player player){
+        entities.remove(player);
+    }
 
     /**
      * Methods offers a way to get a deep-copy of the objects on the tile. Requires entities to be a subclass of {@link Models.Entity}.
      * @return returns entities array with {@link Models.Entity} objects.
      */
     public List<Entity> getEntities(){
-        return entities;
-    }
-
-    private List<Entity> copyEntities(List<Entity> otherEntities) {
-        for(Entity ent: otherEntities){
-            addEntity(ent.copyThis());
-        }
         return entities;
     }
 }

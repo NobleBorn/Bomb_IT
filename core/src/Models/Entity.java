@@ -21,6 +21,4 @@ public abstract class Entity {
         return position;
     }
 
-    protected abstract Entity copyThis();
-
 }
