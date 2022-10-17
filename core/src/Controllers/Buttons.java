@@ -1,11 +1,17 @@
 package Controllers;
 
-//A button class for the common attributes of a button
-public class Buttons {
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+
+
+/**
+ * An abstract button class for the common attributes of a button
+ * */
+public abstract class Buttons {
     private float button_width;
     private float button_height;
     private float button_x;
     private float button_y;
+    private Button button;
 
     /**
      * Constructor.
@@ -50,5 +56,9 @@ public class Buttons {
     public float getButton_y() {
         return button_y;
     }
+
+    public abstract Button getButton();
+
+    public abstract void create();
 }
 

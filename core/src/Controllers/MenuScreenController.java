@@ -6,27 +6,65 @@ import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import Views.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
+import java.util.ArrayList;
+
+/**
+ * A class that creates buttons for the Main menu screen, see {@link Controllers.Text_Button} and
+ * see {@link Controllers.Image_Button} and controls the button events
+ *
+ */
 public class MenuScreenController {
     private MenuScreenView menuScreenView;
+    ArrayList<Buttons> create = new ArrayList<>();
 
-    Text_Button play_button = new Text_Button("Play", 2,1, 7, 3.3f);
-    Text_Button option_button = new Text_Button("Option", 2,1, 7, 4.2f);
-    Text_Button exit_button = new Text_Button("Exit", 2,1, 7, 5.1f);
+    Text_Button play_button = new Text_Button.TextButtonBuilder(7, 3.3f)
+            .buttonSize(2, 1)
+            .buttonName("Play")
+            .createTextButton();
 
-    Image_Button music_button = new Image_Button("volume_on.png", "volume_off.png",1,
-            0.8f, 0.3f, 6.2f);
-    Image_Button sound_button = new Image_Button("sound_on.png", "sound_off.png",1,
-            0.8f, 1, 6.2f);
+    Buttons option_button = new Text_Button.TextButtonBuilder(7,4.2f)
+            .buttonSize(2, 1)
+            .buttonName("Option")
+            .createTextButton();
 
+    Buttons exit_button = new Text_Button.TextButtonBuilder( 7,5.1f)
+            .buttonSize(2, 1)
+            .buttonName("Exit")
+            .createTextButton();
+
+
+
+    Image_Button music_button = new Image_Button.ImageButtonBuilder( 0.3f, 6.2f)
+            .buttonSize(1, 0.8f)
+            .buttonPath1("volume_on.png")
+            .buttonPath2("volume_off.png")
+            .createImageButton();
+
+    Buttons sound_button = new Image_Button.ImageButtonBuilder( 1, 6.2f)
+            .buttonSize(1, 0.8f)
+            .buttonPath1("sound_on.png")
+            .buttonPath2("sound_off.png")
+            .createImageButton();
+
+
+    /**
+     *
+     * @param menuScreenView - an instance of the MenuScreenView
+     */
     public MenuScreenController(final MenuScreenView menuScreenView){
         this.menuScreenView = menuScreenView;
-        play_button.create();
-        option_button.create();
-        exit_button.create();
 
-        music_button.create();
-        sound_button.create();
+        create.add(play_button);
+        create.add(option_button);
+        create.add(exit_button);
+        create.add(music_button);
+        create.add(sound_button);
+
+        for (Buttons buttons : create)
+            buttons.create();
+
 
         play_button.getButton().addListener(new InputListener(){
             @Override
@@ -42,7 +80,7 @@ public class MenuScreenController {
         });
         menuScreenView.getStage().addActor(play_button.getButton());
 
-        option_button.getButton().addListener(new InputListener(){
+        option_button.getButton().addListener(new ClickListener() {
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
                 menuScreenView.getClick_sound().play();
@@ -58,6 +96,7 @@ public class MenuScreenController {
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
                 Gdx.app.exit();
+                System.exit(0);
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -90,9 +129,6 @@ public class MenuScreenController {
             }
         });
         menuScreenView.getStage().addActor(sound_button.getButton());
-
-
-
 
     }
 }

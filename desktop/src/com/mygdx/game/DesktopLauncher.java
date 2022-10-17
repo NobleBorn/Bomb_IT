@@ -9,7 +9,7 @@ public class DesktopLauncher {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setIdleFPS(60);
 		config.useVsync(true);
-
+		config.setResizable(false);
 		config.setWindowedMode(1280, 960);
 		new Lwjgl3Application(new Main(), config);
 	}
