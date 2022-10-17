@@ -54,6 +54,8 @@ public class PlayerController {
         }
     }
 
+    }
+
     private void tryWalk(Direction dir) {
         if (time > 0.15) {
             player.setWalking(true);
