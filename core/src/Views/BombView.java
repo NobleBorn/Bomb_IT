@@ -3,6 +3,8 @@ package Views;
 //import Controllers.KeyHandler;
 import Controllers.PlayerController;
 import Models.Bomb;
+import Models.Position;
+import Models.Tile;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -11,7 +13,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 
-public class BombView extends ApplicationAdapter {
+public class BombView extends ApplicationAdapter implements IDrawable{
     SpriteBatch batch;
     Bomb bomb;
     PlayerController playerController;
@@ -20,23 +22,32 @@ public class BombView extends ApplicationAdapter {
     //KeyHandler keyH;
     TextureRegion bombPlayerImage;
 
-    public BombView(Bomb bomb){
-        //keyH = new KeyHandler();
-        bombImage = new Texture("bombImage.png");
-        addsprite();
+    public BombView(Bomb bomb, Texture bombImage){
+        this.bomb = bomb;
+        keyH = new KeyHandler();
+        this.bombImage = bombImage;
+
     }
 
     private void addsprite(){
         bombPlayerImage = new TextureRegion(bombImage, 0, 0, 64, 64);
     }
 
-    public TextureRegion getBombImage(){
-        TextureRegion image = bombPlayerImage;
+    public Texture getBombImage(){
+        //TextureRegion image = bombPlayerImage;
 
         /*if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT) || Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)){
             image = bombPlayerImage;
         }*/
-        return image;
+        return bombImage;
+    }
+
+    @Override
+    public void draw(SpriteBatch sb) {
+        /* for (Position explosionPosition: bomb.getExplosions()){
+            sb.draw(getBombImage(), explosionPosition.getY()* Tile.tileSize, explosionPosition.getX()*Tile.tileSize);
+        } */
+        sb.draw(getBombImage(), bomb.getPosition().getY()* Tile.tileSize, bomb.getPosition().getX()*Tile.tileSize);
     }
 
     /*public Texture setupPlayerImage() {

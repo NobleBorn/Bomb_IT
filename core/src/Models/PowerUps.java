@@ -6,8 +6,4 @@ public class PowerUps extends Entity{
         super(position);
     }
 
-    @Override
-    protected Entity copyThis() {
-        return new PowerUps(position);
-    }
 }

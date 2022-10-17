@@ -7,8 +7,11 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 
+import java.util.HashMap;
+import java.util.Map;
 
-public class PlayerView {
+
+public class PlayerView implements IDrawable{
     Texture playerImages;
     Player player;
     private TextureRegion[][] playerTexture2D;
@@ -18,17 +21,11 @@ public class PlayerView {
     private Direction previousDir;
     private Animation<TextureRegion> animationRight, animationLeft, animationUp, animationDown;
     private TextureRegion image;
-    private Array<TextureRegion> walkFrames = new Array<>(2);
 
-    /**
-     * Constructor
-     *
-     * @param player - an instance of the player
-     * @param imagesFileName - image path for the player
-     */
+    private Array<TextureRegion> walkFrames = new Array<TextureRegion>(2);
+    
     public PlayerView(Player player, String imagesFileName){
         playerImages = new Texture(imagesFileName);
-
         this.playerTexture2D = TextureRegion.split(playerImages,
                 playerImages.getWidth() / col, playerImages.getHeight() / row);
 
@@ -103,5 +100,10 @@ public class PlayerView {
             timer = 0f;
         }
         previousDir = direction;
+    }
+
+    @Override
+    public void draw(SpriteBatch sb) {
+        sb.draw(getImage(), player.getPosition().getY()* Tile.tileSize, player.getPosition().getX()* Tile.tileSize);
     }
 }

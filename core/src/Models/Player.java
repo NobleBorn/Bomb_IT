@@ -1,5 +1,7 @@
 package Models;
 
+import java.util.List;
+
 /**
  * The class represents a player as a subclass of {@link Models.Entity} and a navigable entity.
  */
@@ -10,20 +12,21 @@ public class Player extends Entity implements Destroyable{
     private int score;
     private boolean alive;
     private int bombLength;
-    private INavigable navigation;
-
+    private IPlayable navigation;
+    private List<Player> objList;
     /**
      * Class constructor
      * @param position the initial {@link Models.Position} of a player at the time of creating it.
      * @param navigation a {@link Models.INavigable} for the player to be able to request navigation commands from the {@link Models.Map}.
      */
-    public Player(Position position, INavigable navigation){
+    public Player(Position position, IPlayable navigation, List<Player> objList){
         super(position);
         this.navigation = navigation;
         this.direction = Direction.UP;
         this.score = 0;
         this.alive = true;
         this.bombLength = 1;
+        this.objList = objList;
     }
 
     public boolean isWalking(){
@@ -55,7 +58,9 @@ public class Player extends Entity implements Destroyable{
     public Direction getDirection() {
         return direction;
     }
-
+    protected int getBombLength(){
+        return bombLength;
+    }
     /**
      * @return returns a player's current score
      */
@@ -90,19 +95,13 @@ public class Player extends Entity implements Destroyable{
     public void dropBomb(){
         //add so you cannot drop infinite bombs
         //should bomb be placed a tile behind the player?
-        Bomb bomb = new Bomb(getPosition(), bombLength, navigation);
+        navigation.dropBomb(this);
+        //navigation.addEntityToWorld(position, bomb);
 
     }
     public void terminate(){
         alive = false;
+        objList.remove(this);
     }
 
-    /**
-     * Offers a way to create a deep-copy of the player.
-     * @return returns a deep-copy of the player with a new {@link Models.Position} object but same coordinates, and the same {@link Models.INavigable} object.
-     */
-    @Override
-    protected Entity copyThis() {
-        return new Player(new Position(position), navigation);
-    }
 }

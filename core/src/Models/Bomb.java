@@ -1,20 +1,19 @@
 package Models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Bomb extends Entity{
 
     private int bombLength;
-    private INavigable navigation;
+    private IExplodable navigation;
+    private BombExplosion explosion;
 
-    public Bomb(Position position, int length, INavigable navigation){
+    public Bomb(Position position, int length, IExplodable navigation){
         super(position);
         this.bombLength = length;
         this.navigation = navigation;
         bombStart();
-    }
-
-    @Override
-    protected Entity copyThis() {
-        return new Bomb(new Position(position), this.bombLength, navigation);
     }
 
     private void bombStart(){
@@ -26,6 +25,8 @@ public class Bomb extends Entity{
         }, 2000);
     }
 
-    private void detonate(){ new BombExplosion(position, bombLength, navigation);
+    protected void detonate(){
+        BombExplosion explosion = new BombExplosion(position, bombLength, navigation);
+        navigation.removeBombFromWorld(this);
     }
 }
