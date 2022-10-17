@@ -4,6 +4,7 @@ public class Bomb extends Entity{
 
     private int bombLength;
     private INavigable navigation;
+    BombExplosion bombExplosion;
 
     public Bomb(Position position, int length, INavigable navigation){
         super(position);
@@ -11,6 +12,11 @@ public class Bomb extends Entity{
         this.navigation = navigation;
         bombStart();
     }
+
+    public int getWallsDestroyedFromExplosion() {
+        return bombExplosion.getWallsDestroyed();
+    }
+
 
     @Override
     protected Entity copyThis() {

@@ -11,6 +11,9 @@ public class Player extends Entity implements Destroyable{
     private boolean alive;
     private int bombLength;
     private INavigable navigation;
+    public MoveObservable observable;
+    private Bomb bomb;
+
 
     /**
      * Class constructor
@@ -25,6 +28,7 @@ public class Player extends Entity implements Destroyable{
         this.alive = true;
         this.bombLength = 1;
     }
+
 
     public boolean isWalking(){
         return isWalking;
@@ -84,15 +88,21 @@ public class Player extends Entity implements Destroyable{
         return newPosition;
     }
 
+
     /**
      * Creates a {@link Models.Bomb} at the current {@link Models.Position}.
      */
     public void dropBomb(){
         //add so you cannot drop infinite bombs
         //should bomb be placed a tile behind the player?
-        Bomb bomb = new Bomb(getPosition(), bombLength, navigation);
-
+        this.bomb = new Bomb(getPosition(), bombLength, navigation);
+        addScore();
     }
+
+    private void addScore() {
+        score = bomb.getWallsDestroyedFromExplosion() * 10;
+    }
+
     public void terminate(){
         alive = false;
     }
