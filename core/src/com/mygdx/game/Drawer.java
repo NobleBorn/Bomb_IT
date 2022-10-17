@@ -22,6 +22,8 @@ public class Drawer {
     private final PlayerView playerTwoView;
     private final Array<IDrawable> toDraw = new Array<>();
 
+    private Object Wall;
+
     public Drawer(SpriteBatch batch, Map map, Player player1, Player player2) {
         this.sb = batch;
         this.map = map;
@@ -43,6 +45,7 @@ public class Drawer {
         }
         for (Bomb bomb: map.getBombs()){
             toDraw.add(new BombView(bomb, bombImage));
+
         }
         toDraw.add(playerOneView);
         toDraw.add(playerTwoView);

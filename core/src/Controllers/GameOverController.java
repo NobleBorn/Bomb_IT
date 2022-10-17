@@ -1,18 +1,33 @@
 package Controllers;
 
 import Views.GameOverView;
-import Views.MenuScreenView;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.mygdx.game.Main;
 
+/**
+ * A class that creates text buttons, see {@link Controllers.Text_Button} and controls the button events
+ */
 public class GameOverController {
     private GameOverView gameOverView;
     final Main game;
 
-    Text_Button menu_button = new Text_Button("Main menu", 2, 1, 7, 3.7f);
-    Text_Button exit_button = new Text_Button("Exit", 2, 1, 7, 4.5f);
+    Text_Button menu_button = new Text_Button.TextButtonBuilder(7, 3.7f)
+            .buttonSize(2, 1).
+            buttonName("Main Menu")
+            .createTextButton();
 
+    Buttons exit_button = new Text_Button.TextButtonBuilder(7, 4.5f)
+            .buttonSize(2, 1).
+            buttonName("Exit")
+            .createTextButton();
+
+    /**
+     * Constructor
+     *
+     * @param gameOverView - an instance of gameOverView class
+     * @param game - an instance of Main
+     */
     public GameOverController(final GameOverView gameOverView, Main game) {
         this.gameOverView = gameOverView;
         this.game = game;
@@ -30,7 +45,7 @@ public class GameOverController {
                 return true;
             }
         });
-        game.stage.addActor(menu_button.getButton());
+        game.getStage().addActor(menu_button.getButton());
 
         exit_button.getButton().addListener(new InputListener() {
             @Override
@@ -43,6 +58,6 @@ public class GameOverController {
                 return true;
             }
         });
-        game.stage.addActor(exit_button.getButton());
+        game.getStage().addActor(exit_button.getButton());
     }
 }

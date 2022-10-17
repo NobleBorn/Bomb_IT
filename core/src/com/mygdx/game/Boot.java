@@ -25,6 +25,7 @@ public class Boot implements Screen {
     private Player playerTwo;
     private PlayerController playerOneController;
     private PlayerController playerTwoController;
+    private Bomb bomb;
 
     private PanelController panelController;
     private float timeSeconds = 0f;
@@ -54,6 +55,7 @@ public class Boot implements Screen {
                 Input.Keys.DPAD_RIGHT, Input.Keys.DPAD_LEFT, Input.Keys.SHIFT_RIGHT);
         this.playerTwoController = new PlayerController(playerTwo, Input.Keys.W, Input.Keys.S,
                 Input.Keys.D, Input.Keys.A, Input.Keys.SHIFT_LEFT);
+
 
         int widthScreen = Gdx.graphics.getWidth();
         int heightScreen = Gdx.graphics.getHeight();
@@ -109,7 +111,7 @@ public class Boot implements Screen {
         orthographicCamera.update();
         playerOneController.update();
         playerTwoController.update();
-        panelController.render();
+        panelController.update();
     }
 
     @Override

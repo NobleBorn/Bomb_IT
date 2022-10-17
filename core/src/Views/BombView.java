@@ -1,6 +1,6 @@
 package Views;
 
-import Controllers.KeyHandler;
+//import Controllers.KeyHandler;
 import Controllers.PlayerController;
 import Models.Bomb;
 import Models.Position;
@@ -19,13 +19,14 @@ public class BombView extends ApplicationAdapter implements IDrawable{
     PlayerController playerController;
 
     Texture bombImage;
-    KeyHandler keyH;
+    //KeyHandler keyH;
     TextureRegion bombPlayerImage;
 
     public BombView(Bomb bomb, Texture bombImage){
         this.bomb = bomb;
         keyH = new KeyHandler();
         this.bombImage = bombImage;
+
     }
 
     private void addsprite(){
