@@ -97,43 +97,18 @@ public class Map implements EventListener, IExplodable, IPlayable {
             }
         }
     }
-
-    /**
-     *
-     * @return current list of player objects
-     */
     public List<Player> getPlayers(){
         return playerObjList;
     }
-
-    /**
-     *
-     * @return current list of the wall objects
-     */
     public List<Wall> getPermWalls(){
         return wallObjList;
     }
-
-    /**
-     *
-     * @return current list of the softWall objects
-     */
     public List<SoftWall> getSoftWalls(){
         return softWallObjList;
     }
-
-    /**
-     *
-     * @return current list of the bombs
-     */
     public List<Bomb> getBombs(){
         return bombObjList;
     }
-
-    /**
-     *
-     * @return the map size
-     */
     public int[] getSize(){
         int[] coordinates = new int[2];
 
@@ -160,10 +135,6 @@ public class Map implements EventListener, IExplodable, IPlayable {
         return false;
     }
 
-    /**
-     *
-     * @param player - an instance of the player see {@link Player} that drops the bomb
-     */
     @Override
     public void dropBomb(Player player) {
         Bomb bomb = new Bomb(player.getPosition(), player.getBombLength(), this,player);
