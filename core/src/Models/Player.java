@@ -100,7 +100,8 @@ public class Player extends Entity implements Destroyable{
         //navigation.addEntityToWorld(position, bomb);
 
     private void addScore() {
-        score = bomb.getWallsDestroyedFromExplosion() * 10;
+        score += bomb.getWallsDestroyedFromExplosion();
+
     }
 
     /**

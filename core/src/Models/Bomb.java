@@ -26,6 +26,11 @@ public class Bomb extends Entity{
         bombStart();
     }
 
+    public int getWallsDestroyedFromExplosion() {
+        return points;
+    }
+
+
     private void bombStart(){
         new java.util.Timer().schedule(new java.util.TimerTask() {
             @Override
@@ -36,7 +41,10 @@ public class Bomb extends Entity{
     }
 
     protected void detonate(){
-        BombExplosion explosion = new BombExplosion(position, bombLength, navigation);
-        navigation.removeBombFromWorld(this);
+        BombExplosion explosion = new BombExplosion(position, bombLength, bombManager);
+        points = explosion.getWallsDestroyed();
+        player.addScore(getWallsDestroyedFromExplosion());
+        bombManager.removeBombFromWorld(this);
     }
+
 }

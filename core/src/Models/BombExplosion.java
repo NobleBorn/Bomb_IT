@@ -57,8 +57,11 @@ public class BombExplosion {
         navigation.tryToKillEntity(bombExplosionPositions.get(0));
         for (int i = 0; i < 4; i++){
             for (int j = 1; j <= bombLength; j++){
-                if (navigation.tryToKillEntity(bombExplosionPositions.get(i*bombLength+j))){
-                    wallsDestroyed ++;
+                if (navigation.tryToKillEntity(bombExplosionPositions.get(i*bombLength+j))==1){
+                    wallsDestroyed++;
+                    break;
+                } else {
+                    break;
                 }
             }
         }
