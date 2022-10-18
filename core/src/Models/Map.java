@@ -49,14 +49,11 @@ public class Map implements EventListener, IExplodable, IPlayable {
         //createPowerUps();
     }
 
-    /**
-     * Reads the map text file and for every tile depending on the number adds an entity object to the tile
-     */
     private void addObjects(){
 
         try {
             List<String> rows = new ArrayList<>();
-            BufferedReader bf = new BufferedReader(new FileReader("/Users/nobleborn/Desktop/Project/assets/test.txt"));
+            BufferedReader bf = new BufferedReader(new FileReader("C:\\Users\\astri\\TDA367\\Bomb_IT\\assets\\test.txt"));
 
             String line = bf.readLine();
             while (line != null) {
@@ -144,7 +141,7 @@ public class Map implements EventListener, IExplodable, IPlayable {
     /**
      * Offers a way for objects to try adding an {@link Models.Entity} to the world.
      * @param pos the {@link Models.Position} that the {@link Models.Entity} is trying to be added at.
-     * @param bomb the {@link Models.Entity} that is trying to be added.
+     * @param ent the {@link Models.Entity} that is trying to be added.
      * @return returns true if the {@link Models.Entity} is added successfully to a {@link Models.Tile}, false otherwise.
      */
     @Override
@@ -178,11 +175,6 @@ public class Map implements EventListener, IExplodable, IPlayable {
         return wallsDestroyed;
     }
 
-    /**
-     *
-     * @param bomb - an instance of the bomb see {@link Bomb} that is to be removed from the map
-     * @return
-     */
     @Override
     public boolean removeBombFromWorld(Bomb bomb) {
         tiles[bomb.getPosition().getX()][bomb.getPosition().getY()].removeEntity();
