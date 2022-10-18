@@ -46,10 +46,6 @@ public class Player extends Entity implements Destroyable{
         if (navigation.tryMove(nextPosition, this)){
             position = nextPosition;
         }
-        //if (cc.isNextTileFree(nextPosition)){
-        //    observable.notifySubscribers(position, nextPosition);
-
-        //}
     }
 
     /**
