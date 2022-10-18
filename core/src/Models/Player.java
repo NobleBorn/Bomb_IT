@@ -14,6 +14,8 @@ public class Player extends Entity implements Destroyable{
     private int bombLength;
     private IPlayable navigation;
     private List<Player> objList;
+    private Bomb bomb;
+
     /**
      * Class constructor
      * @param position the initial {@link Models.Position} of a player at the time of creating it.
@@ -28,6 +30,7 @@ public class Player extends Entity implements Destroyable{
         this.bombLength = 1;
         this.objList = objList;
     }
+
 
     public boolean isWalking(){
         return isWalking;
@@ -85,6 +88,7 @@ public class Player extends Entity implements Destroyable{
         return newPosition;
     }
 
+
     /**
      * Creates a {@link Models.Bomb} at the current {@link Models.Position}.
      */
@@ -95,6 +99,12 @@ public class Player extends Entity implements Destroyable{
         //navigation.addEntityToWorld(position, bomb);
 
     }
+
+    private void addScore() {
+        score += bomb.getWallsDestroyedFromExplosion();
+
+    }
+
     public void terminate(){
         alive = false;
         objList.remove(this);

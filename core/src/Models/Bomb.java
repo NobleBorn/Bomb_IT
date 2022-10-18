@@ -1,13 +1,11 @@
 package Models;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Bomb extends Entity{
 
     private int bombLength;
     private IExplodable navigation;
     private BombExplosion explosion;
+    int points;
 
     public Bomb(Position position, int length, IExplodable navigation){
         super(position);
@@ -15,6 +13,16 @@ public class Bomb extends Entity{
         this.navigation = navigation;
         bombStart();
     }
+
+    protected void detonate(){
+        bombExplosion = new BombExplosion(position, bombLength, navigation);
+        points = bombExplosion.getWallsDestroyed();
+    }
+
+    public int getWallsDestroyedFromExplosion() {
+        return points;
+    }
+
 
     private void bombStart(){
         new java.util.Timer().schedule(new java.util.TimerTask() {
