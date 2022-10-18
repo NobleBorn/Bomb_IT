@@ -5,16 +5,21 @@ public class Bomb extends Entity{
     private int bombLength;
     private INavigable navigation;
     BombExplosion bombExplosion;
+    int points;
 
     public Bomb(Position position, int length, INavigable navigation){
         super(position);
         this.bombLength = length;
         this.navigation = navigation;
-        bombStart();
+    }
+
+    protected void detonate(){
+        bombExplosion = new BombExplosion(position, bombLength, navigation);
+        points = bombExplosion.getWallsDestroyed();
     }
 
     public int getWallsDestroyedFromExplosion() {
-        return bombExplosion.getWallsDestroyed();
+        return points;
     }
 
 
@@ -23,15 +28,4 @@ public class Bomb extends Entity{
         return new Bomb(new Position(position), this.bombLength, navigation);
     }
 
-    private void bombStart(){
-        new java.util.Timer().schedule(new java.util.TimerTask() {
-            @Override
-            public void run() {
-                detonate();
-            }
-        }, 2000);
-    }
-
-    private void detonate(){ new BombExplosion(position, bombLength, navigation);
-    }
 }

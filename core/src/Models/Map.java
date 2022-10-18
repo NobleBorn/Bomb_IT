@@ -18,6 +18,7 @@ public class Map implements EventListener, INavigable{
     private final Tile[][] tiles;
     private String[][] maps = new String[size][size];
     private List<Player> playerObjList = new ArrayList<>();
+    private int wallsDestroyed;
 
     /**
      * Class constructor.
@@ -46,7 +47,7 @@ public class Map implements EventListener, INavigable{
 
         try {
             List<String> rows = new ArrayList<>();
-            BufferedReader bf = new BufferedReader(new FileReader("/Users/nobleborn/Desktop/Project/assets/test.txt"));
+            BufferedReader bf = new BufferedReader(new FileReader("C:\\Users\\astri\\TDA367\\Bomb_IT\\assets\\test.txt"));
 
             String line = bf.readLine();
             while (line != null) {
@@ -147,17 +148,17 @@ public class Map implements EventListener, INavigable{
      * @return returns true if the {@link Models.Entity} is removed successfully, false otherwise.
      */
     @Override
-    public boolean tryToKillEntity(Position position) {
+    public int tryToKillEntity(Position position) {
         if (!tiles[position.getX()][position.getY()].isTileEmpty()){
             Entity entity = tiles[position.getX()][position.getY()].getEntities().get(0);
             if (entity instanceof Destroyable){
                 tiles[position.getX()][position.getY()].removeEntity();
                 ((Destroyable) entity).terminate();
-                return true;
+                return 1;
             }
-            return true;
+            return 2;
         }
-        return false;
+        return 3;
     }
 
 
