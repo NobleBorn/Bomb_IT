@@ -24,7 +24,7 @@ public class Map implements EventListener, IExplodable, IPlayable {
     private List<Wall> wallObjList = new ArrayList<>();
     private List<SoftWall> softWallObjList = new ArrayList<>();
     private List<Bomb> bombObjList = new ArrayList<>();
-    private List<Boolean> wallsDestroyed = new ArrayList<>(2);
+
 
     /**
      * Class constructor.
@@ -53,7 +53,7 @@ public class Map implements EventListener, IExplodable, IPlayable {
 
         try {
             List<String> rows = new ArrayList<>();
-            BufferedReader bf = new BufferedReader(new FileReader("C:\\Users\\astri\\TDA367\\Bomb_IT\\assets\\test.txt"));
+            BufferedReader bf = new BufferedReader(new FileReader("C:\\Users\\oyoun\\IdeaProjects\\Bomb_IT\\assets\\test.txt"));
 
             String line = bf.readLine();
             while (line != null) {
@@ -134,7 +134,7 @@ public class Map implements EventListener, IExplodable, IPlayable {
 
     @Override
     public void dropBomb(Player player) {
-        Bomb bomb = new Bomb(player.getPosition(), player.getBombLength(), this,player);
+        Bomb bomb = new Bomb(player.getPosition(), player.getBombLength(), this);
         tryAddBombToWorld(player.getPosition(), bomb);
     }
 
@@ -157,22 +157,17 @@ public class Map implements EventListener, IExplodable, IPlayable {
      * @return returns true if the {@link Models.Entity} is removed successfully, false otherwise.
      */
     @Override
-    public List<Boolean> tryToKillEntity(Position position) {
-        wallsDestroyed.clear();
+    public boolean tryToKillEntity(Position position) {
         if (!tiles[position.getX()][position.getY()].isTileEmpty()){
             Entity entity = tiles[position.getX()][position.getY()].getEntities().get(0);
-            if (entity instanceof IDestroyable){
+            if (entity instanceof Destroyable){
                 tiles[position.getX()][position.getY()].removeEntity();
-                ((IDestroyable) entity).terminate();
-                wallsDestroyed.add(true);
-                wallsDestroyed.add(true);
+                ((Destroyable) entity).terminate();
+                return true;
             }
-            wallsDestroyed.add(true);
-            wallsDestroyed.add(false);
+            return true;
         }
-        wallsDestroyed.add(false);
-        wallsDestroyed.add(false);
-        return wallsDestroyed;
+        return false;
     }
 
     @Override
