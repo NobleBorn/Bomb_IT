@@ -23,8 +23,8 @@ public class BombView extends ApplicationAdapter implements IDrawable{
 
     public BombView(Bomb bomb, Texture bombImage){
         this.bomb = bomb;
-
         this.bombImage = bombImage;
+
     }
 
     private void addsprite(){

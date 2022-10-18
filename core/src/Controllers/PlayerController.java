@@ -36,25 +36,22 @@ public class PlayerController {
     public void update(){
         if (player.isAlive()) {
             time += Gdx.graphics.getDeltaTime();
-            if (Gdx.input.isKeyPressed(keyUp))
+            if(Gdx.input.isKeyPressed(keyUp))
                 tryWalk(Direction.UP);
 
-            if (Gdx.input.isKeyPressed(keyDown))
+            if(Gdx.input.isKeyPressed(keyDown))
                 tryWalk(Direction.DOWN);
 
-            if (Gdx.input.isKeyPressed(keyRight))
+            if(Gdx.input.isKeyPressed(keyRight))
                 tryWalk(Direction.RIGHT);
 
             if (Gdx.input.isKeyPressed(keyLeft))
                 tryWalk(Direction.LEFT);
-            if (Gdx.input.isKeyPressed(keyLeft)) {
-                tryWalk(Direction.LEFT);
-            }
+
             if (Gdx.input.isKeyJustPressed(keyDropBomb)) {
                 player.dropBomb();
             }
         }
-
     }
 
     private void tryWalk(Direction dir) {
