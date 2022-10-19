@@ -8,20 +8,20 @@ import java.util.List;
 public class Player extends Entity implements Destroyable{
     private boolean isWalking = false;
     private Direction direction;
-    private Position nextPosition;
     private int score;
     private boolean alive;
     private int bombLength;
-    private IPlayable navigation;
+    private IPlayable playerAction;
     private List<Player> objList;
+    private boolean isBombActive = false;
     /**
      * Class constructor
      * @param position the initial {@link Models.Position} of a player at the time of creating it.
      * @param navigation a {@link Models.INavigable} for the player to be able to request navigation commands from the {@link Models.Map}.
      */
-    public Player(Position position, IPlayable navigation, List<Player> objList){
+    public Player(Position position, IPlayable playerAction, List<Player> objList){
         super(position);
-        this.navigation = navigation;
+        this.playerAction = playerAction;
         this.direction = Direction.UP;
         this.score = 0;
         this.alive = true;
@@ -41,9 +41,9 @@ public class Player extends Entity implements Destroyable{
      */
     public void walk(Direction newDirection) {
         this.direction = newDirection;
-        nextPosition = newPositionHandler();
+        Position nextPosition = newPositionHandler();
 
-        if (navigation.tryMove(nextPosition, this)){
+        if (playerAction.tryMove(nextPosition, this)){
             position = nextPosition;
         }
     }
@@ -91,7 +91,7 @@ public class Player extends Entity implements Destroyable{
     public void dropBomb(){
         //add so you cannot drop infinite bombs
         //should bomb be placed a tile behind the player?
-        navigation.dropBomb(this);
+        playerAction.dropBomb(this);
         //navigation.addEntityToWorld(position, bomb);
 
     }
