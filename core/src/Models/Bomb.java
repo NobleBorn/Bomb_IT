@@ -1,20 +1,24 @@
 package Models;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Bomb extends Entity{
 
     private int bombLength;
-    private IExplodable navigation;
-    private BombExplosion explosion;
+    private IExplodable bombManager;
+    private IBombListener player;
+    private int points;
 
-    public Bomb(Position position, int length, IExplodable navigation){
+    public Bomb(Position position, int length, IExplodable bombManager, IBombListener player){
         super(position);
         this.bombLength = length;
-        this.navigation = navigation;
+        this.bombManager = bombManager;
+        this.player = player;
         bombStart();
     }
+
+    public int getWallsDestroyedFromExplosion() {
+        return points;
+    }
+
 
     private void bombStart(){
         new java.util.Timer().schedule(new java.util.TimerTask() {
@@ -26,7 +30,9 @@ public class Bomb extends Entity{
     }
 
     protected void detonate(){
-        BombExplosion explosion = new BombExplosion(position, bombLength, navigation);
-        navigation.removeBombFromWorld(this);
+        BombExplosion explosion = new BombExplosion(position, bombLength, bombManager);
+        points = explosion.getWallsDestroyed();
+        player.addScore(getWallsDestroyedFromExplosion());
+        bombManager.removeBombFromWorld(this);
     }
 }
