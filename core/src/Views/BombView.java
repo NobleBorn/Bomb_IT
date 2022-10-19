@@ -21,6 +21,11 @@ public class BombView extends ApplicationAdapter implements IDrawable{
     Texture bombImage;
     TextureRegion bombPlayerImage;
 
+    /**
+     *
+     * @param bomb - an instance of bomb
+     * @param bombImage - the bomb image
+     */
     public BombView(Bomb bomb, Texture bombImage){
         this.bomb = bomb;
         this.bombImage = bombImage;
@@ -31,48 +36,23 @@ public class BombView extends ApplicationAdapter implements IDrawable{
         bombPlayerImage = new TextureRegion(bombImage, 0, 0, 64, 64);
     }
 
+    /**
+     *
+     * @return - current bomb image
+     */
     public Texture getBombImage(){
-        //TextureRegion image = bombPlayerImage;
-
-        /*if(Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT) || Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)){
-            image = bombPlayerImage;
-        }*/
         return bombImage;
     }
 
+    /**
+     *
+     * @param sb -
+     */
     @Override
     public void draw(SpriteBatch sb) {
-        /* for (Position explosionPosition: bomb.getExplosions()){
-            sb.draw(getBombImage(), explosionPosition.getY()* Tile.tileSize, explosionPosition.getX()*Tile.tileSize);
-        } */
         sb.draw(getBombImage(), bomb.getPosition().getY()* Tile.tileSize, bomb.getPosition().getX()*Tile.tileSize);
     }
 
-    /*public Texture setupPlayerImage() {
-        if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT) || Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)){
-                return bombImage;
-        } return null;
-    }*/
-
-    /*@Override
-    public void create () {
-        batch = new SpriteBatch();
-        bombImage = new Texture("bomb.png");
-    }
-
-    @Override
-    public void render () {
-        //ScreenUtils.clear(1, 0, 0, 1);
-        batch.begin();
-        batch.draw(bombImage, bomb.getPosition().getX(), bomb.getPosition().getY());
-        batch.end();
-    }
-
-    @Override
-    public void dispose() {
-        batch.dispose();
-        bombImage.dispose();
-    }*/
 
 }
 
