@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * The class represents a player as a subclass of {@link Models.Entity} and a navigable entity.
  */
-public class Player extends Entity implements Destroyable{
+public class Player extends Entity implements Destroyable,IBombListener{
     private boolean isWalking = false;
     private Direction direction;
     private int score;
@@ -94,14 +94,12 @@ public class Player extends Entity implements Destroyable{
      * Creates a {@link Models.Bomb} at the current {@link Models.Position}.
      */
     public void dropBomb(){
-        //add so you cannot drop infinite bombs
-        //should bomb be placed a tile behind the player?
-        playerAction.dropBomb(this);
-        //navigation.addEntityToWorld(position, bomb);
+        navigation.dropBomb(this);
+    }
 
-    private void addScore() {
-        score += bomb.getWallsDestroyedFromExplosion();
-
+    @Override
+    public void addScore(int wallsDestroyed) {
+        score += wallsDestroyed;
     }
 
     /**

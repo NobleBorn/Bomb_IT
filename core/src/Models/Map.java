@@ -24,7 +24,7 @@ public class Map implements EventListener, IExplodable, IPlayable {
     private List<Wall> wallObjList = new ArrayList<>();
     private List<SoftWall> softWallObjList = new ArrayList<>();
     private List<Bomb> bombObjList = new ArrayList<>();
-
+    private List<Boolean> wallsDestroyed = new ArrayList<>(2);
 
     /**
      * Class constructor.
@@ -166,7 +166,7 @@ public class Map implements EventListener, IExplodable, IPlayable {
      */
     @Override
     public void dropBomb(Player player) {
-        Bomb bomb = new Bomb(player.getPosition(), player.getBombLength(), this);
+        Bomb bomb = new Bomb(player.getPosition(), player.getBombLength(), this,player);
         tryAddBombToWorld(player.getPosition(), bomb);
     }
 
@@ -189,17 +189,22 @@ public class Map implements EventListener, IExplodable, IPlayable {
      * @return returns true if the {@link Models.Entity} is removed successfully, false otherwise.
      */
     @Override
-    public boolean tryToKillEntity(Position position) {
+    public List<Boolean> tryToKillEntity(Position position) {
+        wallsDestroyed.clear();
         if (!tiles[position.getX()][position.getY()].isTileEmpty()){
             Entity entity = tiles[position.getX()][position.getY()].getEntities().get(0);
             if (entity instanceof Destroyable){
                 tiles[position.getX()][position.getY()].removeEntity();
                 ((Destroyable) entity).terminate();
-                return true;
+                wallsDestroyed.add(true);
+                wallsDestroyed.add(true);
             }
-            return true;
+            wallsDestroyed.add(true);
+            wallsDestroyed.add(false);
         }
-        return false;
+        wallsDestroyed.add(false);
+        wallsDestroyed.add(false);
+        return wallsDestroyed;
     }
 
     /**
