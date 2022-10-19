@@ -93,14 +93,15 @@ public class Player extends Entity implements Destroyable,IBombListener{
     /**
      * Creates a {@link Models.Bomb} at the current {@link Models.Position}.
      */
-    public void dropBomb(){
-        navigation.dropBomb(this);
+    public void dropBomb() {
+        playerAction.dropBomb(this);
     }
 
     @Override
     public void addScore(int wallsDestroyed) {
         score += wallsDestroyed;
     }
+
 
     /**
      * Sets the alive variable for the player object to false and removes the player object from the map
