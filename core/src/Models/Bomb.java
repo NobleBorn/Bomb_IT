@@ -3,15 +3,14 @@ package Models;
 public class Bomb extends Entity{
 
     private int bombLength;
-    private IExplodable navigation;
-    private BombExplosion explosion;
+    private IExplodable bombManager;
     private IBombListener player;
-    int points;
+    private int points;
 
-    public Bomb(Position position, int length, IExplodable navigation, IBombListener player){
+    public Bomb(Position position, int length, IExplodable bombManager, IBombListener player){
         super(position);
         this.bombLength = length;
-        this.navigation = navigation;
+        this.bombManager = bombManager;
         this.player = player;
         bombStart();
     }
@@ -31,10 +30,10 @@ public class Bomb extends Entity{
     }
 
     protected void detonate(){
-        BombExplosion explosion = new BombExplosion(position, bombLength, navigation);
+        BombExplosion explosion = new BombExplosion(position, bombLength, bombManager);
         points = explosion.getWallsDestroyed();
         player.addScore(getWallsDestroyedFromExplosion());
-        navigation.removeBombFromWorld(this);
+        bombManager.removeBombFromWorld(this);
     }
 
 }

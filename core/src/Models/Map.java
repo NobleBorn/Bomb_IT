@@ -193,9 +193,9 @@ public class Map implements EventListener, IExplodable, IPlayable {
         wallsDestroyed.clear();
         if (!tiles[position.getX()][position.getY()].isTileEmpty()){
             Entity entity = tiles[position.getX()][position.getY()].getEntities().get(0);
-            if (entity instanceof Destroyable){
+            if (entity instanceof IDestroyable){
                 tiles[position.getX()][position.getY()].removeEntity();
-                ((Destroyable) entity).terminate();
+                ((IDestroyable) entity).terminate();
                 wallsDestroyed.add(true);
                 wallsDestroyed.add(true);
             }
