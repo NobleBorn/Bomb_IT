@@ -1,5 +1,5 @@
 package Models;
 
-public interface Destroyable {
+public interface IDestroyable {
     void terminate();
 }

@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * The class represents a player as a subclass of {@link Models.Entity} and a navigable entity.
  */
-public class Player extends Entity implements Destroyable,IBombListener{
+public class Player extends Entity implements IDestroyable,IBombListener{
     private boolean isWalking = false;
     private Direction direction;
     private int score;
@@ -14,6 +14,7 @@ public class Player extends Entity implements Destroyable,IBombListener{
     private IPlayable playerAction;
     private List<Player> objList;
     private boolean isBombActive = false;
+
     /**
      * Class constructor
      * @param position the initial {@link Models.Position} of a player at the time of creating it.
@@ -34,6 +35,7 @@ public class Player extends Entity implements Destroyable,IBombListener{
     public void setWalking(boolean isWalking){
         this.isWalking = isWalking;
     }
+
     /**
      * Methods offers a way for the player to move one {@link Models.Tile} on the map, if possible, and change its position. Note that the player's {@link Models.Direction} will be changed regardless of the result of the attempt of moving the {@link Models.Player}.
      * @param newDirection the direction that the player is trying to move in.
@@ -56,6 +58,7 @@ public class Player extends Entity implements Destroyable,IBombListener{
     protected int getBombLength(){
         return bombLength;
     }
+
     /**
      * @return returns a player's current score
      */
@@ -88,12 +91,16 @@ public class Player extends Entity implements Destroyable,IBombListener{
      * Creates a {@link Models.Bomb} at the current {@link Models.Position}.
      */
     public void dropBomb() {
-        playerAction.dropBomb(this);
+        if(!isBombActive) {
+            playerAction.dropBomb(this);
+            isBombActive = true;
+        }
     }
 
     @Override
     public void addScore(int wallsDestroyed) {
         score += wallsDestroyed;
+        isBombActive = false;
     }
 
     public void terminate(){
