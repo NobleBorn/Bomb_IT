@@ -32,10 +32,6 @@ public class BombView extends ApplicationAdapter implements IDrawable{
 
     }
 
-    private void addsprite(){
-        bombPlayerImage = new TextureRegion(bombImage, 0, 0, 64, 64);
-    }
-
     /**
      *
      * @return - current bomb image
@@ -46,7 +42,7 @@ public class BombView extends ApplicationAdapter implements IDrawable{
 
     /**
      *
-     * @param sb -
+     * @param sb - an instance of spritebatch
      */
     @Override
     public void draw(SpriteBatch sb) {

@@ -9,6 +9,11 @@ public class permWallView implements IDrawable{
     private Position position;
     private final Texture permWallTexture;
 
+    /**
+     *
+     * @param pos - position of
+     * @param permWallTexture - texture
+     */
     public permWallView(Position pos, Texture permWallTexture){
         this.position = pos;
         this.permWallTexture = permWallTexture;
