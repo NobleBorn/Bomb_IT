@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import Models.*;
 import Views.*;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -28,14 +29,15 @@ public class Drawer {
         this.sb = batch;
         this.map = map;
 
-        sprPermWall = new TileViewImage().getPermWallTexture();
-        sprTempWall = new TileViewImage().getTempWallTexture();
-        playerOneView = new PlayerView(player1, "spelare.png");
         playerTwoView = new PlayerView(player2, "spelare2.png");
+        playerOneView = new PlayerView(player1, "spelare.png");
+        sprPermWall = new Texture(Gdx.files.internal("wallperm.jpg"));
+        sprTempWall = new Texture(Gdx.files.internal("walltemp.jpg"));
         bombImage = new Texture("bombImage.png");
 
         prepareToDraws();
     }
+
     private void prepareToDraws(){
         for (Wall wall: map.getPermWalls()){
             toDraw.add(new permWallView(wall.getPosition(), sprPermWall));

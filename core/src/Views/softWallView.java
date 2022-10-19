@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class softWallView implements IDrawable{
-    private Position position;
+    private final Position position;
     private final Texture tempWallTexture;
 
     /**

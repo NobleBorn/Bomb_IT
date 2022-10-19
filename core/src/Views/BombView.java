@@ -1,25 +1,14 @@
 package Views;
 
-//import Controllers.KeyHandler;
-import Controllers.PlayerController;
 import Models.Bomb;
-import Models.Position;
 import Models.Tile;
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 
-public class BombView extends ApplicationAdapter implements IDrawable{
-    SpriteBatch batch;
-    Bomb bomb;
-    PlayerController playerController;
-
-    Texture bombImage;
-    TextureRegion bombPlayerImage;
+public class BombView implements IDrawable{
+    private final Bomb bomb;
+    private final Texture bombImage;
 
     /**
      *
@@ -29,14 +18,9 @@ public class BombView extends ApplicationAdapter implements IDrawable{
     public BombView(Bomb bomb, Texture bombImage){
         this.bomb = bomb;
         this.bombImage = bombImage;
-
     }
 
-    /**
-     *
-     * @return - current bomb image
-     */
-    public Texture getBombImage(){
+    private Texture getBombImage(){
         return bombImage;
     }
 
@@ -46,9 +30,8 @@ public class BombView extends ApplicationAdapter implements IDrawable{
      */
     @Override
     public void draw(SpriteBatch sb) {
-        sb.draw(getBombImage(), bomb.getPosition().getY()* Tile.tileSize, bomb.getPosition().getX()*Tile.tileSize);
+        sb.draw(getBombImage(), (bomb.getPosition().getY()* Tile.tileSize)+4, (bomb.getPosition().getX()*Tile.tileSize)+1);
     }
-
 
 }
 

@@ -7,6 +7,7 @@ import Models.*;
 import Views.GameOverView;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -28,11 +29,12 @@ public class Boot implements Screen {
     private Bomb bomb;
 
     private PanelController panelController;
-    private float timeSeconds = 0f;
+    private float timeSeconds = 181f;
     private float period = 600f;
     private FitViewport viewPort;
+    public Music gameMusic;
 
-    public enum State{
+    private enum State{
         Running, Paused
     }
 
@@ -43,7 +45,7 @@ public class Boot implements Screen {
         create();
     }
 
-    public void create() {
+    private void create() {
         this.map = new Map();
         img = new Texture(Gdx.files.internal("karta.jpg"));
         playerOne = map.getPlayers().get(0);
@@ -56,7 +58,6 @@ public class Boot implements Screen {
         this.playerTwoController = new PlayerController(playerTwo, Input.Keys.W, Input.Keys.S,
                 Input.Keys.D, Input.Keys.A, Input.Keys.SHIFT_LEFT);
 
-
         int widthScreen = Gdx.graphics.getWidth();
         int heightScreen = Gdx.graphics.getHeight();
         this.orthographicCamera = new OrthographicCamera();
@@ -64,6 +65,9 @@ public class Boot implements Screen {
         this.viewPort = new FitViewport(1280, heightScreen, orthographicCamera);
         this.batch = new SpriteBatch();
         this.drawer = new Drawer(batch, map, playerOne, playerTwo);
+        this.gameMusic = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
+        this.gameMusic.setLooping(true);
+        gameMusic.play();
     }
 
     @Override
@@ -75,8 +79,8 @@ public class Boot implements Screen {
         int num;
         switch(state){
             case Running:
-                timeSeconds += Gdx.graphics.getDeltaTime();
-                if(timeSeconds > period || !playerOne.isAlive() || !playerTwo.isAlive()){
+                timeSeconds -= Gdx.graphics.getDeltaTime();
+                if(timeSeconds <= 0 || !playerOne.isAlive() || !playerTwo.isAlive()){
                     if(playerTwo.isAlive())
                         num = 2;
                     else
@@ -99,7 +103,7 @@ public class Boot implements Screen {
     }
 
     public void draw(){
-        Gdx.gl.glClearColor(98/255f, 61/255f, 3/255f, 0.9f);
+        Gdx.gl.glClearColor(24/255f, 92/255f, 22/255f, 0.9f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
         batch.begin();
         batch.draw(img, 0,0,960,960);

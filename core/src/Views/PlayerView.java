@@ -12,9 +12,7 @@ import com.badlogic.gdx.utils.Array;
 public class PlayerView implements IDrawable{
     Texture playerImages;
     Player player;
-    private TextureRegion[][] playerTexture2D;
-    private final int col = 8;
-    private final int row = 1;
+    private final TextureRegion[][] playerTexture2D;
     private float timer = 0f;
     private Direction previousDir;
     private Animation<TextureRegion> animationRight, animationLeft, animationUp, animationDown;
@@ -29,6 +27,9 @@ public class PlayerView implements IDrawable{
      * @param imagesFileName - the path to the image file
      */
     public PlayerView(Player player, String imagesFileName){
+        int row = 1;
+        int col = 8;
+
         playerImages = new Texture(imagesFileName);
         this.playerTexture2D = TextureRegion.split(playerImages,
                 playerImages.getWidth() / col, playerImages.getHeight() / row);

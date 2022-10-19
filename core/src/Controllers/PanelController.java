@@ -26,8 +26,8 @@ public class PanelController {
     private Player player1;
     private Player player2;
 
-    Text_Button pause_button = new Text_Button("Pause", 2,1, 9.5f, 6);
-    Text_Button resume_button = new Text_Button("Resume", 2,1, 9.5f, 7);
+    Text_Button pause_button = new Text_Button("Pause", 2,1, 9.5f, 7);
+    Text_Button resume_button = new Text_Button("Resume", 2,1, 9.5f, 8);
 
 
     Image_Button music_button = new Image_Button("volume_on.png", "volume_off.png",1,
@@ -62,6 +62,7 @@ public class PanelController {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 boot.pause();
+                boot.gameMusic.pause();
             }
 
             @Override
@@ -75,6 +76,7 @@ public class PanelController {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 boot.resume();
+                boot.gameMusic.pause();
             }
 
             @Override
@@ -102,17 +104,17 @@ public class PanelController {
     }
 
     private void drawFonts(int row_height, int col_width) {
-        font.draw(batch,"Timer: " + (int)boot.getTimeSeconds(), col_width *9.7f, row_height *7.5f);
-        font.draw(batch,"Player 1 points: " + player1.getScore(), col_width *9.7f, row_height *5.5f);
-        font.draw(batch,"Player 2 points: " + player2.getScore(), col_width *9.7f, row_height *3.5f);
+        font.draw(batch,"Timer: " + (int)boot.getTimeSeconds()/60 + " : " + (int)boot.getTimeSeconds()%60, col_width *9.7f, row_height *7.5f);
+        font.draw(batch,"Player 1 points: " + player1.getScore(), col_width *9.7f, row_height *6.5f);
+        font.draw(batch,"Player 2 points: " + player2.getScore(), col_width *9.7f, row_height *5.5f);
     }
 
     private void drawTextArea(int row_height, int col_width) {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(148/255f,92/255f,43/255f,0.8f);
+        shapeRenderer.setColor(0, 0, 0, 1);
         shapeRenderer.rect(col_width *9.4f, row_height *7.2f, 230, 50);
+        shapeRenderer.rect(col_width *9.4f, row_height *6.2f, 230, 50);
         shapeRenderer.rect(col_width *9.4f, row_height *5.2f, 230, 50);
-        shapeRenderer.rect(col_width *9.4f, row_height *3.2f, 230, 50);
         shapeRenderer.end();
     }
 

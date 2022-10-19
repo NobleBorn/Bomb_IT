@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class permWallView implements IDrawable{
-    private Position position;
+    private final Position position;
     private final Texture permWallTexture;
 
     /**
