@@ -2,6 +2,8 @@ package Views;
 
 import Models.*;
 import com.badlogic.gdx.Gdx;
+import Views.*;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
@@ -15,8 +17,6 @@ public class Drawer {
     private final PlayerView playerOneView;
     private final PlayerView playerTwoView;
     private final Array<IDrawable> toDraw = new Array<>();
-
-    private Object Wall;
 
     public Drawer(SpriteBatch batch, Map map, Player player1, Player player2) {
         this.sb = batch;
