@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * The class represents a player as a subclass of {@link Models.Entity} and a navigable entity.
  */
-public class Player extends Entity implements Destroyable{
+public class Player extends Entity implements Destroyable,IBombListener{
     private boolean isWalking = false;
     private Direction direction;
     private int score;
@@ -94,6 +94,9 @@ public class Player extends Entity implements Destroyable{
         playerAction.dropBomb(this);
         //navigation.addEntityToWorld(position, bomb);
 
+    @Override
+    public void addScore(int wallsDestroyed) {
+        score += wallsDestroyed;
     }
     public void terminate(){
         alive = false;
