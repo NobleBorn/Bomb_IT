@@ -17,7 +17,6 @@ public class Player extends Entity implements Destroyable,IBombListener{
     /**
      * Class constructor
      * @param position the initial {@link Models.Position} of a player at the time of creating it.
-     * @param navigation a {@link Models.INavigable} for the player to be able to request navigation commands from the {@link Models.Map}.
      */
     public Player(Position position, IPlayable playerAction, List<Player> objList){
         super(position);
@@ -88,16 +87,15 @@ public class Player extends Entity implements Destroyable,IBombListener{
     /**
      * Creates a {@link Models.Bomb} at the current {@link Models.Position}.
      */
-    public void dropBomb(){
-        //add so you cannot drop infinite bombs
-        //should bomb be placed a tile behind the player?
+    public void dropBomb() {
         playerAction.dropBomb(this);
-        //navigation.addEntityToWorld(position, bomb);
+    }
 
     @Override
     public void addScore(int wallsDestroyed) {
         score += wallsDestroyed;
     }
+
     public void terminate(){
         alive = false;
         objList.remove(this);
