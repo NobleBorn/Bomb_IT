@@ -3,36 +3,44 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimerTask;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 
 public class MapTest {
     private final Map map = new Map();
-    private final List<Player> testPlayers = map.getPlayers();
 
-    /* @Test
-    void matrix_row_length() {
-        for (Tile[] row: map.getMapMatrix()) {
-            assertEquals(20, row.length);
+    @Test
+    void test_notNull() {
+        for (Bomb bomb: map.getBombs()) {
+            assertNotNull(bomb);
+        }
+        for (SoftWall softWall: map.getSoftWalls()) {
+            assertNotNull(softWall);
+        }
+        for (Wall perWall: map.getPermWalls()) {
+            assertNotNull(perWall);
+        }
+        for (Player player: map.getPlayers()) {
+            assertNotNull(player);
         }
     }
+
     @Test
-    void matrix_col_length() {
-        int counter = 0;
-        for (Tile[] row: map.getMapMatrix()) {
-            for (Tile tile: row) {
-                counter++;
-            }
-            assertEquals(20, counter);
-            counter = 0;
-        }
+    void test_getPlayers() { //test for one of the getters since all work the same way.
+        final List<Player> testPlayers = map.getPlayers();
+        assertEquals(testPlayers.get(0).getPosition().getX(), 1);
+        assertEquals(testPlayers.get(0).getPosition().getY(), 18);
     }
+
     @Test
-    void test_players_positions(){
+    void test_playersPositions(){
+        final List<Player> testPlayers = map.getPlayers();
         List<Player> expected = new ArrayList<>(2);
-        //expected.add(new Player(new Position(1, 18), map));
-        //expected.add(new Player(new Position(18, 1), map));
+        Position pos = new Position(18, 1);
+        expected.add(new Player(new Position(1, 18), map, testPlayers));
+        expected.add(new Player(new Position(pos), map, testPlayers));
         for (int i=0; i<testPlayers.size(); i++){
             assertEquals(testPlayers.get(i).getPosition().getX(), expected.get(i).getPosition().getX());
             assertEquals(testPlayers.get(i).getPosition().getY(), expected.get(i).getPosition().getY());
@@ -41,35 +49,48 @@ public class MapTest {
 
     @Test
     void test_tryMove(){
-        assertEquals(testPlayers.get(1).getPosition().getX(), 18);
-        assertEquals(testPlayers.get(1).getPosition().getY(), 1);
-
-        testPlayers.get(1).walk(Direction.RIGHT); //This is going to go to map's tryMove(position, player)
+        final List<Player> testPlayers = map.getPlayers();
+        testPlayers.get(1).walk(Direction.RIGHT);  //This is going to go to map's tryMove(position, player). Player 2 is the player at the top left.
         assertEquals(testPlayers.get(1).getPosition().getX(), 18);
         assertEquals(testPlayers.get(1).getPosition().getY(), 2);
-
+        testPlayers.get(0).walk(Direction.LEFT);  //This is going to go to map's tryMove(position, player). Player 1 is on the bottom right.
+        assertEquals(testPlayers.get(0).getPosition().getX(), 1);
+        assertEquals(testPlayers.get(0).getPosition().getY(), 17);
+        testPlayers.get(0).walk(Direction.LEFT);  //Player 1 is not going to be able to move since the left position it is blocked, so isTileEmpty() returns false.
+        assertEquals(testPlayers.get(0).getPosition().getX(), 1);
+        assertEquals(testPlayers.get(0).getPosition().getY(), 17);
     }
 
     @Test
-    void test_addEntityToWorld(){
-        assertTrue(map.getMapMatrix()[16][2].isTileEmpty()); //check that Tile is empty when starting
-
-        Entity ent = new Wall(new Position(16, 2));
-        //map.addEntityToWorld(new Position(16, 2), ent);
-
-        assertFalse(map.getMapMatrix()[16][2].isTileEmpty());
+    void test_dropBomb(){ //tests tryAddBombToWorld() Also
+        final Player player = map.getPlayers().get(0);
+        assertTrue(player.isAlive());
+        assertEquals(0, map.getBombs().size());
+        player.dropBomb();
+        assertEquals(1, map.getBombs().size());
+        player.walk(Direction.UP);
+        player.walk(Direction.UP); //player avoids the bomb by beings two steps away
+        new java.util.Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                assertEquals(0, map.getBombs().size()); //because the player has exploded by now and removed from the list of bombs.
+                assertTrue(player.isAlive()); //check that player is still alive two squares away.
+            }
+        }, 2500); //bomb detonates after 2 seconds and size is checked after 2.5 seconds.
+        try{
+            Thread.sleep(3000); //Let the main thread wait for the size check timer to run out.
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
     }
 
     @Test
     void test_tryToKillEntity(){
-        assertFalse(map.getMapMatrix()[16][3].isTileEmpty()); //checking that there is an entity at position
-        assertTrue(map.getMapMatrix()[16][3].getEntities().get(0) instanceof SoftWall); //checking that the entity is destroyable
-
-        map.tryToKillEntity(new Position(16,3)); //remove SoftWall
-
-        assertTrue(map.getMapMatrix()[16][3].isTileEmpty()); //Check that it is removed
-
-    } */
+        final Player player = map.getPlayers().get(0);
+        assertTrue(player.isAlive());
+        map.tryToKillEntity(new Position(player.getPosition().getX(), player.getPosition().getY())); //remove player
+        assertFalse(player.isAlive());
+    }
 
 }

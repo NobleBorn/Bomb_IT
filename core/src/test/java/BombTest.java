@@ -3,35 +3,37 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.Timer;
+import java.util.TimerTask;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class BombTest implements Runnable{
+public class BombTest{
     private final Map map = new Map();
     private final List<Player> playerList = map.getPlayers();
 
     @Test
     void bombTest(){
-        //assertFalse(map.getMapMatrix()[3][16].isTileEmpty()); //check that there is a SoftWall at 3, 16.
-        Player playerOne = playerList.get(0);
+        final Player playerOne = playerList.get(0);
+        final int softWallCount = map.getSoftWalls().size();
         assertEquals(1, playerOne.getPosition().getX()); //check that we are looking at the right player.
         assertEquals(18, playerOne.getPosition().getY());
         playerOne.walk(Direction.LEFT);
         playerOne.walk(Direction.UP);
         playerOne.walk(Direction.UP);
+        assertTrue(playerOne.isAlive());
         playerOne.dropBomb();
-        run();  // we have to wait with checking if the bomb exploded correctly because of the bomb's timer.
-        //assertTrue(map.getMapMatrix()[3][16].isTileEmpty()); //check that the wall has exploded away.
-        assertFalse(playerOne.isAlive()); //check that the player has died to their own song.
-
-    }
-
-    @Override
-    public void run() {
-        try {
-            Thread.sleep(3000);
+        new java.util.Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                assertFalse(playerOne.isAlive()); //check that player is dead since it is on the same square.
+                assertEquals(softWallCount-1, map.getSoftWalls().size()); //check that softWall in position (3, 16) is destroyed and removed from the list of softWalls.
+            }
+        }, 2500); //bomb detonates after 2 seconds.
+        try{
+            Thread.sleep(3000); //Let the main thread wait for the alive check timer to run out.
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
     }
 }
