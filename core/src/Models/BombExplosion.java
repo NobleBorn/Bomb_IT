@@ -9,6 +9,8 @@ public class BombExplosion {
     private Position position;
     private IExplodable navigation;
     private final int bombLength;
+    private int wallsDestroyed;
+    private List<Boolean> isWallDestroyable;
 
     public BombExplosion(Position position, int length, IExplodable navigation){
         this.position = position;
@@ -35,17 +37,16 @@ public class BombExplosion {
         }
     }
 
-    private int wallsDestroyed;
-
     private void bombContact() {
         wallsDestroyed = 0;
         navigation.tryToKillEntity(bombExplosionPositions.get(0));
         for (int i = 0; i < 4; i++){
             for (int j = 1; j <= bombLength; j++){
-                if (navigation.tryToKillEntity(bombExplosionPositions.get(i*bombLength+j))==1){
+                isWallDestroyable = navigation.tryToKillEntity(bombExplosionPositions.get(i*bombLength+j));
+                if (isWallDestroyable.get(1)){
                     wallsDestroyed++;
                     break;
-                } else {
+                } else if(isWallDestroyable.get(0)){
                     break;
                 }
             }

@@ -24,7 +24,7 @@ public class Map implements EventListener, IExplodable, IPlayable {
     private List<Wall> wallObjList = new ArrayList<>();
     private List<SoftWall> softWallObjList = new ArrayList<>();
     private List<Bomb> bombObjList = new ArrayList<>();
-    private int wallsDestroyed;
+    private List<Boolean> wallsDestroyed = new ArrayList<>(2);
 
     /**
      * Class constructor.
@@ -134,14 +134,16 @@ public class Map implements EventListener, IExplodable, IPlayable {
 
     @Override
     public void dropBomb(Player player) {
-        Bomb bomb = new Bomb(player.getPosition(), player.getBombLength(), this);
+        Bomb bomb = new Bomb(player.getPosition(), player.getBombLength(), this,player);
         tryAddBombToWorld(player.getPosition(), bomb);
+
+        //player.setScore(bomb.getWallsDestroyedFromExplosion());
+
     }
 
     /**
      * Offers a way for objects to try adding an {@link Models.Entity} to the world.
      * @param pos the {@link Models.Position} that the {@link Models.Entity} is trying to be added at.
-     * @param ent the {@link Models.Entity} that is trying to be added.
      * @return returns true if the {@link Models.Entity} is added successfully to a {@link Models.Tile}, false otherwise.
      */
     @Override
@@ -157,17 +159,22 @@ public class Map implements EventListener, IExplodable, IPlayable {
      * @return returns true if the {@link Models.Entity} is removed successfully, false otherwise.
      */
     @Override
-    public int tryToKillEntity(Position position) {
+    public List<Boolean> tryToKillEntity(Position position) {
+        wallsDestroyed.clear();
         if (!tiles[position.getX()][position.getY()].isTileEmpty()){
             Entity entity = tiles[position.getX()][position.getY()].getEntities().get(0);
             if (entity instanceof Destroyable){
                 tiles[position.getX()][position.getY()].removeEntity();
                 ((Destroyable) entity).terminate();
-                return 1;
+                wallsDestroyed.add(true);
+                wallsDestroyed.add(true);
             }
-            return 2;
+            wallsDestroyed.add(true);
+            wallsDestroyed.add(false);
         }
-        return 3;
+        wallsDestroyed.add(false);
+        wallsDestroyed.add(false);
+        return wallsDestroyed;
     }
 
     @Override
