@@ -8,9 +8,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 
-import java.util.HashMap;
-import java.util.Map;
-
 
 public class PlayerView implements IDrawable{
     Texture playerImages;
@@ -23,8 +20,14 @@ public class PlayerView implements IDrawable{
     private Animation<TextureRegion> animationRight, animationLeft, animationUp, animationDown;
     private TextureRegion image;
 
-    private Array<TextureRegion> walkFrames = new Array<TextureRegion>(2);
-    
+    private Array<TextureRegion> walkFrames = new Array<>(2);
+
+    /**
+     * Constructor
+     *
+     * @param player - an instance of the player to get direction and position
+     * @param imagesFileName - the path to the image file
+     */
     public PlayerView(Player player, String imagesFileName){
         playerImages = new Texture(imagesFileName);
         this.playerTexture2D = TextureRegion.split(playerImages,
@@ -66,7 +69,7 @@ public class PlayerView implements IDrawable{
 
     /**
      *
-     * @return current player image
+     * @return current player image for the current direction
      */
     public TextureRegion getImage(){
         if (player.isWalking()){
@@ -103,6 +106,10 @@ public class PlayerView implements IDrawable{
         previousDir = direction;
     }
 
+    /**
+     *
+     * @param sb - an instance of spritebatch to draw, it is expected that draw.begin() and draw.end() is implemented
+     */
     @Override
     public void draw(SpriteBatch sb) {
         sb.draw(getImage(), player.getPosition().getY()* Tile.tileSize, player.getPosition().getX()* Tile.tileSize);

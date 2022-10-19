@@ -8,8 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public interface IDrawable {
     /**
      *
-     * @param sb - an instance of spritebatch to draw, it is expected that draw.begin() and draw.end()
-     * is already implemented 
+     * @param sb - an instance of spritebatch to draw, it is expected that draw.begin() and draw.end() is implemented
      */
     void draw(SpriteBatch sb);
 }
