@@ -50,8 +50,10 @@ public class MenuScreenController {
 
 
     /**
+     * Constructor
+     * Creates the buttons and handle button inputs
      *
-     * @param menuScreenView - an instance of the MenuScreenView
+     * @param menuScreenView - an instance of the MenuScreenView see {@link MenuScreenView}
      */
     public MenuScreenController(final MenuScreenView menuScreenView){
         this.menuScreenView = menuScreenView;

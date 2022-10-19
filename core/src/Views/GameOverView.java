@@ -35,8 +35,8 @@ public class GameOverView extends ScreenAdapter {
         this.winner_num = winnerNum;
         game.setStage(new Stage(new ScreenViewport()));
         Gdx.input.setInputProcessor(game.getStage());
-        gameOverImgOne = new Texture(Gdx.files.internal("playerOne.png"));
-        gameOverImgTwo = new Texture(Gdx.files.internal("playerTwo.png"));
+        gameOverImgOne = new Texture(Gdx.files.internal("playerOne1.png"));
+        gameOverImgTwo = new Texture(Gdx.files.internal("playerTwo1.png"));
         font = new BitmapFont();
 
         font.setColor(Color.BLACK);

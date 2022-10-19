@@ -49,6 +49,9 @@ public class Map implements EventListener, IExplodable, IPlayable {
         //createPowerUps();
     }
 
+    /**
+     * Reads the map text file and for every tile depending on the number adds an entity object to the tile
+     */
     private void addObjects(){
 
         try {
@@ -94,18 +97,43 @@ public class Map implements EventListener, IExplodable, IPlayable {
             }
         }
     }
+
+    /**
+     *
+     * @return current list of player objects
+     */
     public List<Player> getPlayers(){
         return playerObjList;
     }
+
+    /**
+     *
+     * @return current list of the wall objects
+     */
     public List<Wall> getPermWalls(){
         return wallObjList;
     }
+
+    /**
+     *
+     * @return current list of the softWall objects
+     */
     public List<SoftWall> getSoftWalls(){
         return softWallObjList;
     }
+
+    /**
+     *
+     * @return current list of the bombs
+     */
     public List<Bomb> getBombs(){
         return bombObjList;
     }
+
+    /**
+     *
+     * @return the map size
+     */
     public int[] getSize(){
         int[] coordinates = new int[2];
 
@@ -132,6 +160,10 @@ public class Map implements EventListener, IExplodable, IPlayable {
         return false;
     }
 
+    /**
+     *
+     * @param player - an instance of the player see {@link Player} that drops the bomb
+     */
     @Override
     public void dropBomb(Player player) {
         Bomb bomb = new Bomb(player.getPosition(), player.getBombLength(), this);
@@ -170,6 +202,11 @@ public class Map implements EventListener, IExplodable, IPlayable {
         return false;
     }
 
+    /**
+     *
+     * @param bomb - an instance of the bomb see {@link Bomb} that is to be removed from the map
+     * @return
+     */
     @Override
     public boolean removeBombFromWorld(Bomb bomb) {
         tiles[bomb.getPosition().getX()][bomb.getPosition().getY()].removeEntity();

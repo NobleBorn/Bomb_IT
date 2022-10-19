@@ -40,7 +40,7 @@ public class MenuScreenView extends ScreenAdapter {
 
         game.setBatch(new SpriteBatch());
 
-        menuImg = new Texture(Gdx.files.internal("mainMenu.png"));
+        menuImg = new Texture(Gdx.files.internal("mainMenu1.png"));
 
         game_music = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
         game_music.setLooping(true);
@@ -110,7 +110,7 @@ public class MenuScreenView extends ScreenAdapter {
 
     private void setScreen() {
         if (startClicked)
-            this.game.setScreen(new Boot(game));
+            this.game.setScreen(new GameScreen(game));
     }
 
     @Override

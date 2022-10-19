@@ -1,21 +1,22 @@
-package com.mygdx.game;
-
+package Views;
 
 import Controllers.PanelController;
 import Controllers.PlayerController;
-import Models.*;
-import Views.GameOverView;
+import Models.Bomb;
+import Models.Map;
+import Models.Player;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.mygdx.game.Main;
 
-public class Boot implements Screen {
+public class GameScreen extends ScreenAdapter {
     final Main game;
     private OrthographicCamera orthographicCamera;
     private Drawer drawer;
@@ -40,14 +41,14 @@ public class Boot implements Screen {
 
     private State state = State.Running;
 
-    public Boot(final Main game) {
+    public GameScreen(final Main game) {
         this.game = game;
         create();
     }
 
     private void create() {
         this.map = new Map();
-        img = new Texture(Gdx.files.internal("karta.jpg"));
+        img = new Texture(Gdx.files.internal("pixelMap.png"));
         playerOne = map.getPlayers().get(0);
         playerTwo = map.getPlayers().get(1);
 

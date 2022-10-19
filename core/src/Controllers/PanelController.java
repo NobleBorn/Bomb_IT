@@ -1,6 +1,7 @@
 package Controllers;
 
 import Models.Player;
+import Views.GameScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -10,14 +11,13 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.mygdx.game.Boot;
 
 /**
  * A class that shows player information such as points, shows game timer and creates pause and resume button see
  * {@link Controllers.Text_Button}
  */
 public class PanelController {
-    private Boot boot;
+    private GameScreen gameScreen;
     private Stage stage;
     private SpriteBatch batch;
     private BitmapFont font;
@@ -37,12 +37,12 @@ public class PanelController {
 
     /**
      * Constructor
-     *
-     * @param boot - an instance of the boot class
+     * Creates button and handle button inputs
+     * @param gameScreen - an instance of the game screen class
      * @param player1 - an instance of the player class for player one
      * @param player2 - an instance of the player class for player two
      */
-    public PanelController(final Boot boot, Player player1, Player player2){
+    public PanelController(final GameScreen gameScreen, Player player1, Player player2){
         this.stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(this.stage);
         batch = new SpriteBatch();
@@ -52,7 +52,7 @@ public class PanelController {
 
         shapeRenderer = new ShapeRenderer();
 
-        this.boot = boot;
+        this.gameScreen = gameScreen;
         this.player1 = player1;
         this.player2 = player2;
         pause_button.create();
@@ -61,8 +61,8 @@ public class PanelController {
         pause_button.getButton().addListener(new InputListener(){
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                boot.pause();
-                boot.gameMusic.pause();
+                gameScreen.pause();
+                gameScreen.gameMusic.pause();
             }
 
             @Override
@@ -75,8 +75,8 @@ public class PanelController {
         resume_button.getButton().addListener(new InputListener(){
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                boot.resume();
-                boot.gameMusic.pause();
+                gameScreen.resume();
+                gameScreen.gameMusic.pause();
             }
 
             @Override
@@ -104,7 +104,7 @@ public class PanelController {
     }
 
     private void drawFonts(int row_height, int col_width) {
-        font.draw(batch,"Timer: " + (int)boot.getTimeSeconds()/60 + " : " + (int)boot.getTimeSeconds()%60, col_width *9.7f, row_height *7.5f);
+        font.draw(batch,"Timer: " + (int)gameScreen.getTimeSeconds()/60 + " : " + (int)gameScreen.getTimeSeconds()%60, col_width *9.7f, row_height *7.5f);
         font.draw(batch,"Player 1 points: " + player1.getScore(), col_width *9.7f, row_height *6.5f);
         font.draw(batch,"Player 2 points: " + player2.getScore(), col_width *9.7f, row_height *5.5f);
     }

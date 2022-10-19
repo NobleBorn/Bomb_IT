@@ -24,10 +24,19 @@ public class Position {
         this.x = pos.getX();
         this.y = pos.getY();
     }
+
+    /**
+     *
+     * @return current x position
+     */
     public int getX() {
         return x;
     }
 
+    /**
+     *
+     * @return current y position
+     */
     public int getY() {
         return y;
     }

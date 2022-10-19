@@ -24,9 +24,10 @@ public class GameOverController {
 
     /**
      * Constructor
+     * Creates the buttons and handles button inputs
      *
-     * @param gameOverView - an instance of gameOverView class
-     * @param game - an instance of Main
+     * @param gameOverView - an instance of gameOverView see {@link GameOverView} class
+     * @param game - an instance of Main see {@link Main}
      */
     public GameOverController(final GameOverView gameOverView, Main game) {
         this.gameOverView = gameOverView;

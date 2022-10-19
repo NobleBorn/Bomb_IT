@@ -14,10 +14,10 @@ public class Player extends Entity implements Destroyable{
     private IPlayable playerAction;
     private List<Player> objList;
     private boolean isBombActive = false;
+
     /**
      * Class constructor
      * @param position the initial {@link Models.Position} of a player at the time of creating it.
-     * @param navigation a {@link Models.INavigable} for the player to be able to request navigation commands from the {@link Models.Map}.
      */
     public Player(Position position, IPlayable playerAction, List<Player> objList){
         super(position);
@@ -64,6 +64,10 @@ public class Player extends Entity implements Destroyable{
         return score;
     }
 
+    /**
+     *
+     * @return current status of the player life
+     */
     public boolean isAlive() {
         return alive;
     }
@@ -95,6 +99,10 @@ public class Player extends Entity implements Destroyable{
         //navigation.addEntityToWorld(position, bomb);
 
     }
+
+    /**
+     * Sets the alive variable for the player object to false and removes the player object from the map
+     */
     public void terminate(){
         alive = false;
         objList.remove(this);

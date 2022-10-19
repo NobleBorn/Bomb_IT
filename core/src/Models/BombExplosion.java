@@ -10,6 +10,13 @@ public class BombExplosion {
     private IExplodable navigation;
     private final int bombLength;
 
+    /**
+     * Constructor
+     *
+     * @param position - position of the bomb
+     * @param length - length of the explosion
+     * @param navigation - an instance of the IExplodable interface
+     */
     public BombExplosion(Position position, int length, IExplodable navigation){
         this.position = position;
         this.bombLength = length;
@@ -18,6 +25,12 @@ public class BombExplosion {
         bombContact();
     }
 
+    /**
+     * Creates an explosion area the length of the bomblength for each direction
+     *
+     * @param position - position of the bomb
+     * @param length - length of the bomb
+     */
     private void createBombExplosionPositions(Position position, int length) {
         
         bombExplosionPositions.add(new Position(position.getX(), position.getY()));
@@ -35,6 +48,10 @@ public class BombExplosion {
         }
     }
 
+    /**
+     * In contact with an explosion area, try to kill the entity (if entity is destroyable then true) and stops
+     * further explosion in that direction
+     */
     private void bombContact() {
         navigation.tryToKillEntity(bombExplosionPositions.get(0));
         for (int i = 0; i < 4; i++){

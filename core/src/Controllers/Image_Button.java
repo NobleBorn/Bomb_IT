@@ -29,7 +29,7 @@ public class Image_Button extends Buttons{
     }
 
     /**
-     * @return the button itself
+     * @return current button
      */
     @Override
     public ImageButton getButton() {
@@ -57,6 +57,7 @@ public class Image_Button extends Buttons{
         button.setPosition(col_width*this.getButton_x(),Gdx.graphics.getHeight()-row_height*this.getButton_y());
 
     }
+
     /**
      * Builder design pattern
      * */

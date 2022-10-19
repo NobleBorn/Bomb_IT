@@ -1,19 +1,12 @@
-package com.mygdx.game;
+package Views;
 
 import Models.*;
-import Views.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 public class Drawer {
-
     private final Map map;
     private final SpriteBatch sb;
     private final Texture sprPermWall;
@@ -39,7 +32,7 @@ public class Drawer {
     }
 
     private void prepareToDraws(){
-        for (Wall wall: map.getPermWalls()){
+        for (Models.Wall wall: map.getPermWalls()){
             toDraw.add(new permWallView(wall.getPosition(), sprPermWall));
         }
         for (SoftWall softWall: map.getSoftWalls()){
@@ -63,5 +56,4 @@ public class Drawer {
         sb.end();
         toDraw.clear();
     }
-
 }
