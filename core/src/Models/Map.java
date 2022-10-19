@@ -53,7 +53,7 @@ public class Map implements EventListener, IExplodable, IPlayable {
 
         try {
             List<String> rows = new ArrayList<>();
-            BufferedReader bf = new BufferedReader(new FileReader("C:\\Users\\oyoun\\IdeaProjects\\Bomb_IT\\assets\\test.txt"));
+            BufferedReader bf = new BufferedReader(new FileReader("/Users/nobleborn/Desktop/Project/assets/test.txt"));
 
             String line = bf.readLine();
             while (line != null) {
@@ -141,7 +141,7 @@ public class Map implements EventListener, IExplodable, IPlayable {
     /**
      * Offers a way for objects to try adding an {@link Models.Entity} to the world.
      * @param pos the {@link Models.Position} that the {@link Models.Entity} is trying to be added at.
-     * @param ent the {@link Models.Entity} that is trying to be added.
+     * @param bomb the {@link Models.Entity} that is trying to be added.
      * @return returns true if the {@link Models.Entity} is added successfully to a {@link Models.Tile}, false otherwise.
      */
     @Override
