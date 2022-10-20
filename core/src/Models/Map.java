@@ -8,6 +8,7 @@ import java.util.EventListener;
 import java.util.List;
 
 /**
+ *
  * The class represents a map that contains tiles, see {@link Models.Tile} and entities, see {@link Models.Entity}
  */
 public class Map implements EventListener, IExplodable, IPlayable {
