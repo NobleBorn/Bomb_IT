@@ -15,6 +15,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
+/**
+ * Represents the Game screen
+ */
 public class Boot implements Screen {
     final Main game;
     private OrthographicCamera orthographicCamera;
@@ -40,6 +43,11 @@ public class Boot implements Screen {
 
     private State state = State.Running;
 
+    /**
+     * Constructor
+     *
+     * @param game - an instance of the main {@link Main}
+     */
     public Boot(final Main game) {
         this.game = game;
         create();
@@ -47,7 +55,7 @@ public class Boot implements Screen {
 
     private void create() {
         this.map = new Map();
-        img = new Texture(Gdx.files.internal("karta.jpg"));
+        img = new Texture(Gdx.files.internal("pixelMap1.png"));
         playerOne = map.getPlayers().get(0);
         playerTwo = map.getPlayers().get(1);
 
@@ -74,6 +82,10 @@ public class Boot implements Screen {
     public void show() {
     }
 
+    /**
+     * Renders game screen draw and updates
+     * @param delta - game's delta time
+     */
     @Override
     public void render(float delta) {
         int num;
@@ -102,6 +114,9 @@ public class Boot implements Screen {
         return timeSeconds;
     }
 
+    /**
+     * Draws the game screen background
+     */
     public void draw(){
         Gdx.gl.glClearColor(24/255f, 92/255f, 22/255f, 0.9f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
@@ -111,6 +126,9 @@ public class Boot implements Screen {
         drawer.setupMap();
     }
 
+    /**
+     * Updates the controls and camera
+     */
     public void update(){
         orthographicCamera.update();
         playerOneController.update();
@@ -123,10 +141,14 @@ public class Boot implements Screen {
         this.viewPort.update(width, height);
     }
 
+    /**
+     * Disposes of the garbage
+     */
     @Override
     public void dispose(){
         batch.dispose();
         panelController.dispose();
+        game.dispose();
     }
 
     @Override

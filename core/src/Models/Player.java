@@ -3,7 +3,8 @@ package Models;
 import java.util.List;
 
 /**
- * The class represents a player as a subclass of {@link Models.Entity} and a navigable entity.
+ * The class represents a player as a subclass of {@link Models.Entity} which is destroyable {@link IDestroyable}
+ * And listens to bomb's explosoin events {@link IBombListener}
  */
 public class Player extends Entity implements IDestroyable,IBombListener{
     private boolean isWalking = false;
@@ -66,6 +67,10 @@ public class Player extends Entity implements IDestroyable,IBombListener{
         return score;
     }
 
+    /**
+     *
+     * @return current status of player's life
+     */
     public boolean isAlive() {
         return alive;
     }
@@ -97,12 +102,20 @@ public class Player extends Entity implements IDestroyable,IBombListener{
         }
     }
 
+    /**
+     *
+     * @param wallsDestroyed - number of the soft walls destroyed {@link SoftWall} after explosion
+     */
     @Override
     public void addScore(int wallsDestroyed) {
         score += wallsDestroyed;
         isBombActive = false;
     }
 
+    /**
+     * Sets "alive" variable to false
+     * Removes player's object from the map
+     */
     public void terminate(){
         alive = false;
         objList.remove(this);

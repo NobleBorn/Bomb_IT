@@ -8,6 +8,7 @@ import java.util.EventListener;
 import java.util.List;
 
 /**
+ *
  * The class represents a map that contains tiles, see {@link Models.Tile} and entities, see {@link Models.Entity}
  */
 public class Map implements EventListener, IExplodable, IPlayable {
@@ -53,6 +54,7 @@ public class Map implements EventListener, IExplodable, IPlayable {
 
         try {
             List<String> rows = new ArrayList<>();
+         
             BufferedReader bf = new BufferedReader(new FileReader("C:\\Users\\oyoun\\IdeaProjects\\Bomb_IT\\assets\\test.txt"));
 
             String line = bf.readLine();
@@ -106,6 +108,12 @@ public class Map implements EventListener, IExplodable, IPlayable {
     public List<Bomb> getBombs(){
         return bombObjList;
     }
+
+
+    /**
+     *
+     * @return map size
+     */
     public int[] getSize(){
         int[] coordinates = new int[2];
 
@@ -132,6 +140,10 @@ public class Map implements EventListener, IExplodable, IPlayable {
         return false;
     }
 
+    /**
+     *
+     * @param player - an instance of the player {@link Player} that drops the bomb {@link Bomb}
+     */
     @Override
     public void dropBomb(Player player) {
         Bomb bomb = new Bomb(player.getPosition(), player.getBombLength(), this,player);
@@ -141,7 +153,7 @@ public class Map implements EventListener, IExplodable, IPlayable {
     /**
      * Offers a way for objects to try adding an {@link Models.Entity} to the world.
      * @param pos the {@link Models.Position} that the {@link Models.Entity} is trying to be added at.
-     * @param ent the {@link Models.Entity} that is trying to be added.
+     * @param bomb the {@link Models.Entity} that is trying to be added.
      * @return returns true if the {@link Models.Entity} is added successfully to a {@link Models.Tile}, false otherwise.
      */
     @Override
@@ -175,12 +187,18 @@ public class Map implements EventListener, IExplodable, IPlayable {
         return wallsDestroyed;
     }
 
+    /**
+     *
+     * @param bomb - an instance of the bomb {@link Bomb}
+     * @return true
+     */
     @Override
     public boolean removeBombFromWorld(Bomb bomb) {
         tiles[bomb.getPosition().getX()][bomb.getPosition().getY()].removeEntity();
         bombObjList.remove(bomb);
         return true;
     }
+
 
 
 }

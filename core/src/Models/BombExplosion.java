@@ -3,6 +3,9 @@ package Models;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents the bomb's explosion {@link Bomb} and manages the explosion events
+ */
 public class BombExplosion {
 
     protected List<Position> bombExplosionPositions = new ArrayList<>();
@@ -12,6 +15,13 @@ public class BombExplosion {
     private int wallsDestroyed;
     private List<Boolean> isWallDestroyable;
 
+    /**
+     * Constructor
+     *
+     * @param position - position of the bomb {@link Bomb} from where the explosion happens
+     * @param length - length of the explosion for each direction
+     * @param bombManager - an instance of IExplodable {@link IExplodable}
+     */
     public BombExplosion(Position position, int length, IExplodable bombManager){
         this.position = position;
         this.bombLength = length;
@@ -20,6 +30,11 @@ public class BombExplosion {
         bombContact();
     }
 
+    /**
+     * Creates an explosion area of the length of bomb's explosion {@link Bomb}
+     *
+     * @param length - length of the explosion for each direction
+     */
     private void createBombExplosionPositions(int length) {
         
         bombExplosionPositions.add(new Position(position.getX(), position.getY()));
@@ -37,6 +52,10 @@ public class BombExplosion {
         }
     }
 
+    /**
+     * In contact with explosion try to kill the entity {@link Entity} (true if entity is destroyable false otherwise)
+     * For every soft wall {@link SoftWall} destroyed add 1 to "wallsDestroyed" variable
+     */
     private void bombContact() {
         wallsDestroyed = 0;
         bombManager.tryToKillEntity(bombExplosionPositions.get(0));
@@ -53,6 +72,10 @@ public class BombExplosion {
         }
     }
 
+    /**
+     *
+     * @return current number of destroyed soft walls {@link SoftWall}
+     */
     public int getWallsDestroyed() {
         return wallsDestroyed;
     }
