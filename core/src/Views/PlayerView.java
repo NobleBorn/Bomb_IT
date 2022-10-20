@@ -10,10 +10,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 
-import java.util.HashMap;
-import java.util.Map;
-
-
+/**
+ * Represents the view of the player {@link Player} which is a drawable object {@link IDrawable}
+ */
 public class PlayerView implements IDrawable{
     Texture playerImages;
     Player player;
@@ -22,15 +21,14 @@ public class PlayerView implements IDrawable{
     private Direction previousDir;
     private Animation<TextureRegion> animationRight, animationLeft, animationUp, animationDown;
     private TextureRegion image;
-    private Array<TextureRegion> walkFrames = new Array<TextureRegion>(2);
+    private Array<TextureRegion> walkFrames = new Array<>(2);
 
     /**
      * Constructor
      *
-     * @param player - an instance of the player
+     * @param player - an instance of the player {@link Player}
      * @param imagesFileName - image path for the player
      */
-
     public PlayerView(Player player, String imagesFileName){
         int row = 1;
         int col = 8;
@@ -51,19 +49,19 @@ public class PlayerView implements IDrawable{
         float updateFrames = 1/60f;
 
         setupWalkFrames(0, 2);
-        this.animationDown = new Animation<TextureRegion>(updateFrames, walkFrames);
+        this.animationDown = new Animation<>(updateFrames, walkFrames);
         walkFrames.clear();
 
         setupWalkFrames(2, 4);
-        this.animationLeft = new Animation<TextureRegion>(updateFrames, walkFrames);
+        this.animationLeft = new Animation<>(updateFrames, walkFrames);
         walkFrames.clear();
 
         setupWalkFrames(4, 6);
-        this.animationRight = new Animation<TextureRegion>(updateFrames, walkFrames);
+        this.animationRight = new Animation<>(updateFrames, walkFrames);
         walkFrames.clear();
 
         setupWalkFrames(6, 8);
-        this.animationUp = new Animation<TextureRegion>(updateFrames, walkFrames);
+        this.animationUp = new Animation<>(updateFrames, walkFrames);
         walkFrames.clear();
     }
 
@@ -75,7 +73,7 @@ public class PlayerView implements IDrawable{
 
     /**
      *
-     * @return current player image
+     * @return current player image for the corresponding direction {@link Direction}
      */
     public TextureRegion getImage(){
         if (player.isWalking()){
@@ -112,6 +110,10 @@ public class PlayerView implements IDrawable{
         previousDir = direction;
     }
 
+    /**
+     *
+     * @param sb - an instance of spritebatch to draw, it is expected that draw.begin() and draw.end() is implemented
+     */
     @Override
     public void draw(SpriteBatch sb) {
         sb.draw(getImage(), player.getPosition().getY()* Tile.tileSize, player.getPosition().getX()* Tile.tileSize);

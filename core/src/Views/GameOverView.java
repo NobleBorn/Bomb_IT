@@ -12,7 +12,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.Main;
 
 /**
- * Game Over screen
+ * Represents Game Over screen
  */
 public class GameOverView extends ScreenAdapter {
     final Main game;
@@ -27,16 +27,16 @@ public class GameOverView extends ScreenAdapter {
     /**
      * Constructor
      *
-     * @param game - an instance of Main class
-     * @param winnerNum - A number that shows which player has won the game
+     * @param game - an instance of Main class {@link Main}
+     * @param winnerNum - A number that shows which player {@link Models.Player} has won the game
      */
     public GameOverView(final Main game, int winnerNum){
         this.game = game;
         this.winner_num = winnerNum;
         game.setStage(new Stage(new ScreenViewport()));
         Gdx.input.setInputProcessor(game.getStage());
-        gameOverImgOne = new Texture(Gdx.files.internal("playerOne.png"));
-        gameOverImgTwo = new Texture(Gdx.files.internal("playerTwo.png"));
+        gameOverImgOne = new Texture(Gdx.files.internal("playerOne1.png"));
+        gameOverImgTwo = new Texture(Gdx.files.internal("playerTwo2.png"));
         font = new BitmapFont();
 
         font.setColor(Color.BLACK);
@@ -46,7 +46,7 @@ public class GameOverView extends ScreenAdapter {
 
     /**
      *
-     * @param mainMenu - set the new value of the boolean variable
+     * @param mainMenu - sets the new boolean value of the variable "mainMenu"
      */
     public void setMainMenu(boolean mainMenu) {
         this.mainMenu = mainMenu;
@@ -54,7 +54,7 @@ public class GameOverView extends ScreenAdapter {
 
     /**
      *
-     * @param exit - set the new value of the boolean variable
+     * @param exit - sets the new boolean value of the variable "exit"
      */
     public void setExit(boolean exit) {
         this.exit = exit;
@@ -109,11 +109,12 @@ public class GameOverView extends ScreenAdapter {
     }
 
     /**
-     * Disposes of images
+     * Disposes of garbage
      */
     @Override
     public void dispose() {
         gameOverImgOne.dispose();
         gameOverImgTwo.dispose();
+        font.dispose();
     }
 }

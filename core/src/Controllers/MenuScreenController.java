@@ -11,8 +11,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import java.util.ArrayList;
 
 /**
- * A class that creates buttons for the Main menu screen, see {@link Controllers.Text_Button} and
- * see {@link Controllers.Image_Button} and controls the button events
+ * A class that creates buttons for the Main menu screen {@link MenuScreenView}, see {@link Controllers.Text_Button}
+ * And see {@link Controllers.Image_Button} and controls the button events
  *
  */
 public class MenuScreenController {
@@ -50,8 +50,9 @@ public class MenuScreenController {
 
 
     /**
-     *
-     * @param menuScreenView - an instance of the MenuScreenView
+     * Constructor
+     * Creates buttons and handle button's events
+     * @param menuScreenView - an instance of the MenuScreenView {@link MenuScreenView}
      */
     public MenuScreenController(final MenuScreenView menuScreenView){
         this.menuScreenView = menuScreenView;

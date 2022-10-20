@@ -6,7 +6,8 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.mygdx.game.Main;
 
 /**
- * A class that creates text buttons, see {@link Controllers.Text_Button} and controls the button events
+ * A class that creates text buttons {@link Controllers.Text_Button} for game over screen {@link GameOverView}
+ * And controls the button events
  */
 public class GameOverController {
     private GameOverView gameOverView;
@@ -24,9 +25,9 @@ public class GameOverController {
 
     /**
      * Constructor
-     *
-     * @param gameOverView - an instance of gameOverView class
-     * @param game - an instance of Main
+     * Creates buttons and handles button' events
+     * @param gameOverView - an instance of gameOverView class {@link GameOverView}
+     * @param game - an instance of Main {@link Main}
      */
     public GameOverController(final GameOverView gameOverView, Main game) {
         this.gameOverView = gameOverView;

@@ -106,6 +106,12 @@ public class Map implements EventListener, IExplodable, IPlayable {
     public List<Bomb> getBombs(){
         return bombObjList;
     }
+
+
+    /**
+     *
+     * @return map size
+     */
     public int[] getSize(){
         int[] coordinates = new int[2];
 
@@ -132,6 +138,10 @@ public class Map implements EventListener, IExplodable, IPlayable {
         return false;
     }
 
+    /**
+     *
+     * @param player - an instance of the player {@link Player} that drops the bomb {@link Bomb}
+     */
     @Override
     public void dropBomb(Player player) {
         Bomb bomb = new Bomb(player.getPosition(), player.getBombLength(), this,player);
@@ -175,6 +185,11 @@ public class Map implements EventListener, IExplodable, IPlayable {
         return wallsDestroyed;
     }
 
+    /**
+     *
+     * @param bomb - an instance of the bomb {@link Bomb}
+     * @return true
+     */
     @Override
     public boolean removeBombFromWorld(Bomb bomb) {
         tiles[bomb.getPosition().getX()][bomb.getPosition().getY()].removeEntity();

@@ -5,6 +5,9 @@ import Models.*;
 import Views.*;
 import com.badlogic.gdx.Input;
 
+/**
+ * A class that handles player's movement {@link Player} through key inputs
+ */
 public class PlayerController {
     Player player;
     private final int keyUp, keyLeft, keyDown, keyRight, keyDropBomb;
@@ -13,7 +16,7 @@ public class PlayerController {
     /**
      * Constructor
      *
-     * @param player - an instance of the player class for the player
+     * @param player - an instance of the player class for the player {@link Player}
      * @param up - a key code for the player's up direction
      * @param down - a key code for the player's down direction
      * @param right - a key code for the player's right direction
@@ -31,7 +34,7 @@ public class PlayerController {
 
     /**
      * Depending on the key input sends the correct direction to tryWalk method
-     * Or calls the dropBomb method for the player
+     * Or calls the dropBomb method for the player {@link Player}
      */
     public void update(){
         if (player.isAlive()) {

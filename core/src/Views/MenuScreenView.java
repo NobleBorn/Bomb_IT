@@ -12,7 +12,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.*;
 
 /**
- * Main menu screen
+ * Represents Main menu screen
  */
 public class MenuScreenView extends ScreenAdapter {
     final Main game;
@@ -28,7 +28,7 @@ public class MenuScreenView extends ScreenAdapter {
     /**
      * Constructor
      *
-     * @param game - an instance of Main class
+     * @param game - an instance of Main class {@link Main}
      */
     public MenuScreenView(final Main game){
         this.game = game;
@@ -40,7 +40,7 @@ public class MenuScreenView extends ScreenAdapter {
 
         game.setBatch(new SpriteBatch());
 
-        menuImg = new Texture(Gdx.files.internal("mainMenu.png"));
+        menuImg = new Texture(Gdx.files.internal("mainMenu1.png"));
 
         game_music = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
         game_music.setLooping(true);
@@ -118,6 +118,9 @@ public class MenuScreenView extends ScreenAdapter {
 
     }
 
+    /**
+     * Plays the game music
+     */
     @Override
     public void show() {
         game_music.play();

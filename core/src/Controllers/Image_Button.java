@@ -7,6 +7,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
+/**
+ * Represent image button as a subclass to buttons {@link Buttons}
+ */
 public class Image_Button extends Buttons{
     private ImageButton button;
     private String path1;
@@ -29,7 +32,7 @@ public class Image_Button extends Buttons{
     }
 
     /**
-     * @return the button itself
+     * @return current button
      */
     @Override
     public ImageButton getButton() {
@@ -105,7 +108,7 @@ public class Image_Button extends Buttons{
         }
 
         /**
-         * Creates the build text button
+         * Creates the build image button
          * */
         public Image_Button createImageButton()
         {

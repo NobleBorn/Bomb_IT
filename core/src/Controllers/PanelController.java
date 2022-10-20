@@ -13,8 +13,8 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.Boot;
 
 /**
- * A class that shows player information such as points, shows game timer and creates pause and resume button see
- * {@link Controllers.Text_Button}
+ * A class that shows player {@link Player }information such as points, shows game timer
+ * Creates pause and resume button see {@link Controllers.Text_Button}
  */
 public class PanelController {
     private Boot boot;
@@ -38,9 +38,9 @@ public class PanelController {
     /**
      * Constructor
      *
-     * @param boot - an instance of the boot class
-     * @param player1 - an instance of the player class for player one
-     * @param player2 - an instance of the player class for player two
+     * @param boot - an instance of the boot class {@link Boot}
+     * @param player1 - an instance of the player class for player one {@link Player}
+     * @param player2 - an instance of the player class for player two {@link Player}
      */
     public PanelController(final Boot boot, Player player1, Player player2){
         this.stage = new Stage(new ScreenViewport());

@@ -4,6 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 
+/**
+ * Represent text button as a subclass to buttons {@link Buttons}
+ */
 public class Text_Button extends Buttons{
     private String name;
     private TextButton button;
