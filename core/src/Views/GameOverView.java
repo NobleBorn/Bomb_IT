@@ -20,6 +20,7 @@ public class GameOverView extends ScreenAdapter {
     private Texture gameOverImgOne;
     private Texture gameOverImgTwo;
     private BitmapFont font;
+    private Stage stage;
     private boolean mainMenu = false;
     private boolean exit = false;
     private int winner_num;
@@ -33,15 +34,15 @@ public class GameOverView extends ScreenAdapter {
     public GameOverView(final Main game, int winnerNum){
         this.game = game;
         this.winner_num = winnerNum;
-        game.setStage(new Stage(new ScreenViewport()));
-        Gdx.input.setInputProcessor(game.getStage());
+        stage = new Stage(new ScreenViewport());
+        Gdx.input.setInputProcessor(stage);
         gameOverImgOne = new Texture(Gdx.files.internal("playerOne1.png"));
         gameOverImgTwo = new Texture(Gdx.files.internal("playerTwo2.png"));
         font = new BitmapFont();
 
         font.setColor(Color.BLACK);
         font.getData().setScale(1.4f);
-        gameOverController = new GameOverController(this, this.game);
+        gameOverController = new GameOverController(this);
     }
 
     /**
@@ -84,9 +85,13 @@ public class GameOverView extends ScreenAdapter {
 
         setScreen();
 
-        game.getStage().act();
-        game.getStage().draw();
+        stage.act();
+        stage.draw();
 
+    }
+
+    public Stage getStage() {
+        return stage;
     }
 
     private void setScreen() {

@@ -10,13 +10,11 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 public class Main extends Game {
 	private SpriteBatch batch;
 	private BitmapFont font;
-	private Stage stage;
 
 	@Override
 	public void create() {
 		batch = new SpriteBatch();
 		font = new BitmapFont();
-		stage = new Stage();
 
 		this.setScreen(new MenuScreenView(this));
 	}
@@ -25,9 +23,6 @@ public class Main extends Game {
 		this.batch = batch;
 	}
 
-	public void setStage(Stage stage) {
-		this.stage = stage;
-	}
 
 	public void setFont(BitmapFont font) {
 		this.font = font;
@@ -41,9 +36,6 @@ public class Main extends Game {
 		return font;
 	}
 
-	public Stage getStage() {
-		return stage;
-	}
 
 	@Override
 	public void render() {
@@ -56,6 +48,5 @@ public class Main extends Game {
 		super.dispose();
 		batch.dispose();
 		font.dispose();
-		stage.dispose();
 	}
 }

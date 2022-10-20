@@ -10,9 +10,6 @@ import com.mygdx.game.Main;
  * And controls the button events
  */
 public class GameOverController {
-    private GameOverView gameOverView;
-    final Main game;
-
     Text_Button menu_button = new Text_Button.TextButtonBuilder(7, 3.7f)
             .buttonSize(2, 1).
             buttonName("Main Menu")
@@ -27,14 +24,19 @@ public class GameOverController {
      * Constructor
      * Creates buttons and handles button' events
      * @param gameOverView - an instance of gameOverView class {@link GameOverView}
-     * @param game - an instance of Main {@link Main}
      */
-    public GameOverController(final GameOverView gameOverView, Main game) {
-        this.gameOverView = gameOverView;
-        this.game = game;
+    public GameOverController(final GameOverView gameOverView) {
         menu_button.create();
         exit_button.create();
 
+        handlesButtonEvents(gameOverView);
+    }
+
+    /**
+     *
+     * @param gameOverView - an instance of gameOverView {@link GameOverView}
+     */
+    private void handlesButtonEvents(final GameOverView gameOverView) {
         menu_button.getButton().addListener(new InputListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
@@ -46,7 +48,7 @@ public class GameOverController {
                 return true;
             }
         });
-        game.getStage().addActor(menu_button.getButton());
+        gameOverView.getStage().addActor(menu_button.getButton());
 
         exit_button.getButton().addListener(new InputListener() {
             @Override
@@ -59,6 +61,6 @@ public class GameOverController {
                 return true;
             }
         });
-        game.getStage().addActor(exit_button.getButton());
+        gameOverView.getStage().addActor(exit_button.getButton());
     }
 }

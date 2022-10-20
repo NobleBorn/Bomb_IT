@@ -1,6 +1,7 @@
 package Controllers;
 
 import Models.Player;
+import Views.PanelView;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -17,15 +18,6 @@ import com.mygdx.game.Boot;
  * Creates pause and resume button see {@link Controllers.Text_Button}
  */
 public class PanelController {
-    private Boot boot;
-    private Stage stage;
-    private SpriteBatch batch;
-    private BitmapFont font;
-    private ShapeRenderer shapeRenderer;
-
-    private Player player1;
-    private Player player2;
-
     Text_Button pause_button = new Text_Button("Pause", 2,1, 9.5f, 7);
     Text_Button resume_button = new Text_Button("Resume", 2,1, 9.5f, 8);
 
@@ -39,25 +31,21 @@ public class PanelController {
      * Constructor
      *
      * @param boot - an instance of the boot class {@link Boot}
-     * @param player1 - an instance of the player class for player one {@link Player}
-     * @param player2 - an instance of the player class for player two {@link Player}
+     * @param panelView - an instance of panelView {@link PanelView}
      */
-    public PanelController(final Boot boot, Player player1, Player player2){
-        this.stage = new Stage(new ScreenViewport());
-        Gdx.input.setInputProcessor(this.stage);
-        batch = new SpriteBatch();
-        font = new BitmapFont();
-        font.setColor(Color.WHITE);
-        font.getData().setScale(1.2f);
-
-        shapeRenderer = new ShapeRenderer();
-
-        this.boot = boot;
-        this.player1 = player1;
-        this.player2 = player2;
+    public PanelController(final Boot boot, PanelView panelView){
         pause_button.create();
         resume_button.create();
 
+        handlesButtonEvents(boot, panelView);
+    }
+
+    /**
+     *
+     * @param boot - an instance of boot {@link Boot}
+     * @param panelView - an instance of panelView {@link PanelView}
+     */
+    private void handlesButtonEvents(final Boot boot, PanelView panelView) {
         pause_button.getButton().addListener(new InputListener(){
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
@@ -70,7 +58,7 @@ public class PanelController {
                 return true;
             }
         });
-        stage.addActor(pause_button.getButton());
+        panelView.getStage().addActor(pause_button.getButton());
 
         resume_button.getButton().addListener(new InputListener(){
             @Override
@@ -84,46 +72,6 @@ public class PanelController {
                 return true;
             }
         });
-        stage.addActor(resume_button.getButton());
+        panelView.getStage().addActor(resume_button.getButton());
     }
-
-    /**
-     * Draws the stage, text areas and the text fonts
-     */
-    public void update(){
-        int row_height = Gdx.graphics.getWidth() / 12;
-        int col_width = Gdx.graphics.getWidth() / 12;
-
-        drawTextArea(row_height, col_width);
-        batch.begin();
-        drawFonts(row_height, col_width);
-        batch.end();
-
-        stage.act();
-        stage.draw();
-    }
-
-    private void drawFonts(int row_height, int col_width) {
-        font.draw(batch,"Timer: " + (int)boot.getTimeSeconds()/60 + " : " + (int)boot.getTimeSeconds()%60, col_width *9.7f, row_height *7.5f);
-        font.draw(batch,"Player 1 points: " + player1.getScore(), col_width *9.7f, row_height *6.5f);
-        font.draw(batch,"Player 2 points: " + player2.getScore(), col_width *9.7f, row_height *5.5f);
-    }
-
-    private void drawTextArea(int row_height, int col_width) {
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(0, 0, 0, 1);
-        shapeRenderer.rect(col_width *9.4f, row_height *7.2f, 230, 50);
-        shapeRenderer.rect(col_width *9.4f, row_height *6.2f, 230, 50);
-        shapeRenderer.rect(col_width *9.4f, row_height *5.2f, 230, 50);
-        shapeRenderer.end();
-    }
-
-    /**
-     * Disposes the stage and font
-     */
-    public void dispose(){
-        stage.dispose();
-        font.dispose();
-    }
-
 }
