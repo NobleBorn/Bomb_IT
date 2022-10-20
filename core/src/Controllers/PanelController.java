@@ -1,31 +1,36 @@
 package Controllers;
 
-import Models.Player;
 import Views.PanelView;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.Boot;
 
 /**
- * A class that shows player {@link Player }information such as points, shows game timer
- * Creates pause and resume button see {@link Controllers.Text_Button}
+ * A class that creates pause and resume button see {@link Controllers.Text_Button} for the side panel
  */
 public class PanelController {
-    Text_Button pause_button = new Text_Button("Pause", 2,1, 9.5f, 7);
-    Text_Button resume_button = new Text_Button("Resume", 2,1, 9.5f, 8);
+    private Text_Button pause_button = new Text_Button.TextButtonBuilder(9.5f, 7f)
+            .buttonSize(2, 1)
+            .buttonName("Pause")
+            .createTextButton();
 
+    private Text_Button resume_button = new Text_Button.TextButtonBuilder(9.5f, 8f)
+            .buttonSize(2, 1)
+            .buttonName("Resume")
+            .createTextButton();
 
-    Image_Button music_button = new Image_Button("volume_on.png", "volume_off.png",1,
-            0.8f, 1, 7);
-    Image_Button sound_button = new Image_Button("sound_on.png", "sound_off.png",1,
-            0.8f, 2.7f, 7);
+    private Image_Button music_button = new Image_Button.ImageButtonBuilder(1, 7f)
+            .buttonPath1("volume_on.png")
+            .buttonPath2("volume_off.png")
+            .buttonSize(1, 0.8f)
+            .createImageButton();
+
+    private Image_Button sound_button = new Image_Button.ImageButtonBuilder(2.7f, 7f)
+            .buttonPath1("sound_on.png")
+            .buttonPath2("sound_off.png")
+            .buttonSize(1, 0.8f)
+            .createImageButton();
+
 
     /**
      * Constructor

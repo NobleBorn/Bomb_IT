@@ -1,20 +1,19 @@
 package Views;
 
-import Controllers.Image_Button;
 import Controllers.PanelController;
-import Controllers.Text_Button;
 import Models.Player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.Boot;
 
+/**
+ * Represents view for the side panel that shows player {@link Player } information such as points, shows game timer
+ */
 public class PanelView {
     private Boot boot;
     private Stage stage;
