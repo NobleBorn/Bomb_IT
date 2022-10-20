@@ -5,7 +5,9 @@ import Models.Tile;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-
+/**
+ * Bomb
+ */
 public class BombView implements IDrawable{
     private final Bomb bomb;
     private final Texture bombImage;
