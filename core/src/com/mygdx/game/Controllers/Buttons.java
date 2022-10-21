@@ -11,7 +11,6 @@ public abstract class Buttons {
     private float button_height;
     private float button_x;
     private float button_y;
-    private Button button;
 
     /**
      * Constructor.

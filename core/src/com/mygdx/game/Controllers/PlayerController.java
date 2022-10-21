@@ -10,7 +10,7 @@ import com.mygdx.game.Views.PlayerView;
  * A class that handles player's movement {@link Player} through key inputs
  */
 public class PlayerController {
-    Player player;
+    private Player player;
     private final int keyUp, keyLeft, keyDown, keyRight, keyDropBomb;
     private float time = 0f;
     private final PlayerView view;

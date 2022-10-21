@@ -36,9 +36,8 @@ public class GameScreen implements Screen {
     private Bomb bomb;
 
     private PanelController panelController;
-    private float timeSeconds = 10f;
-    private PanelView panelView;
     private float timeSeconds = 181f;
+    private PanelView panelView;
     private float period = 600f;
     private FitViewport viewPort;
     public Music gameMusic;
@@ -67,6 +66,7 @@ public class GameScreen implements Screen {
 
         this.panelView = new PanelView(this, playerOne, playerTwo);
 
+
         PlayerView playerOneView = new PlayerView(playerOne, "spelare.png");
         PlayerView playerTwoView = new PlayerView(playerTwo, "spelare2.png");
 
@@ -79,7 +79,7 @@ public class GameScreen implements Screen {
         int heightScreen = Gdx.graphics.getHeight();
         this.orthographicCamera = new OrthographicCamera();
         this.orthographicCamera.setToOrtho(false, widthScreen, heightScreen);
-        this.viewPort = new FitViewport(1280, heightScreen, orthographicCamera);
+        this.viewPort = new FitViewport(0, 0, orthographicCamera);
         this.batch = new SpriteBatch();
         this.drawer = new Drawer(batch, map, playerOneView, playerTwoView);
         this.gameMusic = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
@@ -150,7 +150,10 @@ public class GameScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
+        orthographicCamera.setToOrtho(false, width, height);
+        this.viewPort.setWorldSize(width, height);
         this.viewPort.update(width, height);
+        panelView.getStage().getViewport().update(width, height);
     }
 
     /**

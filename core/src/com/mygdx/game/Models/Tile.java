@@ -39,7 +39,7 @@ public class Tile {
      * Checks if the tile contains any objects.
      * @return returns true if the tile has no objects in it, false otherwise.
      */
-    public boolean isTileEmpty(){
+    protected boolean isTileEmpty(){
         return entities.size() == 0;
     }
     protected void removePlayer(Player player){
@@ -50,7 +50,7 @@ public class Tile {
      * Methods offers a way to get a deep-copy of the objects on the tile. Requires entities to be a subclass of {@link Entity}.
      * @return returns entities array with {@link Entity} objects.
      */
-    public List<Entity> getEntities(){
+    protected List<Entity> getEntities(){
         return entities;
     }
 }

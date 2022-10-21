@@ -1,9 +1,9 @@
-package Controllers;
+package com.mygdx.game.Controllers;
 
-import Views.PanelView;
+import com.mygdx.game.Views.PanelView;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.mygdx.game.Boot;
+import com.mygdx.game.Views.GameScreen;
 
 /**
  * A class that creates pause and resume button see {@link Controllers.Text_Button} for the side panel
@@ -35,27 +35,27 @@ public class PanelController {
     /**
      * Constructor
      *
-     * @param boot - an instance of the boot class {@link Boot}
+     * @param gameScreen - an instance of the gameScreen class {@link GameScreen}
      * @param panelView - an instance of panelView {@link PanelView}
      */
-    public PanelController(final Boot boot, PanelView panelView){
+    public PanelController(final GameScreen gameScreen, PanelView panelView){
         pause_button.create();
         resume_button.create();
 
-        handlesButtonEvents(boot, panelView);
+        handlesButtonEvents(gameScreen, panelView);
     }
 
     /**
      *
-     * @param boot - an instance of boot {@link Boot}
+     * @param gameScreen - an instance of boot {@link GameScreen}
      * @param panelView - an instance of panelView {@link PanelView}
      */
-    private void handlesButtonEvents(final Boot boot, PanelView panelView) {
+    private void handlesButtonEvents(final GameScreen gameScreen, PanelView panelView) {
         pause_button.getButton().addListener(new InputListener(){
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                boot.pause();
-                boot.gameMusic.pause();
+                gameScreen.pause();
+                gameScreen.gameMusic.pause();
             }
 
             @Override
@@ -68,8 +68,8 @@ public class PanelController {
         resume_button.getButton().addListener(new InputListener(){
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-                boot.resume();
-                boot.gameMusic.pause();
+                gameScreen.resume();
+                gameScreen.gameMusic.pause();
             }
 
             @Override
