@@ -1,6 +1,6 @@
 package com.mygdx.game;
 
-import Views.MenuScreenView;
+import com.mygdx.game.Views.MenuScreenView;
 import com.badlogic.gdx.*;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;

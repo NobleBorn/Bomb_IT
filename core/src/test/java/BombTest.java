@@ -1,8 +1,10 @@
-import Models.*;
+import com.mygdx.game.Models.*;
+import com.mygdx.game.Models.Direction;
+import com.mygdx.game.Models.Map;
+import com.mygdx.game.Models.Player;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.Timer;
 import java.util.TimerTask;
 
 import static org.junit.jupiter.api.Assertions.*;

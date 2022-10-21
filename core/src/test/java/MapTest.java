@@ -1,4 +1,5 @@
-import Models.*;
+import com.mygdx.game.Models.*;
+import com.mygdx.game.Models.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
