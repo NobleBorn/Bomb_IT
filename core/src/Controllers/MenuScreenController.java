@@ -16,8 +16,7 @@ import java.util.ArrayList;
  *
  */
 public class MenuScreenController {
-    private MenuScreenView menuScreenView;
-    ArrayList<Buttons> create = new ArrayList<>();
+    private ArrayList<Buttons> create = new ArrayList<>();
 
     Text_Button play_button = new Text_Button.TextButtonBuilder(7, 3.3f)
             .buttonSize(2, 1)
@@ -55,8 +54,6 @@ public class MenuScreenController {
      * @param menuScreenView - an instance of the MenuScreenView {@link MenuScreenView}
      */
     public MenuScreenController(final MenuScreenView menuScreenView){
-        this.menuScreenView = menuScreenView;
-
         create.add(play_button);
         create.add(option_button);
         create.add(exit_button);
@@ -66,7 +63,15 @@ public class MenuScreenController {
         for (Buttons buttons : create)
             buttons.create();
 
+        handlesButtonEvents(menuScreenView);
 
+    }
+
+    /**
+     *
+     * @param menuScreenView - an instance of gameOverView {@link GameOverView}
+     */
+    private void handlesButtonEvents(final MenuScreenView menuScreenView) {
         play_button.getButton().addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
@@ -93,17 +98,17 @@ public class MenuScreenController {
         });
         menuScreenView.getStage().addActor(option_button.getButton());
 
-       exit_button.getButton().addListener(new InputListener(){
-            @Override
-            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                Gdx.app.exit();
-                System.exit(0);
-            }
-            @Override
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                return true;
-            }
-        });
+        exit_button.getButton().addListener(new InputListener(){
+             @Override
+             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                 Gdx.app.exit();
+                 System.exit(0);
+             }
+             @Override
+             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                 return true;
+             }
+         });
         menuScreenView.getStage().addActor(exit_button.getButton());
 
         music_button.getButton().addListener(new EventListener() {
@@ -130,6 +135,5 @@ public class MenuScreenController {
             }
         });
         menuScreenView.getStage().addActor(sound_button.getButton());
-
     }
 }

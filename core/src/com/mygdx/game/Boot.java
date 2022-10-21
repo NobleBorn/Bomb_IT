@@ -5,6 +5,7 @@ import Controllers.PanelController;
 import Controllers.PlayerController;
 import Models.*;
 import Views.GameOverView;
+import Views.PanelView;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
@@ -32,6 +33,7 @@ public class Boot implements Screen {
     private Bomb bomb;
 
     private PanelController panelController;
+    private PanelView panelView;
     private float timeSeconds = 181f;
     private float period = 600f;
     private FitViewport viewPort;
@@ -59,7 +61,7 @@ public class Boot implements Screen {
         playerOne = map.getPlayers().get(0);
         playerTwo = map.getPlayers().get(1);
 
-        this.panelController = new PanelController(this, playerOne, playerTwo);
+        this.panelView = new PanelView(this, playerOne, playerTwo);
 
         this.playerOneController = new PlayerController(playerOne, Input.Keys.DPAD_UP, Input.Keys.DPAD_DOWN,
                 Input.Keys.DPAD_RIGHT, Input.Keys.DPAD_LEFT, Input.Keys.SHIFT_RIGHT);
@@ -133,7 +135,7 @@ public class Boot implements Screen {
         orthographicCamera.update();
         playerOneController.update();
         playerTwoController.update();
-        panelController.update();
+        panelView.update();
     }
 
     @Override
@@ -147,7 +149,7 @@ public class Boot implements Screen {
     @Override
     public void dispose(){
         batch.dispose();
-        panelController.dispose();
+        panelView.dispose();
         game.dispose();
     }
 
