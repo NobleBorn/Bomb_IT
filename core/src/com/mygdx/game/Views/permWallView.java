@@ -9,7 +9,7 @@ import com.mygdx.game.Models.Wall;
 /**
  * Represents the view of the permanent wall {@link Wall} which is a drawable object {@link IDrawable}
  */
-public class permWallView implements IDrawable{
+class permWallView implements IDrawable{
     private final Position position;
     private final Texture permWallTexture;
 
@@ -19,7 +19,7 @@ public class permWallView implements IDrawable{
      * @param pos - position of the permanent wall on the map in type {@link Position}
      * @param permWallTexture - a texture of the permanent wall
      */
-    public permWallView(Position pos, Texture permWallTexture){
+    protected permWallView(Position pos, Texture permWallTexture){
         this.position = pos;
         this.permWallTexture = permWallTexture;
     }
@@ -32,15 +32,6 @@ public class permWallView implements IDrawable{
     public void draw(SpriteBatch sb) {
         sb.draw(getPermWallTexture(), position.getY()* Tile.tileSize, position.getX()*Tile.tileSize);
     }
-
-    /**
-     *
-     * @return current position of the permanent wall
-     */
-    public Position getPosition(){
-        return position;
-    }
-
 
     private Texture getPermWallTexture(){
         return permWallTexture;

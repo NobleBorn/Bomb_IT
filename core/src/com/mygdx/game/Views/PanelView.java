@@ -1,5 +1,6 @@
 package com.mygdx.game.Views;
 
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.Controllers.PanelController;
 import com.mygdx.game.Models.Player;
 import com.badlogic.gdx.Gdx;
@@ -33,8 +34,8 @@ public class PanelView {
      * @param player1 - an instance of the player class for player one {@link Player}
      * @param player2 - an instance of the player class for player two {@link Player}
      */
-    public PanelView(final GameScreen gameScreen, Player player1, Player player2){
-        this.stage = new Stage(new ScreenViewport());
+    protected PanelView(final GameScreen gameScreen, Player player1, Player player2){
+        this.stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
         Gdx.input.setInputProcessor(this.stage);
         batch = new SpriteBatch();
         font = new BitmapFont();
@@ -46,7 +47,7 @@ public class PanelView {
         this.player1 = player1;
         this.player2 = player2;
 
-        PanelController panelController = new PanelController(gameScreen, this);
+        new PanelController(gameScreen, this);
 
     }
 
@@ -72,8 +73,8 @@ public class PanelView {
 
     private void drawFonts(int row_height, int col_width) {
         font.draw(batch,"Timer: " + (int)gameScreen.getTimeSeconds()/60 + " : " + (int)gameScreen.getTimeSeconds()%60, col_width *9.7f, row_height *7.5f);
-        font.draw(batch,"Player 1 points: " + player1.getScore(), col_width *9.7f, row_height *6.5f);
-        font.draw(batch,"Player 2 points: " + player2.getScore(), col_width *9.7f, row_height *5.5f);
+        font.draw(batch,"Player 1 points: " + player1.getScore(), 0.8f*Gdx.graphics.getWidth(), row_height *6.5f);
+        font.draw(batch,"Player 2 points: " + player2.getScore(), 0.8f*Gdx.graphics.getWidth(), row_height *5.5f);
     }
 
     private void drawTextArea(int row_height, int col_width) {

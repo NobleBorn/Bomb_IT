@@ -10,9 +10,9 @@ public class Player extends Entity implements IDestroyable,IBombListener{
     private Direction direction;
     private int score;
     private boolean alive;
-    private int bombLength;
-    private IPlayable playerAction;
+    private final int bombLength;
     private List<Player> objList;
+    private final IPlayable playerAction;
     private boolean isBombActive = false;
 
     /**
@@ -48,9 +48,6 @@ public class Player extends Entity implements IDestroyable,IBombListener{
     public Direction getDirection() {
         return direction;
     }
-    protected int getBombLength(){
-        return bombLength;
-    }
 
     /**
      * @return returns a player's current score
@@ -65,23 +62,6 @@ public class Player extends Entity implements IDestroyable,IBombListener{
      */
     public boolean isAlive() {
         return alive;
-    }
-
-    private Position newPositionHandler() { //possible improvement?
-        Position newPosition;
-        if (direction == Direction.UP){
-            newPosition = new Position(position.getX()+1, position.getY());
-        }
-        else if (direction == Direction.RIGHT){
-            newPosition = new Position(position.getX(), position.getY()+1);
-        }
-        else if (direction == Direction.DOWN){
-            newPosition = new Position(position.getX()-1, position.getY());
-        }
-        else{
-            newPosition = new Position(position.getX(), position.getY()-1);
-        }
-        return newPosition;
     }
 
     /**
@@ -111,6 +91,27 @@ public class Player extends Entity implements IDestroyable,IBombListener{
     public void terminate(){
         alive = false;
         objList.remove(this);
+    }
+
+    protected int getBombLength(){
+        return bombLength;
+    }
+
+    private Position newPositionHandler() { //possible improvement?
+        Position newPosition;
+        if (direction == Direction.UP){
+            newPosition = new Position(position.getX()+1, position.getY());
+        }
+        else if (direction == Direction.RIGHT){
+            newPosition = new Position(position.getX(), position.getY()+1);
+        }
+        else if (direction == Direction.DOWN){
+            newPosition = new Position(position.getX()-1, position.getY());
+        }
+        else{
+            newPosition = new Position(position.getX(), position.getY()-1);
+        }
+        return newPosition;
     }
 
 }

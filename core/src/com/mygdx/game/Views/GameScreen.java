@@ -23,7 +23,7 @@ import com.mygdx.game.Models.Player;
  * Represents the Game screen
  */
 public class GameScreen implements Screen {
-    final Main game;
+    private final Main game;
     private OrthographicCamera orthographicCamera;
     private Drawer drawer;
     private Texture img;
@@ -33,9 +33,7 @@ public class GameScreen implements Screen {
     private Player playerTwo;
     private PlayerController playerOneController;
     private PlayerController playerTwoController;
-    private Bomb bomb;
 
-    private PanelController panelController;
     private float timeSeconds = 181f;
     private PanelView panelView;
     private float period = 600f;

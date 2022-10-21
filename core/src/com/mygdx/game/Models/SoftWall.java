@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * The class represents a soft wall as a subclass of {@link Entity} which is destroyable {@link IDestroyable}
  */
-public class SoftWall extends Wall implements IDestroyable { //marker interface
+public class SoftWall extends Wall implements IDestroyable {
     private List<SoftWall> objArray;
 
     /**

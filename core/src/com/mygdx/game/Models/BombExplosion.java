@@ -6,14 +6,13 @@ import java.util.List;
 /**
  * Represents the bomb's explosion {@link Bomb} and manages the explosion events
  */
-public class BombExplosion {
+class BombExplosion {
 
-    protected List<Position> bombExplosionPositions = new ArrayList<>();
-    private Position position;
-    private IExplodable bombManager;
+    private List<Position> bombExplosionPositions = new ArrayList<>();
+    private final Position position;
+    private final IExplodable bombManager;
     private final int bombLength;
     private int wallsDestroyed;
-    private List<Boolean> isWallDestroyable;
 
     /**
      * Constructor
@@ -61,7 +60,7 @@ public class BombExplosion {
         bombManager.tryToKillEntity(bombExplosionPositions.get(0));
         for (int i = 0; i < 4; i++){
             for (int j = 1; j <= bombLength; j++){
-                isWallDestroyable = bombManager.tryToKillEntity(bombExplosionPositions.get(i*bombLength+j));
+                List<Boolean> isWallDestroyable = bombManager.tryToKillEntity(bombExplosionPositions.get(i * bombLength + j));
                 if (isWallDestroyable.get(1)){
                     wallsDestroyed++;
                     break;
@@ -80,8 +79,5 @@ public class BombExplosion {
         return wallsDestroyed;
     }
 
-    public List<Position> getBombExplosionPositions() {
-        return bombExplosionPositions;
-    }
 
 }
