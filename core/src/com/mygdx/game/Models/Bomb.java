@@ -18,7 +18,7 @@ public class Bomb extends Entity{
      * @param bombManager - an instance of the IExplodable {@link IExplodable}
      * @param player - an instance of the IBombListener {@link IBombListener}
      */
-    public Bomb(Position position, int length, IExplodable bombManager, IBombListener player){
+    protected Bomb(Position position, int length, IExplodable bombManager, IBombListener player){
         super(position);
         this.bombLength = length;
         this.bombManager = bombManager;

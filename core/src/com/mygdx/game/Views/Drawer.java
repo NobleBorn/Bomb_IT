@@ -1,14 +1,12 @@
 package com.mygdx.game.Views;
 
 import com.mygdx.game.Models.*;
-import com.mygdx.game.Views.*;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
-import org.junit.jupiter.params.ParameterizedTest;
 
-public class Drawer {
+class Drawer {
 
     private final Map map;
     private final SpriteBatch sb;

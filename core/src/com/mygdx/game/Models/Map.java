@@ -14,12 +14,7 @@ import java.util.List;
 public class Map implements EventListener, IExplodable, IPlayable {
 
     private final int size = 20;
-    private final int y = size;
-    private final int x = size;
     private final Tile[][] tiles;
-    private Player player;
-    private Wall wall;
-    private SoftWall softWall;
     private String[][] maps = new String[size][size];
     private List<Player> playerObjList = new ArrayList<>();
     private List<Wall> wallObjList = new ArrayList<>();
@@ -32,7 +27,6 @@ public class Map implements EventListener, IExplodable, IPlayable {
      */
     public Map(){
         tiles = createTiles();
-        loadWalls();
         addObjects();
     }
 
@@ -46,16 +40,39 @@ public class Map implements EventListener, IExplodable, IPlayable {
         return tiles;
     }
 
-    private void loadWalls(){
-        //createPowerUps();
-    }
-
     private void addObjects(){
 
+        readTextMap();
+
+        for (int i = 0; i < size; i++){
+            for (int j = 0; j < size; j++){
+                String decider = maps[i][j];
+                switch (decider) {
+                    case "1":
+                        Wall wall = new Wall(new Position(i, j));
+                        tiles[i][j].addEntity(wall);
+                        wallObjList.add(wall);
+                        break;
+                    case "2":
+                        SoftWall softWall = new SoftWall(new Position(i, j), softWallObjList);
+                        tiles[i][j].addEntity(softWall);
+                        softWallObjList.add(softWall);
+                        break;
+                    case "3":
+                        Player player = new Player(new Position(i, j), this, playerObjList);
+                        tiles[i][j].addEntity(player);
+                        playerObjList.add(player);
+                        break;
+                }
+            }
+        }
+    }
+
+    private void readTextMap() {
         try {
             List<String> rows = new ArrayList<>();
-         
-            BufferedReader bf = new BufferedReader(new FileReader("C:\\Users\\oyoun\\IdeaProjects\\Bomb_IT\\assets\\test.txt"));
+
+            BufferedReader bf = new BufferedReader(new FileReader("../assets/test.txt"));
 
             String line = bf.readLine();
             while (line != null) {
@@ -73,29 +90,8 @@ public class Map implements EventListener, IExplodable, IPlayable {
         } catch (IOException e){
             e.printStackTrace();
         }
-        for (int i = 0; i < size; i++){
-            for (int j = 0; j < size; j++){
-                String decider = maps[i][j];
-                switch (decider) {
-                    case "1":
-                        wall = new Wall(new Position(i, j));
-                        tiles[i][j].addEntity(wall);
-                        wallObjList.add(wall);
-                        break;
-                    case "2":
-                        softWall = new SoftWall(new Position(i, j), softWallObjList);
-                        tiles[i][j].addEntity(softWall);
-                        softWallObjList.add(softWall);
-                        break;
-                    case "3":
-                        player = new Player(new Position(i, j), this, playerObjList);
-                        tiles[i][j].addEntity(player);
-                        playerObjList.add(player);
-                        break;
-                }
-            }
-        }
     }
+
     public List<Player> getPlayers(){
         return playerObjList;
     }
@@ -107,20 +103,6 @@ public class Map implements EventListener, IExplodable, IPlayable {
     }
     public List<Bomb> getBombs(){
         return bombObjList;
-    }
-
-
-    /**
-     *
-     * @return map size
-     */
-    public int[] getSize(){
-        int[] coordinates = new int[2];
-
-        coordinates[0] = x;
-        coordinates[1] = y;
-
-        return coordinates;
     }
 
     /**

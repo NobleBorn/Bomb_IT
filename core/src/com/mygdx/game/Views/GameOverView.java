@@ -17,7 +17,6 @@ import com.mygdx.game.Models.Player;
  */
 public class GameOverView extends ScreenAdapter {
     final Main game;
-    private GameOverController gameOverController;
     private Texture gameOverImgOne;
     private Texture gameOverImgTwo;
     private BitmapFont font;
@@ -43,7 +42,7 @@ public class GameOverView extends ScreenAdapter {
 
         font.setColor(Color.BLACK);
         font.getData().setScale(1.4f);
-        gameOverController = new GameOverController(this);
+        new GameOverController(this);
     }
 
     /**
@@ -70,17 +69,13 @@ public class GameOverView extends ScreenAdapter {
     public void render(float delta) {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        int row_height = Gdx.graphics.getWidth() / 12;
-        int col_width = Gdx.graphics.getWidth() / 12;
 
         game.getBatch().begin();
         if(winner_num == 1){
-            game.getBatch().draw(gameOverImgOne,0,0,960,960);
-            font.draw(game.getBatch(),"Bob Won!", col_width*2.9f, row_height*5.5f);
+            renderWinner(gameOverImgOne, "Bob");
         }
         else{
-            game.getBatch().draw(gameOverImgTwo,0,0,960,960);
-            font.draw(game.getBatch(),"Gandalf Won!", col_width*2.9f, row_height*5.5f);
+            renderWinner(gameOverImgTwo, "Gandalf");
         }
         game.getBatch().end();
 
@@ -102,6 +97,13 @@ public class GameOverView extends ScreenAdapter {
             Gdx.app.exit();
             System.exit(0);
         }
+    }
+
+    private void renderWinner(Texture winnerTex, String winnerName){
+        int row_height = Gdx.graphics.getWidth() / 12;
+        int col_width = Gdx.graphics.getWidth() / 12;
+        game.getBatch().draw(winnerTex,0,0,960,960);
+        font.draw(game.getBatch(),winnerName+" won!", col_width*2.9f, row_height*5.5f);
     }
 
     @Override

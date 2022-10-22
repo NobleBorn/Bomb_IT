@@ -42,7 +42,6 @@ allprojects {
 project(":desktop") {
     apply plugin: "java-library"
 
-
     dependencies {
         implementation project(":core")
         api "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
@@ -55,7 +54,9 @@ project(":desktop") {
 project(":core") {
     apply plugin: "java-library"
 
-
+    test{
+        workingDir = new File("../assets/")
+    }
     dependencies {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
         implementation group: 'com.badlogicgames.gdx', name: 'gdx-box2d', version: '1.10.0'

@@ -31,7 +31,7 @@ public class PlayerView implements IDrawable{
      * @param player - an instance of the player {@link Player}
      * @param imagesFileName - image path for the player
      */
-    public PlayerView(Player player, String imagesFileName){
+    protected PlayerView(Player player, String imagesFileName){
         int row = 1;
         int col = 8;
 
@@ -131,5 +131,6 @@ public class PlayerView implements IDrawable{
     @Override
     public void draw(SpriteBatch sb) {
         sb.draw(getImage(), player.getPosition().getY()* Tile.tileSize, player.getPosition().getX()* Tile.tileSize);
+
     }
 }
