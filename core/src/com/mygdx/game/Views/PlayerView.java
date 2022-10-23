@@ -15,8 +15,7 @@ import com.mygdx.game.Models.Tile;
  * Represents the view of the player {@link Player} which is a drawable object {@link IDrawable}
  */
 public class PlayerView implements IDrawable{
-    Texture playerImages;
-    Player player;
+    private final Player player;
     private final TextureRegion[][] playerTexture2D;
     private float timer = 0f;
     private boolean isKeyDown = false;
@@ -35,7 +34,7 @@ public class PlayerView implements IDrawable{
         int row = 1;
         int col = 8;
 
-        playerImages = new Texture(imagesFileName);
+        Texture playerImages = new Texture(imagesFileName);
         this.playerTexture2D = TextureRegion.split(playerImages,
                 playerImages.getWidth() / col, playerImages.getHeight() / row);
 

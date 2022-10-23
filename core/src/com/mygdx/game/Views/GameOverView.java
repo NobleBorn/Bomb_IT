@@ -16,14 +16,14 @@ import com.mygdx.game.Models.Player;
  * Represents Game Over screen
  */
 public class GameOverView extends ScreenAdapter {
-    final Main game;
-    private Texture gameOverImgOne;
-    private Texture gameOverImgTwo;
-    private BitmapFont font;
-    private Stage stage;
+    private final Main game;
+    private final Texture gameOverImgOne;
+    private final Texture gameOverImgTwo;
+    private final BitmapFont font;
+    private final Stage stage;
     private boolean mainMenu = false;
     private boolean exit = false;
-    private int winner_num;
+    private final int winnerNum;
 
     /**
      * Constructor
@@ -31,9 +31,9 @@ public class GameOverView extends ScreenAdapter {
      * @param game - an instance of Main class {@link Main}
      * @param winnerNum - A number that shows which player {@link Player} has won the game
      */
-    public GameOverView(final Main game, int winnerNum){
+    protected GameOverView(Main game, int winnerNum){
         this.game = game;
-        this.winner_num = winnerNum;
+        this.winnerNum = winnerNum;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
         gameOverImgOne = new Texture(Gdx.files.internal("playerOne1.png"));
@@ -71,7 +71,7 @@ public class GameOverView extends ScreenAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         game.getBatch().begin();
-        if(winner_num == 1){
+        if(winnerNum == 1){
             renderWinner(gameOverImgOne, "Bob");
         }
         else{
@@ -104,16 +104,6 @@ public class GameOverView extends ScreenAdapter {
         int col_width = Gdx.graphics.getWidth() / 12;
         game.getBatch().draw(winnerTex,0,0,960,960);
         font.draw(game.getBatch(),winnerName+" won!", col_width*2.9f, row_height*5.5f);
-    }
-
-    @Override
-    public void resize(int width, int height) {
-
-    }
-
-    @Override
-    public void hide() {
-
     }
 
     /**

@@ -69,7 +69,7 @@ public class PanelController {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 gameScreen.resume();
-                gameScreen.gameMusic.pause();
+                gameScreen.gameMusic.play();
             }
 
             @Override

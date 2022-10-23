@@ -76,8 +76,8 @@ public class MenuScreenController {
         play_button.getButton().addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                menuScreenView.getGame_music().stop();
-                menuScreenView.getClick_sound().stop();
+                menuScreenView.getGameMusic().stop();
+                menuScreenView.getClickSound().stop();
                 menuScreenView.setStartClicked(true);
             }
             @Override
@@ -90,7 +90,7 @@ public class MenuScreenController {
         option_button.getButton().addListener(new ClickListener() {
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                menuScreenView.getClick_sound().play();
+                menuScreenView.getClickSound().play();
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -102,6 +102,7 @@ public class MenuScreenController {
         exit_button.getButton().addListener(new InputListener(){
              @Override
              public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                 menuScreenView.getClickSound().play();
                  Gdx.app.exit();
                  System.exit(0);
              }
@@ -116,9 +117,9 @@ public class MenuScreenController {
             @Override
             public boolean handle(Event event) {
                 if(music_button.getButton().isChecked())
-                    menuScreenView.getGame_music().pause();
+                    menuScreenView.getGameMusic().pause();
                 else
-                    menuScreenView.getGame_music().play();
+                    menuScreenView.getGameMusic().play();
                 return false;
             }
         });
@@ -128,10 +129,10 @@ public class MenuScreenController {
             @Override
             public boolean handle(Event event) {
                 if(sound_button.getButton().isChecked()){
-                    menuScreenView.getClick_sound().dispose();
+                    menuScreenView.getClickSound().dispose();
                 }
                 else
-                    menuScreenView.setClick_sound(Gdx.audio.newSound(Gdx.files.internal("drop.wav")));
+                    menuScreenView.setClickSound(Gdx.audio.newSound(Gdx.files.internal("drop.wav")));
                 return false;
             }
         });
