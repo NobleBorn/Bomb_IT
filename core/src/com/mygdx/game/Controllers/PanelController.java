@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.mygdx.game.Views.GameScreen;
 
 /**
- * A class that creates pause and resume button see {@link Controllers.Text_Button} for the side panel
+ * A class that creates pause and resume button see {@link Text_Button} for the side panel
  */
 public class PanelController {
     private Text_Button pause_button = new Text_Button.TextButtonBuilder(9.5f, 7f)

@@ -89,6 +89,8 @@ public class PanelView {
      * Disposes the stage and font
      */
     public void dispose(){
+        batch.dispose();
+        shapeRenderer.dispose();
         stage.dispose();
         font.dispose();
     }

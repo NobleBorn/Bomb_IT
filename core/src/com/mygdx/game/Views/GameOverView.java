@@ -1,5 +1,6 @@
 package com.mygdx.game.Views;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.Controllers.GameOverController;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
@@ -21,6 +22,7 @@ public class GameOverView extends ScreenAdapter {
     private final Texture gameOverImgTwo;
     private final BitmapFont font;
     private final Stage stage;
+    private final SpriteBatch batch;
     private boolean mainMenu = false;
     private boolean exit = false;
     private final int winnerNum;
@@ -36,6 +38,7 @@ public class GameOverView extends ScreenAdapter {
         this.winnerNum = winnerNum;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
+        batch = new SpriteBatch();
         gameOverImgOne = new Texture(Gdx.files.internal("playerOne1.png"));
         gameOverImgTwo = new Texture(Gdx.files.internal("playerTwo2.png"));
         font = new BitmapFont();
@@ -70,14 +73,14 @@ public class GameOverView extends ScreenAdapter {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        game.getBatch().begin();
+        batch.begin();
         if(winnerNum == 1){
             renderWinner(gameOverImgOne, "Bob");
         }
         else{
             renderWinner(gameOverImgTwo, "Gandalf");
         }
-        game.getBatch().end();
+        batch.end();
 
         setScreen();
 
@@ -102,8 +105,8 @@ public class GameOverView extends ScreenAdapter {
     private void renderWinner(Texture winnerTex, String winnerName){
         int row_height = Gdx.graphics.getWidth() / 12;
         int col_width = Gdx.graphics.getWidth() / 12;
-        game.getBatch().draw(winnerTex,0,0,960,960);
-        font.draw(game.getBatch(),winnerName+" won!", col_width*2.9f, row_height*5.5f);
+        batch.draw(winnerTex,0,0,1280,960);
+        font.draw(batch,winnerName+" won!", col_width*2.9f, row_height*5.5f);
     }
 
     /**
@@ -113,6 +116,8 @@ public class GameOverView extends ScreenAdapter {
     public void dispose() {
         gameOverImgOne.dispose();
         gameOverImgTwo.dispose();
+        stage.dispose();
+        batch.dispose();
         font.dispose();
     }
 }

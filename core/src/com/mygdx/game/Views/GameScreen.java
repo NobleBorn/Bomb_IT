@@ -157,7 +157,7 @@ public class GameScreen implements Screen {
     public void dispose(){
         batch.dispose();
         panelView.dispose();
-        game.dispose();
+        panelView.dispose();
     }
 
     @Override
