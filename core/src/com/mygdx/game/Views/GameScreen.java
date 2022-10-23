@@ -28,7 +28,6 @@ public class GameScreen implements Screen {
     private Drawer drawer;
     private Texture img;
     private SpriteBatch batch;
-    private Map map;
     private Player playerOne;
     private Player playerTwo;
     private PlayerController playerOneController;
@@ -36,37 +35,34 @@ public class GameScreen implements Screen {
 
     private float timeSeconds = 181f;
     private PanelView panelView;
-    private float period = 600f;
     private FitViewport viewPort;
     public Music gameMusic;
+    private State state = State.RUNNING;
 
     private enum State{
-        Running, Paused
+        RUNNING, PAUSED
     }
-
-    private State state = State.Running;
 
     /**
      * Constructor
      *
      * @param game - an instance of the main {@link Main}
      */
-    public GameScreen(final Main game) {
+    protected GameScreen(final Main game) {
         this.game = game;
-        create();
+        Map map = new Map();
+        create(map);
     }
 
-    private void create() {
-        this.map = new Map();
+    private void create(Map map) {
         img = new Texture(Gdx.files.internal("pixelMap1.png"));
         playerOne = map.getPlayers().get(0);
         playerTwo = map.getPlayers().get(1);
 
-        this.panelView = new PanelView(this, playerOne, playerTwo);
-
-
         PlayerView playerOneView = new PlayerView(playerOne, "spelare.png");
         PlayerView playerTwoView = new PlayerView(playerTwo, "spelare2.png");
+
+        this.panelView = new PanelView(this, playerOne, playerTwo);
 
         this.playerOneController = new PlayerController(playerOne, playerOneView, Input.Keys.DPAD_UP, Input.Keys.DPAD_DOWN,
                 Input.Keys.DPAD_RIGHT, Input.Keys.DPAD_LEFT, Input.Keys.SHIFT_RIGHT);
@@ -82,7 +78,7 @@ public class GameScreen implements Screen {
         this.drawer = new Drawer(batch, map, playerOneView, playerTwoView);
         this.gameMusic = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
         this.gameMusic.setLooping(true);
-        gameMusic.play();
+        this.gameMusic.play();
     }
 
     @Override
@@ -97,7 +93,7 @@ public class GameScreen implements Screen {
     public void render(float delta) {
         int num;
         switch(state){
-            case Running:
+            case RUNNING:
                 timeSeconds -= Gdx.graphics.getDeltaTime();
                 if(!playerOne.isAlive() || !playerTwo.isAlive()){
                     if(playerTwo.isAlive())
@@ -114,7 +110,7 @@ public class GameScreen implements Screen {
                     update();
                 }
                 break;
-            case Paused:
+            case PAUSED:
                 break;
         }
         batch.setProjectionMatrix(orthographicCamera.combined);
@@ -166,12 +162,12 @@ public class GameScreen implements Screen {
 
     @Override
     public void pause() {
-        state = State.Paused;
+        state = State.PAUSED;
     }
 
     @Override
     public void resume() {
-        state = State.Running;
+        state = State.RUNNING;
     }
 
     @Override

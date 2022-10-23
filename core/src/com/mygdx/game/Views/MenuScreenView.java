@@ -15,22 +15,20 @@ import com.mygdx.game.*;
  * Represents Main menu screen
  */
 public class MenuScreenView extends ScreenAdapter {
-    final Main game;
-
-    private Stage stage;
-    private OrthographicCamera camera;
-    private MenuScreenController menuController;
-    private Texture menuImg;
+    private final Main game;
+    private final Stage stage;
+    private final OrthographicCamera camera;
+    private final Texture menuImg;
     private boolean startClicked = false;
-    private Music game_music;
-    private Sound click_sound;
+    private final Music gameMusic;
+    private Sound clickSound;
 
     /**
      * Constructor
      *
      * @param game - an instance of Main class {@link Main}
      */
-    public MenuScreenView(final Main game){
+    public MenuScreenView(Main game){
         this.game = game;
         this.stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(this.stage);
@@ -42,10 +40,11 @@ public class MenuScreenView extends ScreenAdapter {
 
         menuImg = new Texture(Gdx.files.internal("mainMenu1.png"));
 
-        game_music = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
-        game_music.setLooping(true);
-        click_sound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
-        menuController = new MenuScreenController(this);
+        gameMusic = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
+        gameMusic.setLooping(true);
+        gameMusic.play();
+        clickSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
+        new MenuScreenController(this);
 
     }
 
@@ -61,24 +60,24 @@ public class MenuScreenView extends ScreenAdapter {
      *
      * @return current game_music
      */
-    public Music getGame_music() {
-        return game_music;
+    public Music getGameMusic() {
+        return gameMusic;
     }
 
     /**
      *
      * @return current click_sound
      */
-    public Sound getClick_sound() {
-        return click_sound;
+    public Sound getClickSound() {
+        return clickSound;
     }
 
     /**
      *
-     * @param click_sound - click_sound to set (a path to the sound in assets)
+     * @param clickSound - click_sound to set (a path to the sound in assets)
      */
-    public void setClick_sound(Sound click_sound) {
-        this.click_sound = click_sound;
+    public void setClickSound(Sound clickSound) {
+        this.clickSound = clickSound;
     }
 
     /**
@@ -113,31 +112,13 @@ public class MenuScreenView extends ScreenAdapter {
             this.game.setScreen(new GameScreen(game));
     }
 
-    @Override
-    public void resize(int width, int height) {
-
-    }
-
-    /**
-     * Plays the game music
-     */
-    @Override
-    public void show() {
-        game_music.play();
-    }
-
-    @Override
-    public void hide() {
-    }
-
     /**
      * Disposes of music and sound
      */
     @Override
     public void dispose() {
-        game_music.dispose();
-        click_sound.dispose();
-
+        gameMusic.dispose();
+        clickSound.dispose();
     }
 
 

@@ -32,10 +32,10 @@ class Drawer {
 
     private void prepareToDraws(){
         for (Wall wall: map.getPermWalls()){
-            toDraw.add(new permWallView(wall.getPosition(), sprPermWall));
+            toDraw.add(new PermWallView(wall.getPosition(), sprPermWall));
         }
         for (SoftWall softWall: map.getSoftWalls()){
-            toDraw.add(new softWallView(softWall.getPosition(), sprTempWall));
+            toDraw.add(new SoftWallView(softWall.getPosition(), sprTempWall));
         }
         for (Bomb bomb: map.getBombs()){
             toDraw.add(new BombView(bomb, bombImage));
@@ -44,7 +44,7 @@ class Drawer {
         toDraw.add(playerTwoView);
     }
 
-    public void setupMap() {
+    protected void setupMap() {
         prepareToDraws();
 
         sb.begin();

@@ -9,7 +9,7 @@ import com.mygdx.game.Models.SoftWall;
 /**
  * Represents the view of the soft wall {@link SoftWall} which is a drawable object {@link IDrawable}
  */
-class softWallView implements IDrawable{
+class SoftWallView implements IDrawable{
     private final Position position;
     private final Texture tempWallTexture;
 
@@ -19,7 +19,7 @@ class softWallView implements IDrawable{
      * @param pos - position of the soft wall on the map in type {@link Position}
      * @param softWallTexture - a texture of the soft wall
      */
-    protected softWallView(Position pos, Texture softWallTexture){
+    protected SoftWallView(Position pos, Texture softWallTexture){
         this.position = pos;
         this.tempWallTexture = softWallTexture;
     }
@@ -33,13 +33,6 @@ class softWallView implements IDrawable{
         sb.draw(getSoftWallTexture(), position.getY()* Tile.tileSize, position.getX()* Tile.tileSize);
     }
 
-    /**
-     *
-     * @return current position of the soft wall
-     */
-    public Position getPosition(){
-        return position;
-    }
     private Texture getSoftWallTexture() {
         return tempWallTexture;
     }

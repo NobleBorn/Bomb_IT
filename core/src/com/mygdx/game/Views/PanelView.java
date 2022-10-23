@@ -16,14 +16,13 @@ import com.mygdx.game.Views.GameScreen;
  * Represents view for the side panel that shows player {@link Player } information such as points, shows game timer
  */
 public class PanelView {
-    private GameScreen gameScreen;
-    private Stage stage;
-    private SpriteBatch batch;
-    private BitmapFont font;
-    private ShapeRenderer shapeRenderer;
-
-    private Player player1;
-    private Player player2;
+    private final GameScreen gameScreen;
+    private final Stage stage;
+    private final SpriteBatch batch;
+    private final BitmapFont font;
+    private final ShapeRenderer shapeRenderer;
+    private final Player player1;
+    private final Player player2;
 
 
 
@@ -34,7 +33,7 @@ public class PanelView {
      * @param player1 - an instance of the player class for player one {@link Player}
      * @param player2 - an instance of the player class for player two {@link Player}
      */
-    protected PanelView(final GameScreen gameScreen, Player player1, Player player2){
+    protected PanelView(GameScreen gameScreen, Player player1, Player player2){
         this.stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
         Gdx.input.setInputProcessor(this.stage);
         batch = new SpriteBatch();
@@ -55,12 +54,12 @@ public class PanelView {
      * Draws the stage, text areas and the text fonts
      */
     public void update(){
-        int row_height = Gdx.graphics.getWidth() / 12;
-        int col_width = Gdx.graphics.getWidth() / 12;
+        int rowHeight = Gdx.graphics.getWidth() / 12;
+        int colWidth = Gdx.graphics.getWidth() / 12;
 
-        drawTextArea(row_height, col_width);
+        drawTextArea(rowHeight, colWidth);
         batch.begin();
-        drawFonts(row_height, col_width);
+        drawFonts(rowHeight, colWidth);
         batch.end();
 
         stage.act();
@@ -71,18 +70,18 @@ public class PanelView {
         return stage;
     }
 
-    private void drawFonts(int row_height, int col_width) {
-        font.draw(batch,"Timer: " + (int)gameScreen.getTimeSeconds()/60 + " : " + (int)gameScreen.getTimeSeconds()%60, col_width *9.7f, row_height *7.5f);
-        font.draw(batch,"Player 1 points: " + player1.getScore(), 0.8f*Gdx.graphics.getWidth(), row_height *6.5f);
-        font.draw(batch,"Player 2 points: " + player2.getScore(), 0.8f*Gdx.graphics.getWidth(), row_height *5.5f);
+    private void drawFonts(int rowHeight, int colWidth) {
+        font.draw(batch,"Timer: " + (int)gameScreen.getTimeSeconds()/60 + " : " + (int)gameScreen.getTimeSeconds()%60, colWidth *9.7f, rowHeight *7.5f);
+        font.draw(batch,"Bob points: " + player1.getScore(), 0.8f*Gdx.graphics.getWidth(), rowHeight *6.5f);
+        font.draw(batch,"Gandalf points: " + player2.getScore(), 0.8f*Gdx.graphics.getWidth(), rowHeight *5.5f);
     }
 
-    private void drawTextArea(int row_height, int col_width) {
+    private void drawTextArea(int rowHeight, int colWidth) {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(0, 0, 0, 1);
-        shapeRenderer.rect(col_width *9.4f, row_height *7.2f, 230, 50);
-        shapeRenderer.rect(col_width *9.4f, row_height *6.2f, 230, 50);
-        shapeRenderer.rect(col_width *9.4f, row_height *5.2f, 230, 50);
+        shapeRenderer.rect(colWidth *9.4f, rowHeight *7.2f, 230, 50);
+        shapeRenderer.rect(colWidth *9.4f, rowHeight *6.2f, 230, 50);
+        shapeRenderer.rect(colWidth *9.4f, rowHeight *5.2f, 230, 50);
         shapeRenderer.end();
     }
 
