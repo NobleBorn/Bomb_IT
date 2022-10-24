@@ -88,7 +88,7 @@ public class Map implements EventListener, IExplodable, IPlayable {
                 s++;
             }
         } catch (IOException e){
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
     }
 

@@ -46,8 +46,6 @@ public class PanelView {
         this.player1 = player1;
         this.player2 = player2;
 
-        new PanelController(gameScreen, this);
-
     }
 
     /**

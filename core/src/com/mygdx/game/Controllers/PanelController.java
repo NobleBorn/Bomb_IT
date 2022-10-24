@@ -19,18 +19,6 @@ public class PanelController {
             .buttonName("Resume")
             .createTextButton();
 
-    private Image_Button music_button = new Image_Button.ImageButtonBuilder(1, 7f)
-            .buttonPath1("volume_on.png")
-            .buttonPath2("volume_off.png")
-            .buttonSize(1, 0.8f)
-            .createImageButton();
-
-    private Image_Button sound_button = new Image_Button.ImageButtonBuilder(2.7f, 7f)
-            .buttonPath1("sound_on.png")
-            .buttonPath2("sound_off.png")
-            .buttonSize(1, 0.8f)
-            .createImageButton();
-
 
     /**
      * Constructor
