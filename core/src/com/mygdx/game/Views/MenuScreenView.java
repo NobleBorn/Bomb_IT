@@ -17,6 +17,7 @@ import com.mygdx.game.*;
 public class MenuScreenView extends ScreenAdapter {
     private final Main game;
     private final Stage stage;
+    private final SpriteBatch batch;
     private final OrthographicCamera camera;
     private final Texture menuImg;
     private boolean startClicked = false;
@@ -36,7 +37,7 @@ public class MenuScreenView extends ScreenAdapter {
         this.camera = new OrthographicCamera();
         this.camera.setToOrtho(false, 960, 960);
 
-        game.setBatch(new SpriteBatch());
+        this.batch = new SpriteBatch();
 
         menuImg = new Texture(Gdx.files.internal("mainMenu1.png"));
 
@@ -95,11 +96,11 @@ public class MenuScreenView extends ScreenAdapter {
     @Override
     public void render(float delta) {
         camera.update();
-        game.getBatch().setProjectionMatrix(camera.combined);
+        batch.setProjectionMatrix(camera.combined);
 
-        game.getBatch().begin();
-        game.getBatch().draw(menuImg,0,0,960,960);
-        game.getBatch().end();
+        batch.begin();
+        batch.draw(menuImg,0,0,960,960);
+        batch.end();
 
         setScreen();
 
@@ -117,6 +118,8 @@ public class MenuScreenView extends ScreenAdapter {
      */
     @Override
     public void dispose() {
+        batch.dispose();
+        stage.dispose();
         gameMusic.dispose();
         clickSound.dispose();
     }

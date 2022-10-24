@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.mygdx.game.Views.GameScreen;
 
 /**
- * A class that creates pause and resume button see {@link Controllers.Text_Button} for the side panel
+ * A class that creates pause and resume button see {@link Text_Button} for the side panel
  */
 public class PanelController {
     private Text_Button pause_button = new Text_Button.TextButtonBuilder(9.5f, 7f)
@@ -18,18 +18,6 @@ public class PanelController {
             .buttonSize(2, 1)
             .buttonName("Resume")
             .createTextButton();
-
-    private Image_Button music_button = new Image_Button.ImageButtonBuilder(1, 7f)
-            .buttonPath1("volume_on.png")
-            .buttonPath2("volume_off.png")
-            .buttonSize(1, 0.8f)
-            .createImageButton();
-
-    private Image_Button sound_button = new Image_Button.ImageButtonBuilder(2.7f, 7f)
-            .buttonPath1("sound_on.png")
-            .buttonPath2("sound_off.png")
-            .buttonSize(1, 0.8f)
-            .createImageButton();
 
 
     /**

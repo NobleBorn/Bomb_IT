@@ -1,6 +1,7 @@
 package com.mygdx.game.Views;
 
 
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.Controllers.PanelController;
 import com.mygdx.game.Controllers.PlayerController;
 import com.mygdx.game.Main;
@@ -63,6 +64,7 @@ public class GameScreen implements Screen {
         PlayerView playerTwoView = new PlayerView(playerTwo, "spelare2.png");
 
         this.panelView = new PanelView(this, playerOne, playerTwo);
+        new PanelController(this, panelView);
 
         this.playerOneController = new PlayerController(playerOne, playerOneView, Input.Keys.DPAD_UP, Input.Keys.DPAD_DOWN,
                 Input.Keys.DPAD_RIGHT, Input.Keys.DPAD_LEFT, Input.Keys.SHIFT_RIGHT);
@@ -157,7 +159,7 @@ public class GameScreen implements Screen {
     public void dispose(){
         batch.dispose();
         panelView.dispose();
-        game.dispose();
+        panelView.dispose();
     }
 
     @Override

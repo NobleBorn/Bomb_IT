@@ -24,10 +24,6 @@ public class MenuScreenController {
             .buttonName("Play")
             .createTextButton();
 
-    Buttons option_button = new Text_Button.TextButtonBuilder(7,4.2f)
-            .buttonSize(2, 1)
-            .buttonName("Option")
-            .createTextButton();
 
     Buttons exit_button = new Text_Button.TextButtonBuilder( 7,5.1f)
             .buttonSize(2, 1)
@@ -56,7 +52,6 @@ public class MenuScreenController {
      */
     public MenuScreenController(final MenuScreenView menuScreenView){
         create.add(play_button);
-        create.add(option_button);
         create.add(exit_button);
         create.add(music_button);
         create.add(sound_button);
@@ -86,18 +81,6 @@ public class MenuScreenController {
             }
         });
         menuScreenView.getStage().addActor(play_button.getButton());
-
-        option_button.getButton().addListener(new ClickListener() {
-            @Override
-            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                menuScreenView.getClickSound().play();
-            }
-            @Override
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                return true;
-            }
-        });
-        menuScreenView.getStage().addActor(option_button.getButton());
 
         exit_button.getButton().addListener(new InputListener(){
              @Override

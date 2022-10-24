@@ -46,8 +46,6 @@ public class PanelView {
         this.player1 = player1;
         this.player2 = player2;
 
-        new PanelController(gameScreen, this);
-
     }
 
     /**
@@ -89,6 +87,8 @@ public class PanelView {
      * Disposes the stage and font
      */
     public void dispose(){
+        batch.dispose();
+        shapeRenderer.dispose();
         stage.dispose();
         font.dispose();
     }
