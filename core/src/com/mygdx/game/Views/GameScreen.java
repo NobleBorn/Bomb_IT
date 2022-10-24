@@ -102,9 +102,11 @@ public class GameScreen implements Screen {
                         num = 2;
                     else
                         num = 1;
+                    dispose();
                     this.game.setScreen(new GameOverView(game, num));
                 }
                 else if (timeSeconds <= 0 ){
+                    dispose();
                     this.game.setScreen(new GameOverView(game, playerTwo.getScore() > playerOne.getScore()? 2: 1)); //chooses winner depending on score
                 }
                 else{
@@ -159,7 +161,7 @@ public class GameScreen implements Screen {
     public void dispose(){
         batch.dispose();
         panelView.dispose();
-        panelView.dispose();
+        gameMusic.dispose();
     }
 
     @Override
